@@ -18,8 +18,8 @@ Kalle Asmundi
 ### Backend
 1. Käyttäjätunnuksen rekisteröinti ja Tamagotchi luonti
 2. UART yhteyden luominen
-2. EAT, EXERCISE, PET, ACTIVATE komentojen lähetys
-3. id,BEEP viestin vastaanotto
+2. `EAT, EXERCISE, PET, ACTIVATE` komentojen lähetys
+3. `id,BEEP` viestin vastaanotto
 4. bonus: 2 omaa tietoa, esim. valosensorin ja lämpötilasensorin tulkinta
 5. Raakadatan lähetys csv-muodossa
 
