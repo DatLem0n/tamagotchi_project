@@ -20,7 +20,6 @@
 #include "Board.h"
 #include "sensors/opt3001.h"
 
-#include "valosensori.h"
 
 /* Task */
 #define STACKSIZE 2048

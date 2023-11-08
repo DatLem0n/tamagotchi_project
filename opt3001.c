@@ -15,6 +15,18 @@
 #include "sensors/opt3001.h"
 #include "Board.h"
 
+float valoisuus(uint16_t rekisteri) {
+    uint16_t MASK_E = 0b1111000000000000;
+    uint16_t MASK_R = ~MASK_E;
+
+    uint16_t E = rekisteri & MASK_E;
+    E = E >> 12;
+
+    uint16_t R = rekisteri & MASK_R;
+
+    return 0.01 * pow(2,E) * R;
+}
+
 void opt3001_setup(I2C_Handle *i2c) {
 
 	I2C_Transaction i2cTransaction;
