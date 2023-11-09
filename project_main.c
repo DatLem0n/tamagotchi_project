@@ -56,10 +56,8 @@ PIN_Config ledConfig[] = {
 
 void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
-    // JTKJ: Exercise 1. Blink either led of the device
-    uint_t pinValue = PIN_getOutputValue( Board_LED0 );
-    pinValue = !pinValue;
-    PIN_setOutputValue( ledHandle, Board_LED0, pinValue );
+    //TEST
+    eat(1, messageBuffer);
 
 }
 
@@ -91,10 +89,10 @@ Void uartTaskFxn(UArg arg0, UArg arg1) {
     while (1) {
 
       //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
-        if(programState == MESSAGES_READY){
+        if(messageState == MESSAGES_READY){
             UART_write(uart, messageBuffer, strlen(messageBuffer));
             strcpy(messageBuffer, "");
-            programState = WAITING;
+            messageState = WAITING;
         }
 
         // Once per second, you can modify this
@@ -129,7 +127,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
         // JTKJ: Exercise 3. Save the sensor value into the global variable
         //       Remember to modify state
-        programState = MESSAGES_READY;
+        messageState = MESSAGES_READY;
 
         // Once per second, you can modify this
         Task_sleep(1000000 / Clock_tickPeriod);
