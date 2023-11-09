@@ -20,9 +20,14 @@
 #include "Board.h"
 #include "sensors/opt3001.h"
 
+#include <tamagotchi_IO.c>
+
 
 /* Task */
 #define STACKSIZE 2048
+#define BUFFERSIZE 80
+
+char[BUFFERSIZE] buffer;
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
@@ -60,6 +65,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
 /* Task Functions */
 Void uartTaskFxn(UArg arg0, UArg arg1) {
+    //TODO: fix
     char merkkijono[16];
     // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
 
