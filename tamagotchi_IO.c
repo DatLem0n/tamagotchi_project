@@ -75,7 +75,8 @@ int activate(int eat, int exercise, int pet)
     return 0;
 }
 
-struct note{
+struct note
+{
     int pitch;
     int length;
 };
@@ -84,11 +85,14 @@ struct note{
  * @param note
  * @return
  */
-int noteToFreq(int note){
-    switch (note) {
-        case 0:{
-            return 440; //note frequencies here
-        }
+int noteToFreq(int note)
+{
+    switch (note)
+    {
+    case 0:
+    {
+        return 440; // note frequencies here
+    }
     }
 }
 /**
@@ -96,6 +100,7 @@ int noteToFreq(int note){
  * @param sound
  * @return
  */
-int makeSound(int sound){
+int makeSound(int sound)
+{
     return;
 }
