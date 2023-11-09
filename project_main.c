@@ -20,8 +20,7 @@
 #include "Board.h"
 #include "sensors/opt3001.h"
 
-#include <tamagotchi_IO.c>
-
+#include "tamagotchi_IO.c"
 
 /* Task */
 #define STACKSIZE 2048
@@ -32,7 +31,11 @@ Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
 // JTKJ: Exercise 3. Definition of the state machine
-enum messageState { WAITING=1, MESSAGES_READY };
+enum messageState
+{
+   WAITING = 1,
+   MESSAGES_READY
+};
 enum messageState messageState = WAITING;
 
 // JTKJ: Exercise 3. Global variable for ambient light
@@ -45,152 +48,164 @@ static PIN_Handle ledHandle;
 static PIN_State ledState;
 
 PIN_Config buttonConfig[] = {
-   Board_BUTTON0  | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
-   PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+    Board_BUTTON0 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
+    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
 PIN_Config ledConfig[] = {
-   Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-   PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+    Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
-void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
+void buttonFxn(PIN_Handle handle, PIN_Id pinId)
+{
 
-    //TEST
-    eat(1, messageBuffer);
-
+   // TEST
+   eat(1, messageBuffer);
+   writeMessageBuffer("ping", messageBuffer);
 }
 
 /* Task Functions */
-Void uartTaskFxn(UArg arg0, UArg arg1) {
-    // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
+Void uartTaskFxn(UArg arg0, UArg arg1)
+{
+   // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
 
-       // UART-kirjaston asetukset
-       UART_Handle uart;
-       UART_Params uartParams;
+   // UART-kirjaston asetukset
+   UART_Handle uart;
+   UART_Params uartParams;
 
-       // Alustetaan sarjaliikenne
-       UART_Params_init(&uartParams);
-       uartParams.writeDataMode = UART_DATA_TEXT;
-       uartParams.readDataMode = UART_DATA_TEXT;
-       uartParams.readEcho = UART_ECHO_OFF;
-       uartParams.readMode=UART_MODE_BLOCKING;
-       uartParams.baudRate = 9600; // nopeus 9600baud
-       uartParams.dataLength = UART_LEN_8; // 8
-       uartParams.parityType = UART_PAR_NONE; // n
-       uartParams.stopBits = UART_STOP_ONE; // 1
+   // Alustetaan sarjaliikenne
+   UART_Params_init(&uartParams);
+   uartParams.writeDataMode = UART_DATA_TEXT;
+   uartParams.readDataMode = UART_DATA_TEXT;
+   uartParams.readEcho = UART_ECHO_OFF;
+   uartParams.readMode = UART_MODE_BLOCKING;
+   uartParams.baudRate = 9600;            // nopeus 9600baud
+   uartParams.dataLength = UART_LEN_8;    // 8
+   uartParams.parityType = UART_PAR_NONE; // n
+   uartParams.stopBits = UART_STOP_ONE;   // 1
 
-       // Avataan yhteys laitteen sarjaporttiin vakiossa Board_UART0
-       uart = UART_open(Board_UART0, &uartParams);
-       if (uart == NULL) {
-          System_abort("Error opening the UART");
-       }
+   // Avataan yhteys laitteen sarjaporttiin vakiossa Board_UART0
+   uart = UART_open(Board_UART0, &uartParams);
+   if (uart == NULL)
+   {
+      System_abort("Error opening the UART");
+   }
 
-    while (1) {
+   while (1)
+   {
 
-      //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
-        if(messageState == MESSAGES_READY){
-            UART_write(uart, messageBuffer, strlen(messageBuffer));
-            strcpy(messageBuffer, "");
-            messageState = WAITING;
-        }
+      // Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
+      if (messageState == MESSAGES_READY)
+      {
+         UART_write(uart, messageBuffer, strlen(messageBuffer));
+         strcpy(messageBuffer, "");
+         messageState = WAITING;
+      }
 
-        // Once per second, you can modify this
-        Task_sleep(1000000 / Clock_tickPeriod);
-    }
+      // Once per second, you can modify this
+      Task_sleep(1000000 / Clock_tickPeriod);
+   }
 }
 
-Void sensorTaskFxn(UArg arg0, UArg arg1) {
+Void sensorTaskFxn(UArg arg0, UArg arg1)
+{
 
-    I2C_Handle      i2c;
-    I2C_Params      i2cParams;
+   I2C_Handle i2c;
+   I2C_Params i2cParams;
 
-       // Alustetaan i2c-väylä
-       I2C_Params_init(&i2cParams);
-       i2cParams.bitRate = I2C_400kHz;
+   // Alustetaan i2c-väylä
+   I2C_Params_init(&i2cParams);
+   i2cParams.bitRate = I2C_400kHz;
 
-       // Avataan yhteys
-       i2c = I2C_open(Board_I2C_TMP, &i2cParams);
-       if (i2c == NULL) {
-          System_abort("Error Initializing I2C\n");
-       }
+   // Avataan yhteys
+   i2c = I2C_open(Board_I2C_TMP, &i2cParams);
+   if (i2c == NULL)
+   {
+      System_abort("Error Initializing I2C\n");
+   }
 
-    // JTKJ: Teht�v� 2. Alusta sensorin OPT3001 setup-funktiolla
-    //       Laita enne funktiokutsua eteen 100ms viive (Task_sleep)
-       Task_sleep(100000 / Clock_tickPeriod);
-       opt3001_setup(&i2c);
+   // JTKJ: Teht�v� 2. Alusta sensorin OPT3001 setup-funktiolla
+   //       Laita enne funktiokutsua eteen 100ms viive (Task_sleep)
+   Task_sleep(100000 / Clock_tickPeriod);
+   opt3001_setup(&i2c);
 
-    while (1) {
+   while (1)
+   {
 
-        // JTKJ: Exercise 2. Read sensor data and print it to the Debug window as string
-        ambientLight = opt3001_get_data(&i2c);
+      // JTKJ: Exercise 2. Read sensor data and print it to the Debug window as string
+      ambientLight = opt3001_get_data(&i2c);
 
-        // JTKJ: Exercise 3. Save the sensor value into the global variable
-        //       Remember to modify state
-        messageState = MESSAGES_READY;
+      // JTKJ: Exercise 3. Save the sensor value into the global variable
+      //       Remember to modify state
+      messageState = MESSAGES_READY;
 
-        // Once per second, you can modify this
-        Task_sleep(1000000 / Clock_tickPeriod);
-    }
+      // Once per second, you can modify this
+      Task_sleep(1000000 / Clock_tickPeriod);
+   }
 }
 
-Int main(void) {
+Int main(void)
+{
 
-    // Task variables
-    Task_Handle sensorTaskHandle;
-    Task_Params sensorTaskParams;
-    Task_Handle uartTaskHandle;
-    Task_Params uartTaskParams;
+   // Task variables
+   Task_Handle sensorTaskHandle;
+   Task_Params sensorTaskParams;
+   Task_Handle uartTaskHandle;
+   Task_Params uartTaskParams;
 
-    // Initialize board
-    Board_initGeneral();
+   // Initialize board
+   Board_initGeneral();
 
-    // JTKJ: Exercise 1. Open the button and led pins
-    //       Remember to register the above interrupt handler for button
-    // Ledi käyttöön ohjelmassa
-    ledHandle = PIN_open( &ledState, ledConfig );
-    if(!ledHandle) {
-       System_abort("Error initializing LED pin\n");
-    }
+   // JTKJ: Exercise 1. Open the button and led pins
+   //       Remember to register the above interrupt handler for button
+   // Ledi käyttöön ohjelmassa
+   ledHandle = PIN_open(&ledState, ledConfig);
+   if (!ledHandle)
+   {
+      System_abort("Error initializing LED pin\n");
+   }
 
-    // Painonappi käyttöön ohjelmassa
-    buttonHandle = PIN_open(&buttonState, buttonConfig);
-    if(!buttonHandle) {
-       System_abort("Error initializing button pin\n");
-    }
+   // Painonappi käyttöön ohjelmassa
+   buttonHandle = PIN_open(&buttonState, buttonConfig);
+   if (!buttonHandle)
+   {
+      System_abort("Error initializing button pin\n");
+   }
 
-    // Painonapille keskeytyksen käsittellijä
-    if (PIN_registerIntCb(buttonHandle, &buttonFxn) != 0) {
-       System_abort("Error registering button callback function");
-    }
+   // Painonapille keskeytyksen käsittellijä
+   if (PIN_registerIntCb(buttonHandle, &buttonFxn) != 0)
+   {
+      System_abort("Error registering button callback function");
+   }
 
+   /* Task */
+   Task_Params_init(&sensorTaskParams);
+   sensorTaskParams.stackSize = STACKSIZE;
+   sensorTaskParams.stack = &sensorTaskStack;
+   sensorTaskParams.priority = 2;
+   sensorTaskHandle = Task_create(sensorTaskFxn, &sensorTaskParams, NULL);
+   if (sensorTaskHandle == NULL)
+   {
+      System_abort("Task create failed!");
+   }
 
+   Task_Params_init(&uartTaskParams);
+   uartTaskParams.stackSize = STACKSIZE;
+   uartTaskParams.stack = &uartTaskStack;
+   uartTaskParams.priority = 2;
+   uartTaskHandle = Task_create(uartTaskFxn, &uartTaskParams, NULL);
+   if (uartTaskHandle == NULL)
+   {
+      System_abort("Task create failed!");
+   }
 
-    /* Task */
-    Task_Params_init(&sensorTaskParams);
-    sensorTaskParams.stackSize = STACKSIZE;
-    sensorTaskParams.stack = &sensorTaskStack;
-    sensorTaskParams.priority=2;
-    sensorTaskHandle = Task_create(sensorTaskFxn, &sensorTaskParams, NULL);
-    if (sensorTaskHandle == NULL) {
-        System_abort("Task create failed!");
-    }
+   /* Sanity check */
+   System_printf("Hello world!\n");
+   System_flush();
 
-    Task_Params_init(&uartTaskParams);
-    uartTaskParams.stackSize = STACKSIZE;
-    uartTaskParams.stack = &uartTaskStack;
-    uartTaskParams.priority=2;
-    uartTaskHandle = Task_create(uartTaskFxn, &uartTaskParams, NULL);
-    if (uartTaskHandle == NULL) {
-        System_abort("Task create failed!");
-    }
+   /* Start BIOS */
+   BIOS_start();
 
-    /* Sanity check */
-    System_printf("Hello world!\n");
-    System_flush();
-
-    /* Start BIOS */
-    BIOS_start();
-
-    return (0);
+   return (0);
 }
