@@ -2,12 +2,19 @@
 #include <string.h>
 #include <sensortag_examples/buzzer.h>
 
+#define GROUP_ID_STRING = "id:30";
+
 char[80] msg;
 
+void writeMessageBuffer(char *message, char *buffer)
+{
+    // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
+    if (strlen(buffer) == 0)
+        strcpy(buffer, GROUP_ID_STRING);
 
-void writeBuffer(char* message, char* buffer){
-    if (strlen(buffer)!= 0){
-        strcat(buffer,",");
+    if (strlen(buffer) != 0)
+    {
+        strcat(buffer, ",");
     }
     strcat(buffer, message);
 }
@@ -17,10 +24,12 @@ void writeBuffer(char* message, char* buffer){
  * @param amount
  * @return 1 on success, 0 on fail
  */
-int eat(int amount, char* buffer){
-    if (amount < 1 ) return 0;
+int eat(int amount, char *buffer)
+{
+    if (amount < 1)
+        return 0;
     sprintf(msg, "EAT:%i", amount);
-    writeBuffer(msg, buffer);
+    writeMessageBuffer(msg, buffer);
     return 1;
 }
 
@@ -29,10 +38,12 @@ int eat(int amount, char* buffer){
  * @param amount
  * @return 1 on success, 0 on fail
  */
-int exercise(int amount, char* buffer){
-    if (amount < 1 ) return 0;
+int exercise(int amount, char *buffer)
+{
+    if (amount < 1)
+        return 0;
     sprintf(msg, "EXERCISE:%i", amount);
-    writeBuffer(msg, buffer);
+    writeMessageBuffer(msg, buffer);
     return 1;
 }
 
@@ -41,10 +52,12 @@ int exercise(int amount, char* buffer){
  * @param amount
  * @return 1 on success, 0 on fail
  */
-int pet(int amount, char* buffer){
-    if (amount < 1 ) return 0;
+int pet(int amount, char *buffer)
+{
+    if (amount < 1)
+        return 0;
     sprintf(msg, "PET:%i", amount);
-    writeBuffer(msg, buffer);
+    writeMessageBuffer(msg, buffer);
     return 1;
 }
 
@@ -55,8 +68,9 @@ int pet(int amount, char* buffer){
  * @param pet amount (int) to raise level
  * @return 1 on success, 0 on fail
  */
-int activate(int eat, int exercise, int pet){
+int activate(int eat, int exercise, int pet)
+{
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
-    writeBuffer(msg, buffer);
+    writeMessageBuffer(msg, buffer);
     return 0;
 }

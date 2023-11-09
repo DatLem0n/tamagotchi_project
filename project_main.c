@@ -27,13 +27,13 @@
 #define STACKSIZE 2048
 #define BUFFERSIZE 80
 
-char[BUFFERSIZE] buffer;
+char[BUFFERSIZE] messageBuffer;
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
 // JTKJ: Exercise 3. Definition of the state machine
-enum state { WAITING=1, DATA_READY };
-enum state programState = WAITING;
+enum messageState { WAITING=1, MESSAGES_READY };
+enum messageState messageState = WAITING;
 
 // JTKJ: Exercise 3. Global variable for ambient light
 double ambientLight = -1000.0;
@@ -65,8 +65,6 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
 /* Task Functions */
 Void uartTaskFxn(UArg arg0, UArg arg1) {
-    //TODO: fix
-    char merkkijono[16];
     // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
 
        // UART-kirjaston asetukset
@@ -92,19 +90,12 @@ Void uartTaskFxn(UArg arg0, UArg arg1) {
 
     while (1) {
 
-        // JTKJ: Exercise 3. Print out sensor data as string to debug window if the state is correct
-        //       Remember to modify state
-        if(programState == DATA_READY){
-
-            sprintf(merkkijono,"%f\n",ambientLight);
-            System_printf(merkkijono);
-            System_flush();
-
+      //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
+        if(programState == MESSAGES_READY){
+            UART_write(uart, messageBuffer, strlen(messageBuffer));
+            strcpy(messageBuffer, "");
             programState = WAITING;
         }
-        // JTKJ: Exercise 4. Send the same sensor data string with UART
-        sprintf(merkkijono,"%f\n\r",ambientLight);
-        UART_write(uart, merkkijono, strlen(merkkijono));
 
         // Once per second, you can modify this
         Task_sleep(1000000 / Clock_tickPeriod);
@@ -138,7 +129,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
         // JTKJ: Exercise 3. Save the sensor value into the global variable
         //       Remember to modify state
-        programState = DATA_READY;
+        programState = MESSAGES_READY;
 
         // Once per second, you can modify this
         Task_sleep(1000000 / Clock_tickPeriod);
