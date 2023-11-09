@@ -4,6 +4,10 @@
 
 char[80] msg;
 
+struct note{
+    int pitch;
+    int length;
+};
 
 void writeBuffer(char* message, char* buffer){
     if (strlen(buffer)!= 0){
@@ -59,4 +63,24 @@ int activate(int eat, int exercise, int pet){
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
     writeBuffer(msg, buffer);
     return 0;
+}
+/**
+ *
+ * @param note
+ * @return
+ */
+int noteToFreq(int note){
+    switch (note) {
+        case 0:{
+            return 440; //note frequencies here
+        }
+    }
+}
+/**
+ * selected sound WIP
+ * @param sound
+ * @return
+ */
+int makeSound(int sound){
+    return;
 }
