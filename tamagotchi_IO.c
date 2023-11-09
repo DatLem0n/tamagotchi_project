@@ -74,3 +74,28 @@ int activate(int eat, int exercise, int pet)
     writeMessageBuffer(msg, buffer);
     return 0;
 }
+
+struct note{
+    int pitch;
+    int length;
+};
+/**
+ *
+ * @param note
+ * @return
+ */
+int noteToFreq(int note){
+    switch (note) {
+        case 0:{
+            return 440; //note frequencies here
+        }
+    }
+}
+/**
+ * selected sound WIP
+ * @param sound
+ * @return
+ */
+int makeSound(int sound){
+    return;
+}
