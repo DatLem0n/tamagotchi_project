@@ -26,6 +26,9 @@
 #define STACKSIZE 2048
 #define BUFFERSIZE 80
 
+/*
+* Globaalit muuttujat
+*/
 char messageBuffer[BUFFERSIZE];
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
@@ -54,6 +57,10 @@ PIN_Config ledConfig[] = {
    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
+/*
+* Taskit ja nappifunktio
+*/
+
 void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //TEST
@@ -68,7 +75,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 Void uartTaskFxn(UArg arg0, UArg arg1) {
    // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
 
-      // UART-kirjaston asetukset
+   // UART-kirjaston asetukset
    UART_Handle uart;
    UART_Params uartParams;
 
@@ -98,11 +105,13 @@ Void uartTaskFxn(UArg arg0, UArg arg1) {
          messageState = WAITING;
       }
 
-      // Once per second, you can modify this
-      Task_sleep(1000000 / Clock_tickPeriod);
+      // 4x per second
+      Task_sleep((1000000 / 4) / Clock_tickPeriod);
    }
 }
 
+// TODO: luo jokaiselle käytettävälle sensorille oma sensorTask
+// TODO: Selvitä miten käyttää monta sensoria yhden i2c-väylän kautta
 Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
    I2C_Handle      i2c;
@@ -136,6 +145,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       Task_sleep(1000000 / Clock_tickPeriod);
    }
 }
+
 
 Int main(void) {
 
