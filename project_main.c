@@ -31,8 +31,9 @@ Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
 // JTKJ: Exercise 3. Definition of the state machine
-enum messageState { WAITING = 1, MESSAGES_READY };
-enum messageState messageState = WAITING;
+enum State { WAITING, MESSAGES_READY, DATA_READY };
+enum State messageState = WAITING;
+enum State sensorState = WAITING;
 
 // JTKJ: Exercise 3. Global variable for ambient light
 double ambientLight = -1000.0;
@@ -57,6 +58,9 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //TEST
    eat(1, messageBuffer);
+   messageState = MESSAGES_READY;
+   System_printf("button test\nMessageBuffer:%s\n", messageBuffer);
+   System_flush();
 
 }
 
@@ -126,7 +130,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
       // JTKJ: Exercise 3. Save the sensor value into the global variable
       //       Remember to modify state
-      messageState = MESSAGES_READY;
+      sensorState = DATA_READY;
 
       // Once per second, you can modify this
       Task_sleep(1000000 / Clock_tickPeriod);
