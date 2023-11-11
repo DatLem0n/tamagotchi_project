@@ -28,6 +28,14 @@ Kalle Asmundi
 4. Paina Debug-nappia
 5. Jos haluat nähdä UART-liikenteen: Paina Crtl-Shift-Alt-T, valitse Serial Terminal. Serial portiksi "/dev/tty/ACM0" ja Baud Rateksi 9600
 
+## Sensorit
+- [Paine: BMP280](sensors/bmp280.c)
+- [Lämpötila ja ilmankosteus: HDC1000](sensors/hdc1000.c)
+- [Gyro ja kiihtyvyys: mpu9250](sensors/mpu9250.c)
+- [Valoisuus: opt3001](sensors/opt3001.c)
+- [IR lämpötila: tmp007](sensors/tmp007.c)
+
+
 ## Vaatimukset
 
 - Käyttöliittymä
