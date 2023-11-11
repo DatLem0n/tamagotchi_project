@@ -2,9 +2,9 @@
 #include <string.h>
 #include <sensortag_examples/buzzer.h>
 
-#define GROUP_ID_STRING = "id:30";
+#define GROUP_ID_STRING "id:30"
 
-char[80] msg;
+char msg[80];
 
 void writeMessageBuffer(char *message, char *buffer)
 {
@@ -68,7 +68,7 @@ int pet(int amount, char *buffer)
  * @param pet amount (int) to raise level
  * @return 1 on success, 0 on fail
  */
-int activate(int eat, int exercise, int pet)
+int activate(int eat, int exercise, int pet, char *buffer)
 {
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
     writeMessageBuffer(msg, buffer);

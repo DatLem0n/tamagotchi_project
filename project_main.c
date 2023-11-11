@@ -20,13 +20,13 @@
 #include "Board.h"
 #include "sensors/opt3001.h"
 
-#include "tamagotchi_IO.c"
+#include "tamagotchi_IO.h"
 
 /* Task */
 #define STACKSIZE 2048
 #define BUFFERSIZE 80
 
-char[BUFFERSIZE] messageBuffer;
+char messageBuffer[BUFFERSIZE];
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
