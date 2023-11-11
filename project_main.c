@@ -31,11 +31,7 @@ Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
 // JTKJ: Exercise 3. Definition of the state machine
-enum messageState
-{
-   WAITING = 1,
-   MESSAGES_READY
-};
+enum messageState { WAITING = 1, MESSAGES_READY };
 enum messageState messageState = WAITING;
 
 // JTKJ: Exercise 3. Global variable for ambient light
@@ -48,29 +44,27 @@ static PIN_Handle ledHandle;
 static PIN_State ledState;
 
 PIN_Config buttonConfig[] = {
-    Board_BUTTON0 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
-    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+   Board_BUTTON0 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
+   PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
 PIN_Config ledConfig[] = {
-    Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+   Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+   PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
-void buttonFxn(PIN_Handle handle, PIN_Id pinId)
-{
+void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
-   // TEST
+   //TEST
    eat(1, messageBuffer);
-   writeMessageBuffer("ping", messageBuffer);
+
 }
 
 /* Task Functions */
-Void uartTaskFxn(UArg arg0, UArg arg1)
-{
+Void uartTaskFxn(UArg arg0, UArg arg1) {
    // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
 
-   // UART-kirjaston asetukset
+      // UART-kirjaston asetukset
    UART_Handle uart;
    UART_Params uartParams;
 
@@ -80,24 +74,21 @@ Void uartTaskFxn(UArg arg0, UArg arg1)
    uartParams.readDataMode = UART_DATA_TEXT;
    uartParams.readEcho = UART_ECHO_OFF;
    uartParams.readMode = UART_MODE_BLOCKING;
-   uartParams.baudRate = 9600;            // nopeus 9600baud
-   uartParams.dataLength = UART_LEN_8;    // 8
+   uartParams.baudRate = 9600; // nopeus 9600baud
+   uartParams.dataLength = UART_LEN_8; // 8
    uartParams.parityType = UART_PAR_NONE; // n
-   uartParams.stopBits = UART_STOP_ONE;   // 1
+   uartParams.stopBits = UART_STOP_ONE; // 1
 
    // Avataan yhteys laitteen sarjaporttiin vakiossa Board_UART0
    uart = UART_open(Board_UART0, &uartParams);
-   if (uart == NULL)
-   {
+   if (uart == NULL) {
       System_abort("Error opening the UART");
    }
 
-   while (1)
-   {
+   while (1) {
 
-      // Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
-      if (messageState == MESSAGES_READY)
-      {
+      //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
+      if (messageState == MESSAGES_READY) {
          UART_write(uart, messageBuffer, strlen(messageBuffer));
          strcpy(messageBuffer, "");
          messageState = WAITING;
@@ -108,11 +99,10 @@ Void uartTaskFxn(UArg arg0, UArg arg1)
    }
 }
 
-Void sensorTaskFxn(UArg arg0, UArg arg1)
-{
+Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
-   I2C_Handle i2c;
-   I2C_Params i2cParams;
+   I2C_Handle      i2c;
+   I2C_Params      i2cParams;
 
    // Alustetaan i2c-väylä
    I2C_Params_init(&i2cParams);
@@ -120,8 +110,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1)
 
    // Avataan yhteys
    i2c = I2C_open(Board_I2C_TMP, &i2cParams);
-   if (i2c == NULL)
-   {
+   if (i2c == NULL) {
       System_abort("Error Initializing I2C\n");
    }
 
@@ -130,8 +119,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1)
    Task_sleep(100000 / Clock_tickPeriod);
    opt3001_setup(&i2c);
 
-   while (1)
-   {
+   while (1) {
 
       // JTKJ: Exercise 2. Read sensor data and print it to the Debug window as string
       ambientLight = opt3001_get_data(&i2c);
@@ -145,8 +133,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1)
    }
 }
 
-Int main(void)
-{
+Int main(void) {
 
    // Task variables
    Task_Handle sensorTaskHandle;
@@ -161,23 +148,22 @@ Int main(void)
    //       Remember to register the above interrupt handler for button
    // Ledi käyttöön ohjelmassa
    ledHandle = PIN_open(&ledState, ledConfig);
-   if (!ledHandle)
-   {
+   if (!ledHandle) {
       System_abort("Error initializing LED pin\n");
    }
 
    // Painonappi käyttöön ohjelmassa
    buttonHandle = PIN_open(&buttonState, buttonConfig);
-   if (!buttonHandle)
-   {
+   if (!buttonHandle) {
       System_abort("Error initializing button pin\n");
    }
 
    // Painonapille keskeytyksen käsittellijä
-   if (PIN_registerIntCb(buttonHandle, &buttonFxn) != 0)
-   {
+   if (PIN_registerIntCb(buttonHandle, &buttonFxn) != 0) {
       System_abort("Error registering button callback function");
    }
+
+
 
    /* Task */
    Task_Params_init(&sensorTaskParams);
@@ -185,8 +171,7 @@ Int main(void)
    sensorTaskParams.stack = &sensorTaskStack;
    sensorTaskParams.priority = 2;
    sensorTaskHandle = Task_create(sensorTaskFxn, &sensorTaskParams, NULL);
-   if (sensorTaskHandle == NULL)
-   {
+   if (sensorTaskHandle == NULL) {
       System_abort("Task create failed!");
    }
 
@@ -195,8 +180,7 @@ Int main(void)
    uartTaskParams.stack = &uartTaskStack;
    uartTaskParams.priority = 2;
    uartTaskHandle = Task_create(uartTaskFxn, &uartTaskParams, NULL);
-   if (uartTaskHandle == NULL)
-   {
+   if (uartTaskHandle == NULL) {
       System_abort("Task create failed!");
    }
 
