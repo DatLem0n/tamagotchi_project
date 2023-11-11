@@ -5,6 +5,29 @@ Matias Björklund
 Ville Kujala  
 Kalle Asmundi
 
+## Projektin kääntäminen virtuaalikoneessa
+
+### Jaa tarvittavat kansiot Virtualboxille
+
+1. [Lataa tyhjä projekti johonkin kansioon.](https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-examples/blob/main/emptyProjects/empty_CC2650STK_TI_2023.zip)
+1. Mene VirtualBox/Settings/Shared Folders/ ja lisää edellisen kohdan kansio
+1. Lisää myös paikallisen git-repon kansio ja ruksita auto-mount
+
+### Tuo koodi VM:n Code Composer Studioon
+
+1. Avaa VM
+1. Käynnistä CCS ja mene yläreunassa Projects/Import CCS Projects
+1. Ruksita "Copy projects into workspace" ja importtaa tyhjä projekti
+1. Raahaa git-repon tiedostot CCS projektiin ja "Overwrite all"
+
+### Sensortagin debugaus
+
+1. Jos olet muuttanut koodia: raahaa git-repon tiedostot uudestaan, Overwrite all, Rebuild project
+2. Kiinnitä USB-johto
+3. Mene VirtualBoxin yläreunassa Devices/USB/ ja varmista että Sensortagin kohdalla on ruksi.
+4. Paina Debug-nappia
+5. Jos haluat nähdä UART-liikenteen: Paina Crtl-Shift-Alt-T, valitse Serial Terminal. Serial portiksi "/dev/tty/ACM0" ja Baud Rateksi 9600
+
 ## Vaatimukset
 
 - Käyttöliittymä
