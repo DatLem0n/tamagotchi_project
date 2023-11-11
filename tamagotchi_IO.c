@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <string.h>
-#include <sensortag_examples/buzzer.h>
+#include "sensortag_examples/buzzer.h"
 
 #define GROUP_ID_STRING "id:30"
 
-char msg[80];
-
-void writeMessageBuffer(char *message, char *buffer)
+// TODO: varmista että bufferi ei mene ylitäyteen, muuten laite jäätyy
+void writeMessageBuffer(char* message, char* buffer)
 {
     // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
-    if (strlen(buffer) == 0)
+    if (strlen(buffer) == 0) {
         strcpy(buffer, GROUP_ID_STRING);
-
-    if (strlen(buffer) != 0)
-    {
+    }
+    else {
         strcat(buffer, ",");
     }
+
     strcat(buffer, message);
 }
 
@@ -24,10 +23,12 @@ void writeMessageBuffer(char *message, char *buffer)
  * @param amount
  * @return 1 on success, 0 on fail
  */
-int eat(int amount, char *buffer)
+int eat(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
+    
+    char msg[10];
     sprintf(msg, "EAT:%i", amount);
     writeMessageBuffer(msg, buffer);
     return 1;
@@ -38,10 +39,12 @@ int eat(int amount, char *buffer)
  * @param amount
  * @return 1 on success, 0 on fail
  */
-int exercise(int amount, char *buffer)
+int exercise(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
+
+    char msg[10];
     sprintf(msg, "EXERCISE:%i", amount);
     writeMessageBuffer(msg, buffer);
     return 1;
@@ -52,10 +55,12 @@ int exercise(int amount, char *buffer)
  * @param amount
  * @return 1 on success, 0 on fail
  */
-int pet(int amount, char *buffer)
+int pet(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
+
+    char msg[10];
     sprintf(msg, "PET:%i", amount);
     writeMessageBuffer(msg, buffer);
     return 1;
@@ -68,8 +73,12 @@ int pet(int amount, char *buffer)
  * @param pet amount (int) to raise level
  * @return 1 on success, 0 on fail
  */
-int activate(int eat, int exercise, int pet, char *buffer)
+int activate(int eat, int exercise, int pet, char* buffer)
 {
+    if (amount < 1 || exercise < 1 || pet < 1 || buffer == NULL)
+        return 0;
+
+    char msg[30];
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
     writeMessageBuffer(msg, buffer);
     return 0;
