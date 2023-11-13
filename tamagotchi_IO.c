@@ -4,18 +4,18 @@
 
 #define GROUP_ID_STRING "id:30"
 
-// TODO: varmista että bufferi ei mene ylitäyteen, muuten laite jäätyy
 void writeMessageBuffer(char* message, char* buffer)
 {
-    // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
-    if (strlen(buffer) == 0) {
-        strcpy(buffer, GROUP_ID_STRING);
+    if (strlen(buffer) + strlen(message) < 80){
+        // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
+        if (strlen(buffer) == 0) {
+            strcpy(buffer, GROUP_ID_STRING);
+        }
+        else {
+            strcat(buffer, ",");
+        }
+        strcat(buffer, message);
     }
-    else {
-        strcat(buffer, ",");
-    }
-
-    strcat(buffer, message);
 }
 
 /**
