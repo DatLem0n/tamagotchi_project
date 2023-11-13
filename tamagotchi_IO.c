@@ -6,7 +6,7 @@
 
 void writeMessageBuffer(char* message, char* buffer)
 {
-    if (strlen(buffer) + strlen(message) < 80){
+    if (strlen(buffer) + strlen(message) < 80) {
         // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
         if (strlen(buffer) == 0) {
             strcpy(buffer, GROUP_ID_STRING);
@@ -18,6 +18,19 @@ void writeMessageBuffer(char* message, char* buffer)
     }
 }
 
+/*
+ * writes mpu9250 sensor measurements to the sensor_data array
+ */
+enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMPERATURE, HUMIDITY, PRESSURE, LIGHT };
+void write_mpu9250_to_sensor_data(float* sensor_data, int index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
+    sensor_data[index][AX] = ax;
+    sensor_data[index][AY] = ay;
+    sensor_data[index][AZ] = az;
+    sensor_data[index][GX] = gx;
+    sensor_data[index][GY] = gy;
+    sensor_data[index][GZ] = gz;
+}
+
 /**
  * sends UART to raise tamagotchi food level
  * @param amount
@@ -27,7 +40,7 @@ int eat(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
-    
+
     char msg[10];
     sprintf(msg, "EAT:%i", amount);
     writeMessageBuffer(msg, buffer);

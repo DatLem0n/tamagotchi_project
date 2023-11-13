@@ -152,8 +152,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       sensor_data[index][LIGHT] = opt3001_get_data(&i2c);
 
       mpu9250_get_data(&i2c, ax, ay, az, gx, gy, gz);
-      //TODO: toteuta funktio
-      write_mpu9250_to_sensor_data(ax, ay, az, gx, gy, gz);
+      write_mpu9250_to_sensor_data(sensor_data, index, ax, ay, az, gx, gy, gz);
 
       if (sensorState == SENSORS_SENDING_DATA) {
          //TODO: toteuta funktio
