@@ -37,10 +37,11 @@ char messageBuffer[BUFFERSIZE];
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
-float ax, ay, az, gx, gy, gz;
+float ax, ay, az, gx, gy, gz, temp, humid, press, light;
+int time;
 
 float sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
-enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMPERATURE, HUMIDITY, PRESSURE, LIGHT };
+enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, HUMID, PRESS, LIGHT };
 
 // JTKJ: Exercise 3. Definition of the state machine
 enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
@@ -147,17 +148,17 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
    uint8_t index = 0;
    while (1) {
-      sensor_data[index][TIME] = Clock_getTicks();
       //TODO: lisää loput sensorit
-      sensor_data[index][LIGHT] = opt3001_get_data(&i2c);
+      time = Clock_getTicks();
+      light = opt3001_get_data(&i2c);
+      sensor_data[index][TIME] = time;
+      sensor_data[index][LIGHT] = light:
 
       mpu9250_get_data(&i2c, ax, ay, az, gx, gy, gz);
       write_mpu9250_to_sensor_data(sensor_data, index, ax, ay, az, gx, gy, gz);
 
       if (sensorState == SENSORS_SENDING_DATA) {
-         //TODO: toteuta funktio
-         //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
-         write_sensor_data_to_messageBuffer(sensor_data);
+         write_sensor_data_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, humid, press, light);
       }
 
       index++;

@@ -18,6 +18,14 @@ void writeMessageBuffer(char* message, char* buffer)
     }
 }
 
+//ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
+void write_sensor_data_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, float* temp, float* humid, float* press, float* light);
+char msg[30];
+sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f,temp:%.2f,humid:%.2f,press:%.2f,light:%.2f",
+    ax, ay, az, gx, gy, gz, temp, humid, press, float, light);
+writeMessageBuffer(msg, buffer);
+}
+
 /*
  * writes mpu9250 sensor measurements to the sensor_data array
  */
