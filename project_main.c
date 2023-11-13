@@ -19,6 +19,7 @@
 /* Board Header files */
 #include "Board.h"
 #include "sensors/opt3001.h"
+#include "sensors/mpu9250.h"
 
 #include "tamagotchi_IO.h"
 
@@ -36,11 +37,13 @@ char messageBuffer[BUFFERSIZE];
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
-float sensor_data_queue[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
-enum SensorDataKeys {TIME, AX, AY, AZ, GX, GY, GZ, TEMPERATURE, HUMIDITY, PRESSURE, LIGHT};
+float ax, ay, az, gx, gy, gz;
+
+float sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
+enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMPERATURE, HUMIDITY, PRESSURE, LIGHT };
 
 // JTKJ: Exercise 3. Definition of the state machine
-enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA};
+enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
 enum SensorState sensorState = SENSORS_READY;
 
 // JTKJ: Exercise 1. Add pins RTOS-variables and configuration here
@@ -67,11 +70,11 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //TEST
    //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
-   if(sensorState == SENSORS_READY){
+   if (sensorState == SENSORS_READY) {
       writeMessageBuffer("session:start");
       sensorState = SENSORS_SENDING_DATA;
    }
-   else{
+   else {
       writeMessageBuffer("session:end");
       sensorState = SENSORS_READY;
    }
@@ -106,7 +109,7 @@ Void uartTaskFxn(UArg arg0, UArg arg1) {
    }
 
    while (1) {
-      
+
       //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
       if (messageBuffer[0] != '\0') {
          UART_write(uart, messageBuffer, strlen(messageBuffer));
@@ -140,22 +143,27 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    //TODO: lisää sensors-kansion tiedostoihin puuttuvat rekisteripyörittelyt
    //TODO: alusta loput sensorit
    opt3001_setup(&i2c);
-   
+   mpu9250_setup(&i2c);
+
    uint8_t index = 0;
    while (1) {
-      sensor_data_queue[index][TIME] = Clock_getTicks();
+      sensor_data[index][TIME] = Clock_getTicks();
       //TODO: lisää loput sensorit
-      sensor_data_queue[index][LIGHT] = opt3001_get_data(&i2c);
-      
-      if(sensorState == SENSORS_SENDING_DATA){
+      sensor_data[index][LIGHT] = opt3001_get_data(&i2c);
+
+      mpu9250_get_data(&i2c, ax, ay, az, gx, gy, gz);
+      //TODO: toteuta funktio
+      write_mpu9250_to_sensor_data(ax, ay, az, gx, gy, gz);
+
+      if (sensorState == SENSORS_SENDING_DATA) {
          //TODO: toteuta funktio
          //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
-         write_sensor_data_to_messageBuffer(sensor_data_queue);
+         write_sensor_data_to_messageBuffer(sensor_data);
       }
-      
+
       index++;
-      if(index == SENSOR_DATA_ROWS)
-         index == 0;
+      if (index == SENSOR_DATA_ROWS)
+         index = 0;
       // Once per second, you can modify this
       Task_sleep(1000000 / Clock_tickPeriod);
    }
