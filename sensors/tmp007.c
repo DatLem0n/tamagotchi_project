@@ -11,6 +11,7 @@
 #include <string.h>
 #include "Board.h"
 #include "tmp007.h"
+#include <stdint.h>
 
 void tmp007_setup(I2C_Handle *i2c) {
 
@@ -21,19 +22,25 @@ void tmp007_setup(I2C_Handle *i2c) {
 /**************** JTKJ: DO NOT MODIFY ANYTHING ABOVE THIS LINE ****************/
 
 double tmp007_get_data(I2C_Handle *i2c) {
-
+    double tempMultiplier = 0.03125;
 	double temperature = 0.0; // return value of the function
-    // JTKJ: Find out the correct buffer sizes with this sensor?
-    // char txBuffer[ n ];
-    // char rxBuffer{ n ];
 
-    // JTKJ: Fill in the i2cMessage data structure with correct values
-    //       as shown in the lecture material
+    char txBuffer[1];
+    char rxBuffer[2];
+
     I2C_Transaction i2cMessage;
 
-	if (I2C_transfer(*i2c, &i2cMessage)) {
+    i2cMessage.slaveAddress = Board_TMP007_ADDR;
+    txBuffer[0] = TMP007_REG_TEMP;
+    i2cMessage.writeBuf = txBuffer;
+    i2cMessage.writeCount = 1;
+    i2cMessage.readBuf = rxBuffer;
+    i2cMessage.readCount = 2;
 
-        // JTKJ: Here the conversion from register value to temperature
+	if (I2C_transfer(*i2c, &i2cMessage)) {
+        uint16_t rekisteri = rxBuffer[0] << 8 | rxBuffer[1];
+        uint16_t data = rekisteri >> 2;
+        temperature = data * tempMultiplier;
 
 	} else {
 
