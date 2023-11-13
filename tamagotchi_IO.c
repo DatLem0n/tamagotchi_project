@@ -19,17 +19,17 @@ void writeMessageBuffer(char* message, char* buffer)
 }
 
 //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
-void write_sensor_data_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, float* temp, float* humid, float* press, float* light);
+void write_sensor_data_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, float* temp, float* humid, float* press, float* light){
 char msg[30];
 sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f,temp:%.2f,humid:%.2f,press:%.2f,light:%.2f",
-    ax, ay, az, gx, gy, gz, temp, humid, press, float, light);
+    ax, ay, az, gx, gy, gz, temp, humid, press, light);
 writeMessageBuffer(msg, buffer);
 }
 
 /*
  * writes mpu9250 sensor measurements to the sensor_data array
  */
-enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMPERATURE, HUMIDITY, PRESSURE, LIGHT };
+enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, HUMID, PRESS, LIGHT };
 void write_mpu9250_to_sensor_data(float* sensor_data, int index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
     sensor_data[index][AX] = ax;
     sensor_data[index][AY] = ay;
@@ -37,6 +37,12 @@ void write_mpu9250_to_sensor_data(float* sensor_data, int index, float* ax, floa
     sensor_data[index][GX] = gx;
     sensor_data[index][GY] = gy;
     sensor_data[index][GZ] = gz;
+}
+void write_other_sensors_to_sensor_data(float* sensor_data, int index, float* temp, float* humid, float* press, float* light){
+    sensor_data[index][TEMP] = temp;
+    sensor_data[index][HUMID] = humid;
+    sensor_data[index][PRESS] = press;
+    sensor_data[index][LIGHT] = light;
 }
 
 /**

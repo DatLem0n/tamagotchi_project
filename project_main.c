@@ -20,6 +20,7 @@
 #include "Board.h"
 #include "sensors/opt3001.h"
 #include "sensors/mpu9250.h"
+#include "sensors/bmp280.h"
 
 #include "tamagotchi_IO.h"
 
@@ -145,17 +146,18 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    //TODO: alusta loput sensorit
    opt3001_setup(&i2c);
    mpu9250_setup(&i2c);
+   bmp280_setup(&i2c);
 
    short index = 0;
    while (1) {
       //TODO: lisää loput sensorit
       time = Clock_getTicks();
       light = opt3001_get_data(&i2c);
-      sensor_data[index][TIME] = time;
-      sensor_data[index][LIGHT] = light:
-
+      bmp280_get_data(&i2c, temp, press);
       mpu9250_get_data(&i2c, ax, ay, az, gx, gy, gz);
+
       write_mpu9250_to_sensor_data(sensor_data, index, ax, ay, az, gx, gy, gz);
+      write_other_sensors_to_sensor_data(sensor_data, index, temp, humid, press, light);
 
       if (sensorState == SENSORS_SENDING_DATA) {
          write_sensor_data_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, humid, press, light);
