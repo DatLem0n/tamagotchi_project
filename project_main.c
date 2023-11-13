@@ -25,6 +25,9 @@
 /* Task */
 #define STACKSIZE 2048
 #define BUFFERSIZE 80
+// TODO: Suurenna jos muistia riittää
+#define SENSOR_DATA_ROWS 10
+#define SENSOR_DATA_COLUMNS 11
 
 /*
 * Globaalit muuttujat
@@ -33,13 +36,12 @@ char messageBuffer[BUFFERSIZE];
 Char sensorTaskStack[STACKSIZE];
 Char uartTaskStack[STACKSIZE];
 
-// JTKJ: Exercise 3. Definition of the state machine
-enum State { WAITING, MESSAGES_READY, DATA_READY };
-enum State messageState = WAITING;
-enum State sensorState = WAITING;
+float sensor_data_queue[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
+enum SensorDataKeys {TIME, AX, AY, AZ, GX, GY, GZ, TEMPERATURE, HUMIDITY, PRESSURE, LIGHT};
 
-// JTKJ: Exercise 3. Global variable for ambient light
-double ambientLight = -1000.0;
+// JTKJ: Exercise 3. Definition of the state machine
+enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA};
+enum SensorState sensorState = SENSORS_READY;
 
 // JTKJ: Exercise 1. Add pins RTOS-variables and configuration here
 static PIN_Handle buttonHandle;
@@ -64,9 +66,16 @@ PIN_Config ledConfig[] = {
 void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //TEST
-   eat(1, messageBuffer);
-   messageState = MESSAGES_READY;
-   System_printf("button test\nMessageBuffer:%s\n", messageBuffer);
+   //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
+   if(sensorState == SENSORS_READY){
+      writeMessageBuffer("session:start");
+      sensorState = SENSORS_SENDING_DATA;
+   }
+   else{
+      writeMessageBuffer("session:end");
+      sensorState = SENSORS_READY;
+   }
+   System_printf("MessageBuffer:%s\n", messageBuffer);
    System_flush();
 
 }
@@ -97,12 +106,11 @@ Void uartTaskFxn(UArg arg0, UArg arg1) {
    }
 
    while (1) {
-
+      
       //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
-      if (messageState == MESSAGES_READY) {
+      if (messageBuffer[0] != '\0') {
          UART_write(uart, messageBuffer, strlen(messageBuffer));
          strcpy(messageBuffer, "");
-         messageState = WAITING;
       }
 
       // 4x per second
@@ -110,8 +118,6 @@ Void uartTaskFxn(UArg arg0, UArg arg1) {
    }
 }
 
-// TODO: luo jokaiselle käytettävälle sensorille oma sensorTask
-// TODO: Selvitä miten käyttää monta sensoria yhden i2c-väylän kautta
 Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
    I2C_Handle      i2c;
@@ -130,17 +136,26 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    // JTKJ: Teht�v� 2. Alusta sensorin OPT3001 setup-funktiolla
    //       Laita enne funktiokutsua eteen 100ms viive (Task_sleep)
    Task_sleep(100000 / Clock_tickPeriod);
+
+   //TODO: lisää sensors-kansion tiedostoihin puuttuvat rekisteripyörittelyt
+   //TODO: alusta loput sensorit
    opt3001_setup(&i2c);
-
+   
+   uint8_t index = 0;
    while (1) {
-
-      // JTKJ: Exercise 2. Read sensor data and print it to the Debug window as string
-      ambientLight = opt3001_get_data(&i2c);
-
-      // JTKJ: Exercise 3. Save the sensor value into the global variable
-      //       Remember to modify state
-      sensorState = DATA_READY;
-
+      sensor_data_queue[index][TIME] = Clock_getTicks();
+      //TODO: lisää loput sensorit
+      sensor_data_queue[index][LIGHT] = opt3001_get_data(&i2c);
+      
+      if(sensorState == SENSORS_SENDING_DATA){
+         //TODO: toteuta funktio
+         //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
+         write_sensor_data_to_messageBuffer(sensor_data_queue);
+      }
+      
+      index++;
+      if(index == SENSOR_DATA_ROWS)
+         index == 0;
       // Once per second, you can modify this
       Task_sleep(1000000 / Clock_tickPeriod);
    }
