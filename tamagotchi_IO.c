@@ -96,7 +96,7 @@ int pet(int amount, char* buffer)
  */
 int activate(int eat, int exercise, int pet, char* buffer)
 {
-    if (amount < 1 || exercise < 1 || pet < 1 || buffer == NULL)
+    if (eat < 1 || exercise < 1 || pet < 1 || buffer == NULL)
         return 0;
 
     char msg[30];

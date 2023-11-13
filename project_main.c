@@ -34,8 +34,8 @@
 * Globaalit muuttujat
 */
 char messageBuffer[BUFFERSIZE];
-Char sensorTaskStack[STACKSIZE];
-Char uartTaskStack[STACKSIZE];
+char sensorTaskStack[STACKSIZE];
+char uartTaskStack[STACKSIZE];
 
 float ax, ay, az, gx, gy, gz, temp, humid, press, light;
 int time;
@@ -72,11 +72,11 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
    //TEST
    //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
    if (sensorState == SENSORS_READY) {
-      writeMessageBuffer("session:start");
+      writeMessageBuffer("session:start", messageBuffer);
       sensorState = SENSORS_SENDING_DATA;
    }
    else {
-      writeMessageBuffer("session:end");
+      writeMessageBuffer("session:end", messageBuffer);
       sensorState = SENSORS_READY;
    }
    System_printf("MessageBuffer:%s\n", messageBuffer);
@@ -85,7 +85,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 }
 
 /* Task Functions */
-Void uartTaskFxn(UArg arg0, UArg arg1) {
+void uartTaskFxn(UArg arg0, UArg arg1) {
    // JTKJ: Exercise 4. Setup here UART connection as 9600,8n1
 
    // UART-kirjaston asetukset
@@ -146,7 +146,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    opt3001_setup(&i2c);
    mpu9250_setup(&i2c);
 
-   uint8_t index = 0;
+   short index = 0;
    while (1) {
       //TODO: lisää loput sensorit
       time = Clock_getTicks();
@@ -170,7 +170,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
 }
 
 
-Int main(void) {
+int main(void) {
 
    // Task variables
    Task_Handle sensorTaskHandle;
