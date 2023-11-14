@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "sensortag_examples/buzzer.h"
 
 #define GROUP_ID_STRING "id:30"
+
 
 void writeMessageBuffer(char* message, char* buffer)
 {
@@ -114,9 +116,9 @@ int activate(int eat, int exercise, int pet, char* buffer)
  * note is the char value of frequency (C,D etc.)
  * length of note is 1/x so 1/4th note would be length of 4
  */
-struct note
+struct Note
 {
-    char note;
+    char note[3];
     int length;
 };
 /**
@@ -124,68 +126,131 @@ struct note
  * @param note char (e.g. 'C' for 261 hz)
  * @return frequency value (int)
  */
-int noteToFreq(char note)
+int noteToFreq(char * note)
 {
-    switch (note)
+    int frequency;
+    switch (note[0])
     {
-    case 'C':
-    {
-        return 261;
-    }break;
-    case 'c':
-    {
-        return 277;
-    }break;
-    case 'D':
-    {
-        return 293;
-    }break;
-    case 'd':
-    {
-        return 311;
-    }break;
-    case 'E':
-    {
-        return 329;
-    }break;
-    case 'F':
-    {
-        return 349;
-    }break;
-    case 'f':
-    {
-        return 362;
-    }break;
-    case 'G':
-    {
-        return 392;
-    }break;
-    case 'g':
-    {
-        return 415;
-    }break;
-    case 'A':
-    {
-        return 440;
-    }break;
-    case 'a':
-    {
-        return 466;
-    }break;
-    case 'H':
-    {
-        return 493;
-    }break;
+        case 'C':
+        {
+            frequency = 261;
+        }break;
+        case 'c':
+        {
+            frequency = 523;
+        }break;
+        case 'D':
+        {
+            frequency = 293;
+        }break;
+        case 'd':
+        {
+            frequency = 587;
+        }break;
+        case 'E':
+        {
+            frequency = 329;
+        }break;
+        case 'e':
+        {
+            frequency = 659;
+        }break;
+        case 'F':
+        {
+            frequency = 349;
+        }break;
+        case 'f':
+        {
+            frequency = 698;
+        }break;
+        case 'G':
+        {
+            frequency = 392;
+        }break;
+        case 'g':
+        {
+            frequency = 783;
+        }break;
+        case 'A':
+        {
+            frequency = 440;
+        }break;
+        case 'a':
+        {
+            frequency = 880;
+        }break;
+        case 'B':
+        {
+            frequency = 493;
+        }break;
+        case 'b':
+        {
+            frequency = 987;
+        }break;
         default:
-            return 0;
+            frequency = 0;
+        }
+    if (note[1] == '#'){
+        frequency = (float)frequency * 1.06;
     }
+
+    return frequency;
+
 }
+
+/**
+ *          SOUNDBANK
+ */
+int SOUND_AMOUNT = 1;
+struct Note Doom[] ={
+        {"E",6},
+        {"E",8},
+        {"e",8},
+        {"E",6},
+        {"E",8},
+        {"d",8},
+        {"E",6},
+        {"E",8},
+        {"c",8},
+        {"E",6},
+        {"E",8},
+        {"A#",8},
+        {"E",6},
+        {"E",8},
+        {"B",8},
+        {"c",8},
+        {"E",6},
+        {"E",8},
+        {"e",8},
+        {"E",6},
+        {"E",8},
+        {"d",8},
+        {"E",6},
+        {"E",8},
+        {"c",8},
+        {"E",6},
+        {"E",8},
+        {"A#",4},
+        {"-",1}
+};
+
+/**
+ *          END OF SOUNDBANK (for now)
+ */
+
+
+
+
 /**
  * selected sound WIP
  * @param sound
+ * @param songLength
  * @return
  */
-int makeSound(int sound)
-{
-    return;
+int makeSound(struct Note sound[], int songlength){
+    for (int i = 0; i < songlength; ++i) {
+        int frequency = noteToFreq(sound[i].note);
+        int duration = sound[i].length;
+
+    }
 }
