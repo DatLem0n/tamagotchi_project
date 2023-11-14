@@ -38,10 +38,10 @@ char messageBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 
-float ax, ay, az, gx, gy, gz, temp, press, light;
+double ax, ay, az, gx, gy, gz, temp, press, light;
 int time;
 
-float sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
+double sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
 
 // JTKJ: Exercise 3. Definition of the state machine
@@ -145,7 +145,9 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    //TODO: lisää sensors-kansion tiedostoihin puuttuvat rekisteripyörittelyt
    //TODO: alusta loput sensorit
    opt3001_setup(&i2c);
+   Task_sleep(100000 / Clock_tickPeriod);
    mpu9250_setup(&i2c);
+   Task_sleep(100000 / Clock_tickPeriod);
    bmp280_setup(&i2c);
 
    short index = 0;
@@ -153,14 +155,14 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       //TODO: lisää loput sensorit
       time = Clock_getTicks();
       light = opt3001_get_data(&i2c);
-      bmp280_get_data(&i2c, temp, press);
-      mpu9250_get_data(&i2c, ax, ay, az, gx, gy, gz);
+      bmp280_get_data(&i2c, &temp, &press);
+      mpu9250_get_data(&i2c, &ax, &ay, &az, &gx, &gy, &gz);
 
-      write_mpu9250_to_sensor_data(sensor_data, index, ax, ay, az, gx, gy, gz);
-      write_other_sensors_to_sensor_data(sensor_data, index, temp, press, light);
+      write_mpu9250_to_sensor_data(&sensor_data, &index, &ax, &ay, &az, &gx, &gy, &gz);
+      write_other_sensors_to_sensor_data(&sensor_data, &index, &temp, &press, &light);
 
       if (sensorState == SENSORS_SENDING_DATA) {
-         write_sensor_data_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
+         write_sensor_data_to_messageBuffer(&messageBuffer, &time, &ax, &ay, &az, &gx, &gy, &gz, &temp, &press, &light);
       }
 
       index++;

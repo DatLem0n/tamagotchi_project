@@ -2,9 +2,9 @@
 #include <string.h>
 
 void writeMessageBuffer(char* message, char* buffer);
-void write_sensor_data_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, float* temp, float* press, float* light);
-void write_other_sensors_to_sensor_data(float* sensor_data, int index, float* temp, float* press, float* light);
-void write_mpu9250_to_sensor_data(float* sensor_data, int index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
+void write_sensor_data_to_messageBuffer(char* buffer, int* time, double* ax, double* ay, double* az, double* gx, double* gy, double* gz, double* temp, double* press, double* light);
+void write_other_sensors_to_sensor_data(double** sensor_data, int* index, double* temp, double* press, double* light);
+void write_mpu9250_to_sensor_data(double** sensor_data, int* index, double* ax, double* ay, double* az, double* gx, double* gy, double* gz);
 int eat(int amount, char* buffer);
 int exercise(int amount, char* buffer);
 int pet(int amount, char* buffer);
