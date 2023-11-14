@@ -152,7 +152,7 @@ void bmp280_get_data(I2C_Handle *i2c, double *pressure, double *temperature) {
     char rxBuffer[6];
 
     I2C_Transaction i2cMessage;
-    i2cMessage.slaveAddress = Board_BMP280_ADDR
+    i2cMessage.slaveAddress = Board_BMP280_ADDR;
     i2cMessage.writeBuf = txBuffer;
     i2cMessage.writeCount = 1;
     i2cMessage.readBuf = rxBuffer;
