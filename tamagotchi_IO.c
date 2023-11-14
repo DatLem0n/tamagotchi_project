@@ -7,7 +7,7 @@
 
 void writeMessageBuffer(char* message, char* buffer)
 {
-    if (strlen(buffer) + strlen(message) < 80) {
+    if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
         // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
         if (strlen(buffer) == 0) {
             strcpy(buffer, GROUP_ID_STRING);
@@ -21,7 +21,7 @@ void writeMessageBuffer(char* message, char* buffer)
 
 //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
 void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
-    char msg[80];
+    char msg[BUFFERSIZE];
     sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
         ax, ay, az, gx, gy, gz);
     writeMessageBuffer(msg, buffer);
