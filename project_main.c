@@ -18,9 +18,9 @@
 
 /* Board Header files */
 #include "Board.h"
-#include "sensors/opt3001.h"
-#include "sensors/mpu9250.h"
-#include "sensors/bmp280.h"
+#include "sensors/opt3001.h" //valoisuus
+#include "sensors/mpu9250.h" //kiihtyvyys
+#include "sensors/bmp280.h" //lämpötila ja paine
 
 #include "tamagotchi_IO.h"
 
@@ -29,7 +29,7 @@
 #define BUFFERSIZE 80
 // TODO: Suurenna jos muistia riittää
 #define SENSOR_DATA_ROWS 10
-#define SENSOR_DATA_COLUMNS 11
+#define SENSOR_DATA_COLUMNS 10
 
 /*
 * Globaalit muuttujat
@@ -38,11 +38,11 @@ char messageBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 
-float ax, ay, az, gx, gy, gz, temp, humid, press, light;
+float ax, ay, az, gx, gy, gz, temp, press, light;
 int time;
 
 float sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
-enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, HUMID, PRESS, LIGHT };
+enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
 
 // JTKJ: Exercise 3. Definition of the state machine
 enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
@@ -157,10 +157,10 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       mpu9250_get_data(&i2c, ax, ay, az, gx, gy, gz);
 
       write_mpu9250_to_sensor_data(sensor_data, index, ax, ay, az, gx, gy, gz);
-      write_other_sensors_to_sensor_data(sensor_data, index, temp, humid, press, light);
+      write_other_sensors_to_sensor_data(sensor_data, index, temp, press, light);
 
       if (sensorState == SENSORS_SENDING_DATA) {
-         write_sensor_data_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, humid, press, light);
+         write_sensor_data_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
       }
 
       index++;
