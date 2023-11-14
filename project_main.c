@@ -220,8 +220,9 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
          index = 0;
       System_printf("Sleeping...\n");
       System_flush();
+      
       // 10x per second, you can modify this
-      Task_sleep(1000000/10 / Clock_tickPeriod);
+      //Task_sleep(1000000/10 / Clock_tickPeriod);
    }
 }
 
