@@ -128,12 +128,12 @@ void uartTaskFxn(UArg arg0, UArg arg1) {
 
       //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
       if (messageBuffer[0] != '\0') {
-         UART_write(uart, messageBuffer, strlen(messageBuffer));
-         strcpy(messageBuffer, "");
+         UART_write(uart, messageBuffer, strlen(messageBuffer) + 1);
+         strcpy(messageBuffer, '\0');
       }
 
-      // 4x per second
-      Task_sleep((1000000 / 4) / Clock_tickPeriod);
+      // 10x per second
+      Task_sleep((1000000 / 10) / Clock_tickPeriod);
    }
 }
 
