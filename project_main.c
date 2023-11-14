@@ -24,13 +24,7 @@
 #include "sensors/bmp280.h" //lämpötila ja paine
 
 #include "tamagotchi_IO.h"
-
-/* Task */
-#define STACKSIZE 2048
-#define BUFFERSIZE 80
-// TODO: Suurenna jos muistia riittää
-#define SENSOR_DATA_ROWS 10
-#define SENSOR_DATA_COLUMNS 10
+#include "shared.h"
 
 /*
 * Globaalit muuttujat

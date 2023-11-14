@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "sensortag_examples/buzzer.h"
+#include "shared.h"
 
 #define GROUP_ID_STRING "id:30"
 
@@ -30,7 +31,7 @@ void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* a
  * writes mpu9250 sensor measurements to the sensor_data array
  */
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
-void write_mpu9250_to_sensor_data(float* sensor_data, int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
+void write_mpu9250_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
     sensor_data[*index][AX] = *ax;
     sensor_data[*index][AY] = *ay;
     sensor_data[*index][AZ] = *az;
@@ -38,7 +39,7 @@ void write_mpu9250_to_sensor_data(float* sensor_data, int* index, float* ax, flo
     sensor_data[*index][GY] = *gy;
     sensor_data[*index][GZ] = *gz;
 }
-void write_other_sensors_to_sensor_data(float* sensor_data, int* index, double* temp, double* press, double* light) {
+void write_other_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, double* temp, double* press, double* light) {
     sensor_data[*index][TEMP] = (float)*temp;
     sensor_data[*index][PRESS] = (float)*press;
     sensor_data[*index][LIGHT] = (float)*light;
