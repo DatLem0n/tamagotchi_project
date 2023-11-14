@@ -3,14 +3,15 @@
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
 
-#define GROUP_ID_STRING "id:30"
+#define GROUP_ID_STRING "id:3430"
 
 void writeMessageBuffer(char* message, char* buffer)
 {
     if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
         // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
-        if (strlen(buffer) == 0) {
+        if (buffer[0] == '\0') {
             strcpy(buffer, GROUP_ID_STRING);
+            strcat(buffer, ",");
         }
         else {
             strcat(buffer, ",");
@@ -23,7 +24,7 @@ void writeMessageBuffer(char* message, char* buffer)
 void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
     char msg[BUFFERSIZE];
     sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
-        ax, ay, az, gx, gy, gz);
+        *time, *ax, *ay, *az, *gx, *gy, *gz);
     writeMessageBuffer(msg, buffer);
 }
 

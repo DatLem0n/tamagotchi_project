@@ -56,7 +56,7 @@ static PIN_State  mpuPinState;
 
 // MPU power pin
 static PIN_Config mpuPinConfig[] = {
-    Board_MPU_POWER  | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+    Board_MPU_POWER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
     PIN_TERMINATE
 };
 
@@ -83,6 +83,8 @@ PIN_Config ledConfig[] = {
 void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //TEST
+   eat(1, messageBuffer);
+
    //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
    if (sensorState == SENSORS_READY) {
       writeMessageBuffer("session:start", messageBuffer);
@@ -149,6 +151,44 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    i2cParams_opt3001.bitRate = I2C_400kHz;
    i2cParams_bmp280.bitRate = I2C_400kHz;
 
+   // Alustetaan MPU9250
+   System_printf("Initializing mpu9250...\n");
+   System_flush();
+   i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
+   if (i2c_mpu9250 == NULL)
+      System_abort("Error Initializing mpu9250 I2C\n");
+   PIN_setOutputValue(mpuPinHandle, Board_MPU_POWER, Board_MPU_POWER_ON);
+   Task_sleep(100000 / Clock_tickPeriod);
+   mpu9250_setup(&i2c_mpu9250);
+   I2C_close(i2c_mpu9250);
+   System_printf("Initialized.\n");
+   System_flush();
+
+   //Alustetaan OPT3001
+   System_printf("Initializing opt3001...\n");
+   System_flush();
+   i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
+   if (i2c_opt3001 == NULL)
+      System_abort("Error Initializing opt3001 I2C\n");
+   Task_sleep(100000 / Clock_tickPeriod);
+   opt3001_setup(&i2c_opt3001);
+   I2C_close(i2c_opt3001);
+   System_printf("Initialized.\n");
+   System_flush();
+
+   // Alustetaan BMP280
+   System_printf("Initializing bmp280...\n");
+   System_flush();
+   i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
+   if (i2c_bmp280 == NULL)
+      System_abort("Error Initializing mpu9250 I2C\n");
+   Task_sleep(100000 / Clock_tickPeriod);
+   bmp280_setup(&i2c_bmp280);
+   I2C_close(i2c_opt3001);
+   System_printf("Initialized.\n");
+   System_flush();
+
+
    int index = 0;
    while (1) {
       time = Clock_getTicks();
@@ -157,35 +197,25 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      //Käynnistetään MPU9250
-      PIN_setOutputValue(mpuPinHandle,Board_MPU_POWER, Board_MPU_POWER_ON);
       Task_sleep(100000 / Clock_tickPeriod);
-      mpu9250_setup(&i2c_mpu9250);
-
-      //Haetaan data
+      // Haetaan data
       System_printf("Getting mpu9250 data\n");
       System_flush();
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
-      //Suljetaan yhteys
-      System_printf("Closing mpu9250 i2c connection\n");
-      System_flush();
+      // Suljetaan yhteys
       I2C_close(i2c_mpu9250);
       //PIN_setOutputValue(mpuPinHandle,Board_MPU_POWER, Board_MPU_POWER_OFF);
 
-      //avataan OPT3001 yhteys
+      // Avataan OPT3001 yhteys
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
       Task_sleep(100000 / Clock_tickPeriod);
-      opt3001_setup(&i2c_opt3001);
-      
-      //Haetaan data
+      // Haetaan data
       System_printf("Getting opt3001 data\n");
       System_flush();
       light = opt3001_get_data(&i2c_opt3001);
-      //suljetaan yhteys
-      System_printf("Closing opt3001 i2c connection\n");
-      System_flush();
+      // Suljetaan yhteys
       I2C_close(i2c_opt3001);
 
       // Avataan BMP280 yhteys
@@ -193,16 +223,11 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       if (i2c_bmp280 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
       Task_sleep(100000 / Clock_tickPeriod);
-      bmp280_setup(&i2c_bmp280);
-      
-      //Haetaan data
+      // Haetaan data
       System_printf("Getting bmp280 data\n");
       System_flush();
       bmp280_get_data(&i2c_bmp280, &temp, &press);
-      
-      //Suljetaan yhteys
-      System_printf("Closing bmp280 i2c connection\n");
-      System_flush();
+      // Suljetaan yhteys
       I2C_close(i2c_bmp280);
 
       // Tallennetaan data sensor_data taulukkoon
@@ -220,7 +245,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
          index = 0;
       System_printf("Sleeping...\n");
       System_flush();
-      
+
       // 10x per second, you can modify this
       //Task_sleep(1000000/10 / Clock_tickPeriod);
    }
