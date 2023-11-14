@@ -110,24 +110,74 @@ int activate(int eat, int exercise, int pet, char* buffer)
     return 0;
 }
 
+/**
+ * note is the char value of frequency (C,D etc.)
+ * length of note is 1/x so 1/4th note would be length of 4
+ */
 struct note
 {
-    int pitch;
+    char note;
     int length;
 };
 /**
- *
- * @param note
- * @return
+ *Returns frequency of note, # is marked with lowercase letters (horrible, I know...)
+ * @param note char (e.g. 'C' for 261 hz)
+ * @return frequency value (int)
  */
-int noteToFreq(int note)
+int noteToFreq(char note)
 {
     switch (note)
     {
-    case 0:
+    case 'C':
     {
-        return 440; // note frequencies here
-    }
+        return 261;
+    }break;
+    case 'c':
+    {
+        return 277;
+    }break;
+    case 'D':
+    {
+        return 293;
+    }break;
+    case 'd':
+    {
+        return 311;
+    }break;
+    case 'E':
+    {
+        return 329;
+    }break;
+    case 'F':
+    {
+        return 349;
+    }break;
+    case 'f':
+    {
+        return 362;
+    }break;
+    case 'G':
+    {
+        return 392;
+    }break;
+    case 'g':
+    {
+        return 415;
+    }break;
+    case 'A':
+    {
+        return 440;
+    }break;
+    case 'a':
+    {
+        return 466;
+    }break;
+    case 'H':
+    {
+        return 493;
+    }break;
+        default:
+            return 0;
     }
 }
 /**
