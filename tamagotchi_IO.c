@@ -2,16 +2,18 @@
 #include <string.h>
 #include <stdlib.h>
 #include "sensortag_examples/buzzer.h"
+#include "shared.h"
 
-#define GROUP_ID_STRING "id:30"
+#define GROUP_ID_STRING "id:3430"
 
 
 void writeMessageBuffer(char* message, char* buffer)
 {
-    if (strlen(buffer) + strlen(message) < 80) {
+    if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
         // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
-        if (strlen(buffer) == 0) {
+        if (buffer[0] == '\0') {
             strcpy(buffer, GROUP_ID_STRING);
+            strcat(buffer, ",");
         }
         else {
             strcat(buffer, ",");
@@ -21,10 +23,10 @@ void writeMessageBuffer(char* message, char* buffer)
 }
 
 //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
-void write_sensor_data_to_messageBuffer(char* buffer, int* time, double* ax, double* ay, double* az, double* gx, double* gy, double* gz, double* temp, double* press, double* light) {
-    char msg[30];
-    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f,temp:%.2f,press:%.2f,light:%.2f",
-        ax, ay, az, gx, gy, gz, temp, press, light);
+void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
+    char msg[BUFFERSIZE];
+    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
+        *time, *ax, *ay, *az, *gx, *gy, *gz);
     writeMessageBuffer(msg, buffer);
 }
 
@@ -32,7 +34,7 @@ void write_sensor_data_to_messageBuffer(char* buffer, int* time, double* ax, dou
  * writes mpu9250 sensor measurements to the sensor_data array
  */
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
-void write_mpu9250_to_sensor_data(double** sensor_data, int* index, double* ax, double* ay, double* az, double* gx, double* gy, double* gz) {
+void write_mpu9250_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
     sensor_data[*index][AX] = *ax;
     sensor_data[*index][AY] = *ay;
     sensor_data[*index][AZ] = *az;
@@ -40,10 +42,10 @@ void write_mpu9250_to_sensor_data(double** sensor_data, int* index, double* ax, 
     sensor_data[*index][GY] = *gy;
     sensor_data[*index][GZ] = *gz;
 }
-void write_other_sensors_to_sensor_data(double** sensor_data, int* index, double* temp, double* press, double* light) {
-    sensor_data[*index][TEMP] = *temp;
-    sensor_data[*index][PRESS] = *press;
-    sensor_data[*index][LIGHT] = *light;
+void write_other_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, double* temp, double* press, double* light) {
+    sensor_data[*index][TEMP] = (float)*temp;
+    sensor_data[*index][PRESS] = (float)*press;
+    sensor_data[*index][LIGHT] = (float)*light;
 }
 
 /**
