@@ -130,55 +130,31 @@ int noteToFreq(char note)
     switch (note)
     {
     case 'C':
-    {
         return 261;
-    }break;
     case 'c':
-    {
         return 277;
-    }break;
     case 'D':
-    {
         return 293;
-    }break;
     case 'd':
-    {
         return 311;
-    }break;
     case 'E':
-    {
         return 329;
-    }break;
     case 'F':
-    {
         return 349;
-    }break;
     case 'f':
-    {
         return 362;
-    }break;
     case 'G':
-    {
         return 392;
-    }break;
     case 'g':
-    {
         return 415;
-    }break;
     case 'A':
-    {
         return 440;
-    }break;
     case 'a':
-    {
         return 466;
-    }break;
     case 'H':
-    {
         return 493;
-    }break;
-        default:
-            return 0;
+    default:
+        return 0;
     }
 }
 /**
