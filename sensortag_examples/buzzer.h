@@ -56,7 +56,7 @@
 *                                          Functions
 * ------------------------------------------------------------------------------
 */
-void buzzerOpeun(PIN_Handle hPinGpio);
+void buzzerOpen(PIN_Handle hPinGpio);
 bool buzzerSetFrequency(uint16_t frequency);
 void buzzerClose(void);
 
