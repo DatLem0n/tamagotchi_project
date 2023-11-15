@@ -13,5 +13,5 @@ int pet(int amount, char* buffer);
 int activate(int eat, int exercise, int pet, char* buffer);
 
 int noteToFreq(int note);
-int makeSound(int sound);
+int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo);
 

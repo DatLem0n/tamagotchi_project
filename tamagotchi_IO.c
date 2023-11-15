@@ -249,27 +249,23 @@ struct Note Doom[] ={
  * @return
  */
 
-static PIN_Handle hBuzzer;
-static PIN_State sBuzzer;
-PIN_Config cBuzzer[] = {
-        Board_BUZZER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-        PIN_TERMINATE
-};
-
 /**
  * Plays the selected sound,
  * @param sound Note array with notes and lengths of notes
- * @param songlength number of notes in the sound array
+ * @param songLength number of notes in the sound array
  * @param tempo playback speed (mess around with values for this to achieve wanted speed)
  * @return
  */
-int makeSound(struct Note sound[], int songlength, int tempo){
-    for (int i = 0; i < songlength; ++i) {
+// Kutsu makeSoundia project_mainin buzzerTaskissä
+int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo){
+    int i;
+    for (i = 0; i < songLength; ++i) {
         int frequency = noteToFreq(sound[i].note);
         int duration = 1 / sound[i].length; // in notes
 
+        buzzerOpen(buzzerHandle);
         buzzerSetFrequency(frequency);
-        buzzerOpen(hBuzzer, cBuzzer);
         Task_sleep(tempo*duration);
+        buzzerClose();
     }
 }

@@ -32,6 +32,7 @@
 char messageBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
+char buzzerTaskStack[STACKSIZE];
 
 float ax, ay, az, gx, gy, gz;
 double temp, press, light;
@@ -49,6 +50,8 @@ static PIN_Handle buttonHandle;
 static PIN_State buttonState;
 static PIN_Handle ledHandle;
 static PIN_State ledState;
+static PIN_Handle buzzerHandle;
+static PIN_State buzzerState;
 
 // MPU power pin global variables
 static PIN_Handle mpuPinHandle;
@@ -76,6 +79,11 @@ PIN_Config ledConfig[] = {
    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
+PIN_Config buzzerConfig[] = {
+  Board_BUZZER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+  PIN_TERMINATE
+};
+
 /*
 * Taskit ja nappifunktio
 */
@@ -97,6 +105,14 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
    System_printf("MessageBuffer:%s\n", messageBuffer);
    System_flush();
 
+}
+
+void buzzerTaskFxn(UArg arg0, UArg arg1) {
+
+   while(1){
+      // makeSound-kutsu tänne
+      Task_sleep(950000 / Clock_tickPeriod);
+   }
 }
 
 /* Task Functions */
@@ -259,6 +275,8 @@ int main(void) {
    Task_Params sensorTaskParams;
    Task_Handle uartTaskHandle;
    Task_Params uartTaskParams;
+   Task_Handle buzzerTaskHandle;
+   Task_Params buzzerTaskParams;
 
    // Initialize board
    Board_initGeneral();
@@ -269,8 +287,6 @@ int main(void) {
       System_abort("Error initializing MPU power pin\n");
    }
 
-   // JTKJ: Exercise 1. Open the button and led pins
-   //       Remember to register the above interrupt handler for button
    // Ledi käyttöön ohjelmassa
    ledHandle = PIN_open(&ledState, ledConfig);
    if (!ledHandle) {
@@ -288,9 +304,13 @@ int main(void) {
       System_abort("Error registering button callback function");
    }
 
+   // Buzzer
+   buzzerHandle = PIN_open(&buzzerState, buzzerConfig);
+   if (buzzerHandle == NULL) {
+    System_abort("Buzzer pin open failed!");
+  }
 
-
-   /* Task */
+   // Sensor Task
    Task_Params_init(&sensorTaskParams);
    sensorTaskParams.stackSize = STACKSIZE;
    sensorTaskParams.stack = &sensorTaskStack;
@@ -300,6 +320,7 @@ int main(void) {
       System_abort("Task create failed!");
    }
 
+   // UART Task
    Task_Params_init(&uartTaskParams);
    uartTaskParams.stackSize = STACKSIZE;
    uartTaskParams.stack = &uartTaskStack;
@@ -308,6 +329,15 @@ int main(void) {
    if (uartTaskHandle == NULL) {
       System_abort("Task create failed!");
    }
+
+   // Buzzer Task
+Task_Params_init(&buzzerTaskParams);
+  buzzerTaskParams.stackSize = STACKSIZE;
+  buzzerTaskParams.stack = &buzzerTaskStack;
+  buzzerTaskHandle = Task_create((Task_FuncPtr)buzzerTaskFxn, &buzzerTaskParams, NULL);
+  if (buzzerTaskHandle == NULL) {
+    System_abort("Buzzer task create failed!");
+  }
 
    /* Sanity check */
    System_printf("Hello world!\n");
