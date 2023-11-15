@@ -124,7 +124,7 @@ struct Note
     int length;
 };
 /**
- *Returns frequency of note, # is marked with lowercase letters (horrible, I know...)
+ *Returns frequency of note
  * @param note char (e.g. 'C' for 261 hz)
  * @return frequency value (int)
  */
@@ -242,17 +242,34 @@ struct Note Doom[] ={
 
 
 
-
 /**
  * selected sound WIP
  * @param sound
  * @param songLength
  * @return
  */
-int makeSound(struct Note sound[], int songlength){
+
+static PIN_Handle hBuzzer;
+static PIN_State sBuzzer;
+PIN_Config cBuzzer[] = {
+        Board_BUZZER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+        PIN_TERMINATE
+};
+
+/**
+ * Plays the selected sound,
+ * @param sound Note array with notes and lengths of notes
+ * @param songlength number of notes in the sound array
+ * @param tempo playback speed (mess around with values for this to achieve wanted speed)
+ * @return
+ */
+int makeSound(struct Note sound[], int songlength, int tempo){
     for (int i = 0; i < songlength; ++i) {
         int frequency = noteToFreq(sound[i].note);
-        int duration = sound[i].length;
+        int duration = 1 / sound[i].length; // in notes
 
+        buzzerSetFrequency(frequency);
+        buzzerOpen(hBuzzer, cBuzzer);
+        Task_sleep(tempo*duration);
     }
 }
