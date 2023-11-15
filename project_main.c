@@ -109,7 +109,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
-   while(1){
+   while (1) {
       // makeSound-kutsu tänne
       Task_sleep(950000 / Clock_tickPeriod);
    }
@@ -307,8 +307,8 @@ int main(void) {
    // Buzzer
    buzzerHandle = PIN_open(&buzzerState, buzzerConfig);
    if (buzzerHandle == NULL) {
-    System_abort("Buzzer pin open failed!");
-  }
+      System_abort("Buzzer pin open failed!");
+   }
 
    // Sensor Task
    Task_Params_init(&sensorTaskParams);
@@ -331,13 +331,13 @@ int main(void) {
    }
 
    // Buzzer Task
-Task_Params_init(&buzzerTaskParams);
-  buzzerTaskParams.stackSize = STACKSIZE;
-  buzzerTaskParams.stack = &buzzerTaskStack;
-  buzzerTaskHandle = Task_create((Task_FuncPtr)buzzerTaskFxn, &buzzerTaskParams, NULL);
-  if (buzzerTaskHandle == NULL) {
-    System_abort("Buzzer task create failed!");
-  }
+   Task_Params_init(&buzzerTaskParams);
+   buzzerTaskParams.stackSize = STACKSIZE;
+   buzzerTaskParams.stack = &buzzerTaskStack;
+   buzzerTaskHandle = Task_create((Task_FuncPtr)buzzerTaskFxn, &buzzerTaskParams, NULL);
+   if (buzzerTaskHandle == NULL) {
+      System_abort("Buzzer task create failed!");
+   }
 
    /* Sanity check */
    System_printf("Hello world!\n");

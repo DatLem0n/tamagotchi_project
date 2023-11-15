@@ -128,71 +128,71 @@ struct Note
  * @param note char (e.g. 'C' for 261 hz)
  * @return frequency value (int)
  */
-int noteToFreq(char * note)
+int noteToFreq(char* note)
 {
     int frequency;
     switch (note[0])
     {
-        case 'C':
-        {
-            frequency = 261;
-        }break;
-        case 'c':
-        {
-            frequency = 523;
-        }break;
-        case 'D':
-        {
-            frequency = 293;
-        }break;
-        case 'd':
-        {
-            frequency = 587;
-        }break;
-        case 'E':
-        {
-            frequency = 329;
-        }break;
-        case 'e':
-        {
-            frequency = 659;
-        }break;
-        case 'F':
-        {
-            frequency = 349;
-        }break;
-        case 'f':
-        {
-            frequency = 698;
-        }break;
-        case 'G':
-        {
-            frequency = 392;
-        }break;
-        case 'g':
-        {
-            frequency = 783;
-        }break;
-        case 'A':
-        {
-            frequency = 440;
-        }break;
-        case 'a':
-        {
-            frequency = 880;
-        }break;
-        case 'B':
-        {
-            frequency = 493;
-        }break;
-        case 'b':
-        {
-            frequency = 987;
-        }break;
-        default:
-            frequency = 0;
-        }
-    if (note[1] == '#'){
+    case 'C':
+    {
+        frequency = 261;
+    }break;
+    case 'c':
+    {
+        frequency = 523;
+    }break;
+    case 'D':
+    {
+        frequency = 293;
+    }break;
+    case 'd':
+    {
+        frequency = 587;
+    }break;
+    case 'E':
+    {
+        frequency = 329;
+    }break;
+    case 'e':
+    {
+        frequency = 659;
+    }break;
+    case 'F':
+    {
+        frequency = 349;
+    }break;
+    case 'f':
+    {
+        frequency = 698;
+    }break;
+    case 'G':
+    {
+        frequency = 392;
+    }break;
+    case 'g':
+    {
+        frequency = 783;
+    }break;
+    case 'A':
+    {
+        frequency = 440;
+    }break;
+    case 'a':
+    {
+        frequency = 880;
+    }break;
+    case 'B':
+    {
+        frequency = 493;
+    }break;
+    case 'b':
+    {
+        frequency = 987;
+    }break;
+    default:
+        frequency = 0;
+    }
+    if (note[1] == '#') {
         frequency = (float)frequency * 1.06;
     }
 
@@ -204,7 +204,7 @@ int noteToFreq(char * note)
  *          SOUNDBANK
  */
 int SOUND_AMOUNT = 1;
-struct Note Doom[] ={
+struct Note Doom[] = {
         {"E",6},
         {"E",8},
         {"e",8},
@@ -242,22 +242,22 @@ struct Note Doom[] ={
 
 
 
-/**
- * selected sound WIP
- * @param sound
- * @param songLength
- * @return
- */
+ /**
+  * selected sound WIP
+  * @param sound
+  * @param songLength
+  * @return
+  */
 
-/**
- * Plays the selected sound,
- * @param sound Note array with notes and lengths of notes
- * @param songLength number of notes in the sound array
- * @param tempo playback speed (mess around with values for this to achieve wanted speed)
- * @return
- */
-// Kutsu makeSoundia project_mainin buzzerTaskissä
-int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo){
+  /**
+   * Plays the selected sound,
+   * @param sound Note array with notes and lengths of notes
+   * @param songLength number of notes in the sound array
+   * @param tempo playback speed (mess around with values for this to achieve wanted speed)
+   * @return
+   */
+   // Kutsu makeSoundia project_mainin buzzerTaskissä
+int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo) {
     int i;
     for (i = 0; i < songLength; ++i) {
         int frequency = noteToFreq(sound[i].note);
@@ -265,7 +265,7 @@ int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int 
 
         buzzerOpen(buzzerHandle);
         buzzerSetFrequency(frequency);
-        Task_sleep(tempo*duration);
+        Task_sleep(tempo * duration);
         buzzerClose();
     }
 }
