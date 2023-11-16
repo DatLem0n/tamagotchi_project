@@ -111,7 +111,7 @@ void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
    while (1) {
       makeSound(buzzerHandle, 1);
-      Task_sleep(950000 / Clock_tickPeriod);
+      //Task_sleep(950000 / Clock_tickPeriod);
    }
 }
 
@@ -213,10 +213,8 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(100000 / Clock_tickPeriod);
+      Task_sleep(SECOND / Clock_tickPeriod);
       // Haetaan data
-      System_printf("Getting mpu9250 data\n");
-      System_flush();
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
       // Suljetaan yhteys
       I2C_close(i2c_mpu9250);
@@ -226,10 +224,8 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
-      Task_sleep(100000 / Clock_tickPeriod);
+      Task_sleep(SECOND / Clock_tickPeriod);
       // Haetaan data
-      System_printf("Getting opt3001 data\n");
-      System_flush();
       light = opt3001_get_data(&i2c_opt3001);
       // Suljetaan yhteys
       I2C_close(i2c_opt3001);
@@ -238,17 +234,13 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
       if (i2c_bmp280 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(100000 / Clock_tickPeriod);
+      Task_sleep(SECOND / Clock_tickPeriod);
       // Haetaan data
-      System_printf("Getting bmp280 data\n");
-      System_flush();
       bmp280_get_data(&i2c_bmp280, &temp, &press);
       // Suljetaan yhteys
       I2C_close(i2c_bmp280);
 
       // Tallennetaan data sensor_data taulukkoon
-      System_printf("Writing sensor data\n");
-      System_flush();
       write_mpu9250_to_sensor_data(sensor_data, &index, &ax, &ay, &az, &gx, &gy, &gz);
       write_other_sensors_to_sensor_data(sensor_data, &index, &temp, &press, &light);
 
@@ -259,8 +251,6 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       index++;
       if (index == SENSOR_DATA_ROWS)
          index = 0;
-      System_printf("Sleeping...\n");
-      System_flush();
 
       // 10x per second, you can modify this
       //Task_sleep(1000000/10 / Clock_tickPeriod);

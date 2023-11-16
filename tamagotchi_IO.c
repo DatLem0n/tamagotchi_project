@@ -2,8 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ti/sysbios/knl/Clock.h>
+#include <ti/sysbios/knl/Task.h>
+#include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
+
 
 
 #define GROUP_ID_STRING "id:3430"
@@ -254,26 +257,24 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     int songLength;
     int tempo;
 
-      switch (soundSelection) {
-          case 1:{
-              sound = Doom;
-              songLength = 29;
-              tempo = 120;
-          }break;
-          default:{
-              return 0;
-          }
-      }
+      sound = Doom;
+      songLength = 29;
+      tempo = SECOND;
+
+
 
     int i;
     for (i = 0; i < songLength; ++i) {
-        int frequency = noteToFreq(sound[i].note);
-        int duration = 1 / sound[i].length; // in notes
-
         buzzerOpen(buzzerHandle);
+        int frequency = noteToFreq(sound[i].note);
+        float duration = 1.0 / sound[i].length; // in notes
+
         buzzerSetFrequency(frequency);
         Task_sleep(tempo * duration /  Clock_tickPeriod);
         buzzerClose();
+        Task_sleep(tempo / 5000);
+
     }
+
     return 1;
 }
