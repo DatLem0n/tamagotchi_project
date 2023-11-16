@@ -12,6 +12,7 @@ Kalle Asmundi
 1. [Lataa tyhjä projekti johonkin kansioon.](https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-examples/blob/main/emptyProjects/empty_CC2650STK_TI_2023.zip)
 1. Mene VirtualBox/Settings/Shared Folders/ ja lisää edellisen kohdan kansio
 1. Lisää myös paikallisen git-repon kansio ja ruksita auto-mount
+1. Aja VM:n terminaalissa komento `sudo usermod -aG vboxsf $USER`, salasana 1234
 
 ### Tuo koodi VM:n Code Composer Studioon
 
