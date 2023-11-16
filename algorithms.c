@@ -3,6 +3,7 @@
 
 void moving_average(float *input_array, uint8_t array_size, uint8_t window_size, float *output_array);
 
+/*
 int main(void)
 {
     //Moving average test
@@ -12,13 +13,15 @@ int main(void)
 
     return 0;
 }
+*/
 
 void moving_average(float *input_array, uint8_t array_size, uint8_t window_size, float *output_array)
 {
     if (input_array == NULL || output_array == NULL)
         return;
     float sum = 0;
-    for (uint8_t i = 0; i <= array_size; i++)
+    uint8_t i;
+    for ( i = 0; i <= array_size; i++)
     {
         sum += input_array[i];
 

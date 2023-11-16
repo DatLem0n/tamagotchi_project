@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "Board.h"
 #include "bmp280.h"
+#include <stdint.h>
 
 // konversiovakiot
 uint16_t dig_T1;
@@ -147,19 +148,23 @@ void bmp280_setup(I2C_Handle *i2c) {
 
 void bmp280_get_data(I2C_Handle *i2c, double *pressure, double *temperature) {
 
-    // JTKJ: Find out the correct buffer sizes with this sensor?
-    // char txBuffer[ n ];
-    // char rxBuffer{ n ];
+    char txBuffer[1];
+    char rxBuffer[6];
 
-    // JTKJ: Fill in the i2cMessage data structure with correct values
-    //       as shown in the lecture material
     I2C_Transaction i2cMessage;
+    i2cMessage.slaveAddress = Board_BMP280_ADDR;
+    i2cMessage.writeBuf = txBuffer;
+    i2cMessage.writeCount = 1;
+    i2cMessage.readBuf = rxBuffer;
+    i2cMessage.readCount = 6;
 
     if (I2C_transfer(*i2c, &i2cMessage)) {
 
-        // JTKJ: Here the conversion from register value to unit values
-        //       Save the values to the function parameters pressure and temperature
+        uint32_t pressureReg = (((int32_t)rxBuffer[0] << 16) | ((int32_t)rxBuffer[1] << 8) | rxBuffer[2]); // with trailing 4 bits
+        uint32_t temperatureReg = (((int32_t)rxBuffer[3] << 16) | ((int32_t)rxBuffer[4] << 8) | rxBuffer[5]); // with trailing
 
+        *pressure = bmp280_convert_pres(pressureReg);
+        *temperature = bmp280_temp_compensation(temperatureReg);
     } else {
 
         // Oops, something went wrong..
