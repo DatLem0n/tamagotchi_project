@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ti/sysbios/knl/Clock.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
 
@@ -249,6 +250,8 @@ struct Note Doom[] = {
   * @return
   */
 
+
+// Kutsu makeSoundia project_mainin buzzerTaskissä
   /**
    * Plays the selected sound,
    * @param sound Note array with notes and lengths of notes
@@ -256,7 +259,6 @@ struct Note Doom[] = {
    * @param tempo playback speed (mess around with values for this to achieve wanted speed)
    * @return
    */
-   // Kutsu makeSoundia project_mainin buzzerTaskissä
 int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo) {
     int i;
     for (i = 0; i < songLength; ++i) {
@@ -265,7 +267,7 @@ int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int 
 
         buzzerOpen(buzzerHandle);
         buzzerSetFrequency(frequency);
-        Task_sleep(tempo * duration);
+        Task_sleep(tempo * duration /  Clock_tickPeriod);
         buzzerClose();
     }
 }

@@ -25,6 +25,7 @@
 
 #include "tamagotchi_IO.h"
 #include "shared.h"
+#include "soundbank.h"
 
 /*
 * Globaalit muuttujat
@@ -110,7 +111,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
    while (1) {
-      // makeSound-kutsu tänne
+      makeSound(buzzerHandle, Doom, 29, 110);
       Task_sleep(950000 / Clock_tickPeriod);
    }
 }
