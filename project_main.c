@@ -25,7 +25,6 @@
 
 #include "tamagotchi_IO.h"
 #include "shared.h"
-#include "soundbank.h"
 
 /*
 * Globaalit muuttujat

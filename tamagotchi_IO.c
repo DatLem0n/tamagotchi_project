@@ -4,13 +4,16 @@
 #include <ti/sysbios/knl/Clock.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
-#include "soundbank.h"
-
 
 
 #define GROUP_ID_STRING "id:3430"
 
 
+struct Note
+{
+    char note[3];
+    int length;
+};
 void writeMessageBuffer(char* message, char* buffer)
 {
     if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
@@ -195,27 +198,73 @@ int noteToFreq(char* note)
 
 }
 
+/**
+ *          SOUNDBANK
+ */
+struct Note Doom[] = {
+        {"E",6},
+        {"E",8},
+        {"e",8},
+        {"E",6},
+        {"E",8},
+        {"d",8},
+        {"E",6},
+        {"E",8},
+        {"c",8},
+        {"E",6},
+        {"E",8},
+        {"A#",8},
+        {"E",6},
+        {"E",8},
+        {"B",8},
+        {"c",8},
+        {"E",6},
+        {"E",8},
+        {"e",8},
+        {"E",6},
+        {"E",8},
+        {"d",8},
+        {"E",6},
+        {"E",8},
+        {"c",8},
+        {"E",6},
+        {"E",8},
+        {"A#",4},
+        {"-",1}
+};
 
-
-
-
- /**
-  * selected sound WIP
-  * @param sound
-  * @param songLength
-  * @return
-  */
-
+/**
+ *          END OF SOUNDBANK (for now)
+ */
 
 // Kutsu makeSoundia project_mainin buzzerTaskissä
   /**
    * Plays the selected sound,
+   * Sound selection:
+   * 1 for Doom
+   *
+   *
    * @param sound Note array with notes and lengths of notes
    * @param songLength number of notes in the sound array
    * @param tempo playback speed (mess around with values for this to achieve wanted speed)
    * @return
    */
-int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo) {
+int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
+    struct Note* sound;
+    int songLength;
+    int tempo;
+
+      switch (soundSelection) {
+          case 1:{
+              sound = Doom;
+              songLength = 29;
+              tempo = 120;
+          }break;
+          default:{
+              return 0;
+          }
+      }
+
     int i;
     for (i = 0; i < songLength; ++i) {
         int frequency = noteToFreq(sound[i].note);
@@ -226,4 +275,5 @@ int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int 
         Task_sleep(tempo * duration /  Clock_tickPeriod);
         buzzerClose();
     }
+    return 1;
 }
