@@ -38,7 +38,8 @@ struct Note Doom[] = {
         {"E",8},
         {"A#",4},
         {"-",1}
-} doom;
+};
+
 
 /**
  *          END OF SOUNDBANK (for now)
