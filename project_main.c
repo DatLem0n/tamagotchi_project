@@ -149,7 +149,7 @@ void uartTaskFxn(UArg arg0, UArg arg1) {
       }
 
       // 10x per second
-      Task_sleep((1000000 / 10) / Clock_tickPeriod);
+      Task_sleep((SECOND / 10) / Clock_tickPeriod);
    }
 }
 
