@@ -110,7 +110,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
    while (1) {
-      makeSound(buzzerHandle, Doom, 29, 110);
+      makeSound(buzzerHandle, 1);
       Task_sleep(950000 / Clock_tickPeriod);
    }
 }
