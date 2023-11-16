@@ -4,6 +4,7 @@
 #include <ti/sysbios/knl/Clock.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
+#include <soundbank.h>
 
 #define GROUP_ID_STRING "id:3430"
 
