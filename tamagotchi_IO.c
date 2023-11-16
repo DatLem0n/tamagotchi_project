@@ -135,64 +135,51 @@ int noteToFreq(char* note)
     switch (note[0])
     {
     case 'C':
-    {
         frequency = 261;
-    }break;
+        break;
     case 'c':
-    {
         frequency = 523;
-    }break;
+        break;
     case 'D':
-    {
         frequency = 293;
-    }break;
+        break;
     case 'd':
-    {
         frequency = 587;
-    }break;
+        break;
     case 'E':
-    {
         frequency = 329;
-    }break;
+        break;
     case 'e':
-    {
         frequency = 659;
-    }break;
+        break;
     case 'F':
-    {
         frequency = 349;
-    }break;
+        break;
     case 'f':
-    {
         frequency = 698;
-    }break;
+        break;
     case 'G':
-    {
         frequency = 392;
-    }break;
+        break;
     case 'g':
-    {
         frequency = 783;
-    }break;
+        break;
     case 'A':
-    {
         frequency = 440;
-    }break;
+        break;
     case 'a':
-    {
         frequency = 880;
-    }break;
+        break;
     case 'B':
-    {
         frequency = 493;
-    }break;
+        break;
     case 'b':
-    {
         frequency = 987;
-    }break;
+        break;
     default:
         frequency = 0;
     }
+
     if (note[1] == '#') {
         frequency = (float)frequency * 1.06;
     }
