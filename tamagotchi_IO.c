@@ -4,6 +4,7 @@
 #include <ti/sysbios/knl/Clock.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
+#include <soundbank.h>
 
 #define GROUP_ID_STRING "id:3430"
 
@@ -201,45 +202,7 @@ int noteToFreq(char* note)
 
 }
 
-/**
- *          SOUNDBANK
- */
-int SOUND_AMOUNT = 1;
-struct Note Doom[] = {
-        {"E",6},
-        {"E",8},
-        {"e",8},
-        {"E",6},
-        {"E",8},
-        {"d",8},
-        {"E",6},
-        {"E",8},
-        {"c",8},
-        {"E",6},
-        {"E",8},
-        {"A#",8},
-        {"E",6},
-        {"E",8},
-        {"B",8},
-        {"c",8},
-        {"E",6},
-        {"E",8},
-        {"e",8},
-        {"E",6},
-        {"E",8},
-        {"d",8},
-        {"E",6},
-        {"E",8},
-        {"c",8},
-        {"E",6},
-        {"E",8},
-        {"A#",4},
-        {"-",1}
-};
 
-/**
- *          END OF SOUNDBANK (for now)
- */
 
 
 
@@ -260,8 +223,7 @@ struct Note Doom[] = {
    * @return
    */
 int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo) {
-    int i;
-    for (i = 0; i < songLength; ++i) {
+    for (int i = 0; i < songLength; ++i) {
         int frequency = noteToFreq(sound[i].note);
         int duration = 1 / sound[i].length; // in notes
 

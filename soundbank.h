@@ -3,6 +3,10 @@ struct Note
     char note[3];
     int length;
 };
+/**
+ *          SOUNDBANK
+ */
+int SOUND_AMOUNT = 1;
 struct Note Doom[] = {
         {"E",6},
         {"E",8},
@@ -34,3 +38,7 @@ struct Note Doom[] = {
         {"A#",4},
         {"-",1}
 };
+
+/**
+ *          END OF SOUNDBANK (for now)
+ */
