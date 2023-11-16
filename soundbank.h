@@ -1,3 +1,5 @@
+#ifndef _SOUNDBANK_H_
+#define _SOUNDBANK_H_
 struct Note
 {
     char note[3];
@@ -6,7 +8,6 @@ struct Note
 /**
  *          SOUNDBANK
  */
-int SOUND_AMOUNT = 1;
 struct Note Doom[] = {
         {"E",6},
         {"E",8},
@@ -37,8 +38,9 @@ struct Note Doom[] = {
         {"E",8},
         {"A#",4},
         {"-",1}
-};
+} doom;
 
 /**
  *          END OF SOUNDBANK (for now)
  */
+#endif

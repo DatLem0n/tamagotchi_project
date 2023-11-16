@@ -4,7 +4,9 @@
 #include <ti/sysbios/knl/Clock.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
-#include <soundbank.h>
+#include "soundbank.h"
+
+
 
 #define GROUP_ID_STRING "id:3430"
 
@@ -117,15 +119,6 @@ int activate(int eat, int exercise, int pet, char* buffer)
 }
 
 /**
- * note is the char value of frequency (C,D etc.)
- * length of note is 1/x so 1/4th note would be length of 4
- */
-struct Note
-{
-    char note[3];
-    int length;
-};
-/**
  *Returns frequency of note
  * @param note char (e.g. 'C' for 261 hz)
  * @return frequency value (int)
@@ -223,7 +216,8 @@ int noteToFreq(char* note)
    * @return
    */
 int makeSound(PIN_Handle buzzerHandle, struct Note sound[], int songLength, int tempo) {
-    for (int i = 0; i < songLength; ++i) {
+    int i;
+    for (i = 0; i < songLength; ++i) {
         int frequency = noteToFreq(sound[i].note);
         int duration = 1 / sound[i].length; // in notes
 
