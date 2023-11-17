@@ -234,31 +234,96 @@ struct Note Victory[] = {
         {"A#",3},
         {"C",16}
 };
+struct Note toBeContinued[] = {
+        {"f#", 4},
+        {"g", 8},
+        {"f#", 16},
+        {"e", 16},
+        {"d", 8},
+        {"e", 8},
+        {"d", 8},
+        {"c", 8},
+        {"H", 8},
+        {"d", 8},
+        {"H", 8},
+        {"c", 8},
+        {"A", 8},
+        {"H", 8},
+        {"G", 8},
+        {"A", 8},
+        {"e", 4},
+        {"e", 8},
+        {"f#",4},
+        {"g", 4},
+        {"f#", 4},
+        {"g", 4},
+        {"f#", 8},
+        {"e", 2},
+        {"e", 4},
+        {"e", 8},
+        {"f#", 4},
+        {"g", 4},
+        {"f#", 8},
+        {"e", 2},
+        {"-", 3},
+        {"e", 4},
+        {"e", 8},
+        {"f#",4},
+        {"g", 4},
+        {"f#", 4},
+        {"g", 4},
+        {"f#", 8},
+        {"e", 2},
+        {"e", 4},
+        {"e", 8},
+        {"f#", 4},
+        {"g", 4},
+        {"f#", 8},
+        {"e", 2},
+        {"-", 3}
+};
 
 /**
  *          END OF SOUNDBANK (for now)
  */
 
-// Kutsu makeSoundia project_mainin buzzerTaskissä
   /**
    * Plays the selected sound,
    * Sound selection:
-   * 1 for Doom
+   *    1 for Doom
+   *    2 for Victory sound
+   *    3 for roundabout
    *
+   * @param buzzerHandle
+   * @param soundSelection (int)
    *
-   * @param sound Note array with notes and lengths of notes
-   * @param songLength number of notes in the sound array
-   * @param tempo playback speed (mess around with values for this to achieve wanted speed)
    * @return
    */
 int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     struct Note* sound;
     int songLength;
     int tempo;
+      switch (soundSelection) {
+          case 1:
+              sound = Doom;
+              songLength = 29;
+              tempo = SECOND;
+              break;
 
-      sound = Doom;
-      songLength = 29;
-      tempo = SECOND;
+          case 2:
+              sound = Victory;
+              songLength = 9;
+              tempo = SECOND * 1.5;
+              break;
+          case 3:
+              sound = toBeContinued;
+              songLength = 46;
+              tempo = SECOND;
+          default:
+              return 0;
+      }
+
+
 
 
 
