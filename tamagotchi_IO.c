@@ -223,6 +223,18 @@ struct Note Doom[] = {
         {"-",1}
 };
 
+struct Note Victory[] = {
+        {"C",3},
+        {"C",3},
+        {"C",3},
+        {"C",8},
+        {"G#",8},
+        {"A#",8},
+        {"C",6},
+        {"A#",3},
+        {"C",16}
+};
+
 /**
  *          END OF SOUNDBANK (for now)
  */
