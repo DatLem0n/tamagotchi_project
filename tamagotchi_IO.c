@@ -319,13 +319,10 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
               sound = toBeContinued;
               songLength = 46;
               tempo = SECOND;
+              break;
           default:
               return 0;
       }
-
-
-
-
 
     int i;
     for (i = 0; i < songLength; ++i) {
