@@ -88,10 +88,11 @@ PIN_Config buzzerConfig[] = {
 * Taskit ja nappifunktio
 */
 
+enum Music music_selection = SILENT;
 void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //TEST
-   eat(1, messageBuffer);
+   //eat(1, messageBuffer);
 
    //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
    if (sensorState == SENSORS_READY) {
@@ -102,15 +103,18 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
       writeMessageBuffer("session:end", messageBuffer);
       sensorState = SENSORS_READY;
    }
-   System_printf("MessageBuffer:%s\n", messageBuffer);
-   System_flush();
+   //System_printf("MessageBuffer:%s\n", messageBuffer);
+   //System_flush();
+   music_selection++;
+   if(music_selection == END)
+      music_selection = SILENT;
 
 }
 
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
    while (1) {
-      makeSound(buzzerHandle, 1);
+      makeSound(buzzerHandle, music_selection);
       //Task_sleep(950000 / Clock_tickPeriod);
    }
 }

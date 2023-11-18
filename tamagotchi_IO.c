@@ -290,6 +290,7 @@ struct Note toBeContinued[] = {
   /**
    * Plays the selected sound,
    * Sound selection:
+   *    0 for silence
    *    1 for Doom
    *    2 for Victory sound
    *    3 for roundabout
