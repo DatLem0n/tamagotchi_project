@@ -16,18 +16,29 @@ struct Note
     char note[3];
     int length;
 };
-void writeMessageBuffer(char* message, char* buffer)
+
+/**
+ * Writes given message to the messagebuffer. Will try writing untill buffer is not full.
+ * @param message
+ * @param buffer
+ * @return 1 if succesfull, 0 if fail
+ */
+int writeMessageBuffer(char* message, char* buffer)
 {
-    if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
-        // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
-        if (buffer[0] == '\0') {
-            strcpy(buffer, GROUP_ID_STRING);
-            strcat(buffer, ",");
+    while (1){
+        if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
+            // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
+            if (buffer[0] == '\0') {
+                strcpy(buffer, GROUP_ID_STRING);
+                strcat(buffer, ",");
+            }
+            else {
+                strcat(buffer, ",");
+            }
+            strcat(buffer, message);
+            return 1;
         }
-        else {
-            strcat(buffer, ",");
-        }
-        strcat(buffer, message);
+        Task_sleep((SECOND * 0.01) /  Clock_tickPeriod);
     }
 }
 
@@ -38,7 +49,15 @@ void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* a
         *time, *ax, *ay, *az, *gx, *gy, *gz);
     writeMessageBuffer(msg, buffer);
 }
-
+void writeOtherSensorsToMsgBuffer(char *buffer, double *temp, double *press, double *light){
+    char msg[BUFFERSIZE];
+    sprintf(msg,"temp:%f,press:%f,light:%f", *temp, *press, *light);
+    writeMessageBuffer();
+}
+void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light) {
+    char msg
+    writeMessageBuffer(sprintf())
+}
 /*
  * writes mpu9250 sensor measurements to the sensor_data array
  */
@@ -231,7 +250,8 @@ struct Note Victory[] = {
         {"A#",4},
         {"c",6},
         {"A#",16},
-        {"c",2}
+        {"c",2},
+        {"-",4}
 };
 struct Note toBeContinued[] = {
         {"f#", 4},
@@ -307,18 +327,18 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
       switch (soundSelection) {
           case 1:
               sound = Doom;
-              songLength = 29;
+              songLength = sizeof Doom;
               tempo = SECOND;
               break;
 
           case 2:
               sound = Victory;
-              songLength = 9;
+              songLength = sizeof Victory;
               tempo = SECOND * 1.5;
               break;
           case 3:
               sound = toBeContinued;
-              songLength = 46;
+              songLength = sizeof toBeContinued;
               tempo = 2*SECOND;
               break;
           default:
@@ -336,7 +356,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         buzzerSetFrequency(frequency);
         Task_sleep(tempo * duration);
         buzzerClose();
-        Task_sleep(tempo / 50000);
+        Task_sleep(tempo * 0.0001);
 
     }
 
