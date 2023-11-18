@@ -28,11 +28,8 @@ int writeMessageBuffer(char* message, char* buffer)
             // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
             if (buffer[0] == '\0') {
                 strcpy(buffer, GROUP_ID_STRING);
-                strcat(buffer, ",");
             }
-            else {
-                strcat(buffer, ",");
-            }
+            strcat(buffer, ",");
             strcat(buffer, message);
             return 1;
         }
@@ -56,27 +53,24 @@ int writeMessageBuffer(char* message, char* buffer)
   * @param light light
   */
 void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light) {
+    int dataAmount = 10;
+    int bufferFull = 0;
     char msg[BUFFERSIZE];
-    sprintf(msg, "time:%i",*time);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "ax:%.2f",*ax);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "ay:%.2f",*ay);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "az:%.2f",*az);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "gx:%.2f",*gx);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "gy:%.2f",*gy);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "gz:%.2f",*gz);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "temp:%.2f",*temp);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "press:%.2f",*press);
-    writeMessageBuffer(msg, buffer);
-    sprintf(msg, "light:%.2f",*light);
-    writeMessageBuffer(msg, buffer);
+    char dataPrefixes[10][20] = {"time:", "ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:"};
+    void * dataPointerArray[10] = {time, ax, ay, az, gx, gy, gz, temp, press, light};
+
+    int i = 0;
+     for (; i < dataAmount; ++i) {
+         do {
+             if (i < 1 || i > 6) {
+                 snprintf(msg, BUFFERSIZE, "%s%i", dataPrefixes[i], dataPointerArray[i]);
+             }
+             else{
+                 snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i], dataPointerArray[i]);
+             }
+             bufferFull = !writeMessageBuffer(msg, buffer);
+         } while (bufferFull);
+     }
 }
 
 /*
