@@ -160,8 +160,8 @@ void bmp280_get_data(I2C_Handle *i2c, double *pressure, double *temperature) {
 
     if (I2C_transfer(*i2c, &i2cMessage)) {
 
-        uint32_t pressureReg = (((int32_t)rxBuffer[0] << 16) | ((int32_t)rxBuffer[1] << 8) | rxBuffer[2]); // with trailing 4 bits
-        uint32_t temperatureReg = (((int32_t)rxBuffer[3] << 16) | ((int32_t)rxBuffer[4] << 8) | rxBuffer[5]); // with trailing
+        uint32_t pressureReg = (((int32_t)rxBuffer[0] << 16) | ((int32_t)rxBuffer[1] << 8) | rxBuffer[2]) << 4; // with trailing 4 bits
+        uint32_t temperatureReg = (((int32_t)rxBuffer[3] << 16) | ((int32_t)rxBuffer[4] << 8) | rxBuffer[5]) << 4; // with trailing
 
         *pressure = bmp280_convert_pres(pressureReg);
         *temperature = bmp280_temp_compensation(temperatureReg);
