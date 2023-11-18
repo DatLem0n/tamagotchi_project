@@ -307,7 +307,7 @@ int main(void) {
    Task_Params_init(&sensorTaskParams);
    sensorTaskParams.stackSize = STACKSIZE;
    sensorTaskParams.stack = &sensorTaskStack;
-   sensorTaskParams.priority = 3;
+   sensorTaskParams.priority = 1;
    sensorTaskHandle = Task_create(sensorTaskFxn, &sensorTaskParams, NULL);
    if (sensorTaskHandle == NULL) {
       System_abort("Task create failed!");
@@ -317,7 +317,7 @@ int main(void) {
    Task_Params_init(&uartTaskParams);
    uartTaskParams.stackSize = STACKSIZE;
    uartTaskParams.stack = &uartTaskStack;
-   uartTaskParams.priority = 1;
+   uartTaskParams.priority = 3;
    uartTaskHandle = Task_create(uartTaskFxn, &uartTaskParams, NULL);
    if (uartTaskHandle == NULL) {
       System_abort("Task create failed!");
