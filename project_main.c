@@ -175,7 +175,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    if (i2c_mpu9250 == NULL)
       System_abort("Error Initializing mpu9250 I2C\n");
    PIN_setOutputValue(mpuPinHandle, Board_MPU_POWER, Board_MPU_POWER_ON);
-   Task_sleep(100000);
+   Task_sleep(SECOND/10);
    mpu9250_setup(&i2c_mpu9250);
    I2C_close(i2c_mpu9250);
 
@@ -183,7 +183,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
    if (i2c_opt3001 == NULL)
       System_abort("Error Initializing opt3001 I2C\n");
-   Task_sleep(100000);
+   Task_sleep(SECOND/10);
    opt3001_setup(&i2c_opt3001);
    I2C_close(i2c_opt3001);
 
@@ -191,8 +191,9 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
    if (i2c_bmp280 == NULL)
       System_abort("Error Initializing mpu9250 I2C\n");
-   Task_sleep(100000);
+      Task_sleep(SECOND/10);
    bmp280_setup(&i2c_bmp280);
+   I2C_close(i2c_opt3001);
 
    int index = 0;
    while (1) {
@@ -202,18 +203,19 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND);
+      Task_sleep(SECOND/10);
       // Haetaan data
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
       // Suljetaan yhteys
       I2C_close(i2c_mpu9250);
+
       //PIN_setOutputValue(mpuPinHandle,Board_MPU_POWER, Board_MPU_POWER_OFF);
 
       // Avataan OPT3001 yhteys
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
-      Task_sleep(SECOND);
+      Task_sleep(SECOND/10);
       // Haetaan data
       light = opt3001_get_data(&i2c_opt3001);
       // Suljetaan yhteys
@@ -223,7 +225,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
       if (i2c_bmp280 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND);
+      Task_sleep(SECOND/10);
       // Haetaan data
       bmp280_get_data(&i2c_bmp280, &temp, &press);
       // Suljetaan yhteys

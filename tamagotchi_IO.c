@@ -348,18 +348,18 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
       switch (soundSelection) {
           case 1:
               sound = Doom;
-              songLength = sizeof Doom;
+              songLength = sizeof(Doom)/sizeof(struct Note);
               tempo = SECOND;
               break;
 
           case 2:
               sound = Victory;
-              songLength = sizeof Victory;
+              songLength = sizeof(Victory)/sizeof(struct Note);
               tempo = SECOND * 1.5;
               break;
           case 3:
               sound = toBeContinued;
-              songLength = sizeof toBeContinued;
+              songLength = sizeof(toBeContinued)/sizeof(struct Note);
               tempo = 2*SECOND;
               break;
           default:
