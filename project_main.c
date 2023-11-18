@@ -239,7 +239,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       write_other_sensors_to_sensor_data(sensor_data, &index, &temp, &press, &light);
 
       if (sensorState == SENSORS_SENDING_DATA) {
-         writeSensorsToMsgBuffer(&messageBuffer, &time, &ax, &ay, &az, &gx, &gy, &gz, &temp, &press, &light);
+         writeSensorsToMsgBuffer(&messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
       }
 
       index++;
