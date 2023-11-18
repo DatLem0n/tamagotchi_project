@@ -54,7 +54,7 @@ int writeMessageBuffer(char* message, char* buffer)
   */
 void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light) {
     int dataAmount = 10;
-    int bufferFull = 0;
+    int bufferFull;
     char msg[BUFFERSIZE];
     char dataPrefixes[10][20] = {"time:", "ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:"};
     double * dataPointerArray[10] = {(double *) ax, (double *) ay, (double *) az, (double *) gx, (double *) gy,
@@ -62,13 +62,13 @@ void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, floa
 
     int i = 0;
      for (; i < dataAmount; ++i) {
-         do {
-             if (i == 0) {
-                 snprintf(msg, BUFFERSIZE, "%s%i", dataPrefixes[i], *time);
-             }
-             else{
-                 snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i], *dataPointerArray[i - 1]);
-             }
+         if (i == 0) {
+             snprintf(msg, BUFFERSIZE, "%s%i", dataPrefixes[i], *time);
+         }
+         else{
+             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i], *dataPointerArray[i - 1]);
+         }
+         do{
              bufferFull = !writeMessageBuffer(msg, buffer);
          } while (bufferFull);
      }
