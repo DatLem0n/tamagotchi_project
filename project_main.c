@@ -216,7 +216,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
-      Task_sleep(SECOND/10);
+      Task_sleep(SECOND/5);
       // Haetaan data
       light = opt3001_get_data(&i2c_opt3001);
       // Suljetaan yhteys
