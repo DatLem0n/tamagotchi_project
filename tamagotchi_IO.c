@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ti/sysbios/knl/Clock.h>
 #include <ti/sysbios/knl/Task.h>
 #include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
@@ -335,7 +334,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         float duration = 1.0 / sound[i].length; // in notes
 
         buzzerSetFrequency(frequency);
-        Task_sleep(tempo * duration /  Clock_tickPeriod);
+        Task_sleep(tempo * duration);
         buzzerClose();
         Task_sleep(tempo / 50000);
 

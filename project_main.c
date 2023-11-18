@@ -7,7 +7,6 @@
 
 /* BIOS Header files */
 #include <ti/sysbios/BIOS.h>
-#include <ti/sysbios/knl/Clock.h>
 #include <ti/sysbios/knl/Task.h>
 #include <ti/drivers/PIN.h>
 #include <ti/drivers/pin/PINCC26XX.h>
@@ -115,7 +114,7 @@ void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
    while (1) {
       makeSound(buzzerHandle, music_selection);
-      //Task_sleep(SECOND/2 / Clock_tickPeriod);
+      //Task_sleep(SECOND/2);
    }
 }
 
@@ -153,7 +152,7 @@ void uartTaskFxn(UArg arg0, UArg arg1) {
       }
 
       // 10x per second
-      Task_sleep((SECOND / 10) / Clock_tickPeriod);
+      Task_sleep((SECOND / 10));
    }
 }
 
@@ -178,7 +177,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    if (i2c_mpu9250 == NULL)
       System_abort("Error Initializing mpu9250 I2C\n");
    PIN_setOutputValue(mpuPinHandle, Board_MPU_POWER, Board_MPU_POWER_ON);
-   Task_sleep(100000 / Clock_tickPeriod);
+   Task_sleep(100000);
    mpu9250_setup(&i2c_mpu9250);
    I2C_close(i2c_mpu9250);
    System_printf("Initialized.\n");
@@ -190,7 +189,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
    if (i2c_opt3001 == NULL)
       System_abort("Error Initializing opt3001 I2C\n");
-   Task_sleep(100000 / Clock_tickPeriod);
+   Task_sleep(100000);
    opt3001_setup(&i2c_opt3001);
    I2C_close(i2c_opt3001);
    System_printf("Initialized.\n");
@@ -202,7 +201,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
    if (i2c_bmp280 == NULL)
       System_abort("Error Initializing mpu9250 I2C\n");
-   Task_sleep(100000 / Clock_tickPeriod);
+   Task_sleep(100000);
    bmp280_setup(&i2c_bmp280);
    I2C_close(i2c_opt3001);
    System_printf("Initialized.\n");
@@ -217,7 +216,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND / Clock_tickPeriod);
+      Task_sleep(SECOND);
       // Haetaan data
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
       // Suljetaan yhteys
@@ -228,7 +227,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
-      Task_sleep(SECOND / Clock_tickPeriod);
+      Task_sleep(SECOND);
       // Haetaan data
       light = opt3001_get_data(&i2c_opt3001);
       // Suljetaan yhteys
@@ -238,7 +237,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
       if (i2c_bmp280 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND / Clock_tickPeriod);
+      Task_sleep(SECOND);
       // Haetaan data
       bmp280_get_data(&i2c_bmp280, &temp, &press);
       // Suljetaan yhteys
@@ -257,7 +256,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
          index = 0;
 
       // 10x per second, you can modify this
-      //Task_sleep(1000000/10 / Clock_tickPeriod);
+      //Task_sleep(1000000/10);
    }
 }
 
