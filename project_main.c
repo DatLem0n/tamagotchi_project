@@ -248,7 +248,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       write_other_sensors_to_sensor_data(sensor_data, &index, &temp, &press, &light);
 
       if (sensorState == SENSORS_SENDING_DATA) {
-         writeSensorsToMsgBuffer(&messageBuffer[BUFFERSIZE], &time, &ax, &ay, &az, &gx, &gy, &gz, &temp, &press, &light);
+         writeSensorsToMsgBuffer(&messageBuffer, &time, &ax, &ay, &az, &gx, &gy, &gz, &temp, &press, &light);
       }
 
       index++;
@@ -307,7 +307,7 @@ int main(void) {
    Task_Params_init(&sensorTaskParams);
    sensorTaskParams.stackSize = STACKSIZE;
    sensorTaskParams.stack = &sensorTaskStack;
-   sensorTaskParams.priority = 2;
+   sensorTaskParams.priority = 3;
    sensorTaskHandle = Task_create(sensorTaskFxn, &sensorTaskParams, NULL);
    if (sensorTaskHandle == NULL) {
       System_abort("Task create failed!");
@@ -317,7 +317,7 @@ int main(void) {
    Task_Params_init(&uartTaskParams);
    uartTaskParams.stackSize = STACKSIZE;
    uartTaskParams.stack = &uartTaskStack;
-   uartTaskParams.priority = 2;
+   uartTaskParams.priority = 1;
    uartTaskHandle = Task_create(uartTaskFxn, &uartTaskParams, NULL);
    if (uartTaskHandle == NULL) {
       System_abort("Task create failed!");
@@ -327,6 +327,7 @@ int main(void) {
    Task_Params_init(&buzzerTaskParams);
    buzzerTaskParams.stackSize = STACKSIZE;
    buzzerTaskParams.stack = &buzzerTaskStack;
+   uartTaskParams.priority = 2;
    buzzerTaskHandle = Task_create((Task_FuncPtr)buzzerTaskFxn, &buzzerTaskParams, NULL);
    if (buzzerTaskHandle == NULL) {
       System_abort("Buzzer task create failed!");
