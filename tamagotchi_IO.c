@@ -52,13 +52,13 @@ int writeMessageBuffer(char* message, char* buffer)
   * @param press pressure
   * @param light light
   */
-void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light) {
+void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light) {
     int dataAmount = 10;
     int bufferFull;
     char msg[BUFFERSIZE];
     char dataPrefixes[10][20] = {"time:", "ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:"};
-    double * dataPointerArray[10] = {(double *) ax, (double *) ay, (double *) az, (double *) gx, (double *) gy,
-                                     (double *) gz, temp, press, light};
+    double dataPointerArray[10] = {(double) ax, (double) ay, (double) az, (double) gx, (double) gy,
+                                     (double) gz, temp, press, light};
 
     int i = 0;
      for (; i < dataAmount; ++i) {
