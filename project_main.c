@@ -115,7 +115,7 @@ void buzzerTaskFxn(UArg arg0, UArg arg1) {
 
    while (1) {
       makeSound(buzzerHandle, music_selection);
-      //Task_sleep(950000 / Clock_tickPeriod);
+      Task_sleep(SECOND/2 / Clock_tickPeriod);
    }
 }
 
