@@ -6,8 +6,6 @@
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
 
-
-
 #define GROUP_ID_STRING "id:3430"
 
 
@@ -38,7 +36,7 @@ int writeMessageBuffer(char* message, char* buffer)
             strcat(buffer, message);
             return 1;
         }
-        Task_sleep((SECOND * 0.01) /  Clock_tickPeriod);
+        Task_sleep(SECOND / 100);
     }
 }
 
