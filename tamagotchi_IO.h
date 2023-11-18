@@ -5,6 +5,7 @@
 
 void writeMessageBuffer(char* message, char* buffer);
 void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
+void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light);
 void write_other_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, double* temp, double* press, double* light);
 void write_mpu9250_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 int eat(int amount, char* buffer);

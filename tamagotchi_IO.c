@@ -19,7 +19,7 @@ struct Note
  * Writes given message to the messagebuffer. Will try writing untill buffer is not full.
  * @param message
  * @param buffer
- * @return 1 if succesfull, 0 if fail
+ * @return 1 on success
  */
 int writeMessageBuffer(char* message, char* buffer)
 {
@@ -41,21 +41,44 @@ int writeMessageBuffer(char* message, char* buffer)
 }
 
 //ohjeet: https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-raw-sensor-data
-void write_mpu9250_to_messageBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
-    char msg[BUFFERSIZE];
-    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
-        *time, *ax, *ay, *az, *gx, *gy, *gz);
-    writeMessageBuffer(msg, buffer);
-}
-void writeOtherSensorsToMsgBuffer(char *buffer, double *temp, double *press, double *light){
-    char msg[BUFFERSIZE];
-    sprintf(msg,"temp:%f,press:%f,light:%f", *temp, *press, *light);
-    writeMessageBuffer();
-}
+ /**
+  * Writes all sensor data to the buffer
+  * @param buffer
+  * @param time time of measurement
+  * @param ax accelerometer x
+  * @param ay accelerometer y
+  * @param az accelerometer z
+  * @param gx gyro x
+  * @param gy gyro y
+  * @param gz gyro z
+  * @param temp temperature
+  * @param press pressure
+  * @param light light
+  */
 void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light) {
-    char msg
-    writeMessageBuffer(sprintf())
+    char msg[BUFFERSIZE];
+    sprintf(msg, "time:%i",*time);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "ax:%.2f",*ax);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "ay:%.2f",*ay);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "az:%.2f",*az);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "gx:%.2f",*gx);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "gy:%.2f",*gy);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "gz:%.2f",*gz);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "temp:%.2f",*temp);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "press:%.2f",*press);
+    writeMessageBuffer(buffer, msg);
+    sprintf(msg, "light:%.2f",*light);
+    writeMessageBuffer(buffer, msg);
 }
+
 /*
  * writes mpu9250 sensor measurements to the sensor_data array
  */
