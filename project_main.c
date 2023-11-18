@@ -102,8 +102,8 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
       writeMessageBuffer("session:end", messageBuffer);
       sensorState = SENSORS_READY;
    }
-   System_printf("MessageBuffer:%s\n", messageBuffer);
-   System_flush();
+   //System_printf("MessageBuffer:%s\n", messageBuffer);
+   //System_flush();
    music_selection++;
    if(music_selection == END)
       music_selection = SILENT;
@@ -171,8 +171,6 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    i2cParams_bmp280.bitRate = I2C_400kHz;
 
    // Alustetaan MPU9250
-   System_printf("Initializing mpu9250...\n");
-   System_flush();
    i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
    if (i2c_mpu9250 == NULL)
       System_abort("Error Initializing mpu9250 I2C\n");
@@ -180,33 +178,21 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
    Task_sleep(100000);
    mpu9250_setup(&i2c_mpu9250);
    I2C_close(i2c_mpu9250);
-   System_printf("Initialized.\n");
-   System_flush();
 
    //Alustetaan OPT3001
-   System_printf("Initializing opt3001...\n");
-   System_flush();
    i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
    if (i2c_opt3001 == NULL)
       System_abort("Error Initializing opt3001 I2C\n");
    Task_sleep(100000);
    opt3001_setup(&i2c_opt3001);
    I2C_close(i2c_opt3001);
-   System_printf("Initialized.\n");
-   System_flush();
 
    // Alustetaan BMP280
-   System_printf("Initializing bmp280...\n");
-   System_flush();
    i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
    if (i2c_bmp280 == NULL)
       System_abort("Error Initializing mpu9250 I2C\n");
    Task_sleep(100000);
    bmp280_setup(&i2c_bmp280);
-   I2C_close(i2c_opt3001);
-   System_printf("Initialized.\n");
-   System_flush();
-
 
    int index = 0;
    while (1) {
@@ -307,7 +293,7 @@ int main(void) {
    Task_Params_init(&sensorTaskParams);
    sensorTaskParams.stackSize = STACKSIZE;
    sensorTaskParams.stack = &sensorTaskStack;
-   sensorTaskParams.priority = 1;
+   sensorTaskParams.priority = 2;
    sensorTaskHandle = Task_create(sensorTaskFxn, &sensorTaskParams, NULL);
    if (sensorTaskHandle == NULL) {
       System_abort("Task create failed!");
@@ -317,7 +303,7 @@ int main(void) {
    Task_Params_init(&uartTaskParams);
    uartTaskParams.stackSize = STACKSIZE;
    uartTaskParams.stack = &uartTaskStack;
-   uartTaskParams.priority = 3;
+   uartTaskParams.priority = 2;
    uartTaskHandle = Task_create(uartTaskFxn, &uartTaskParams, NULL);
    if (uartTaskHandle == NULL) {
       System_abort("Task create failed!");
@@ -327,7 +313,6 @@ int main(void) {
    Task_Params_init(&buzzerTaskParams);
    buzzerTaskParams.stackSize = STACKSIZE;
    buzzerTaskParams.stack = &buzzerTaskStack;
-   uartTaskParams.priority = 2;
    buzzerTaskHandle = Task_create((Task_FuncPtr)buzzerTaskFxn, &buzzerTaskParams, NULL);
    if (buzzerTaskHandle == NULL) {
       System_abort("Buzzer task create failed!");

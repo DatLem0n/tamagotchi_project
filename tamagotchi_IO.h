@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "shared.h"
+#include <ti/drivers/PIN.h>
 
 
 void writeMessageBuffer(char* message, char* buffer);
