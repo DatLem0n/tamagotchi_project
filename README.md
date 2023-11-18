@@ -5,6 +5,9 @@ Matias Björklund
 Ville Kujala  
 Kalle Asmundi
 
+
+
+
 ## Projektin kääntäminen virtuaalikoneessa
 
 ### Jaa tarvittavat kansiot Virtualboxille
@@ -30,6 +33,7 @@ Kalle Asmundi
 5. Jos haluat nähdä UART-liikenteen: Paina Crtl-Shift-Alt-T, valitse Serial Terminal. Serial portiksi "/dev/tty/ACM0" ja Baud Rateksi 9600
 
 ## Sensorit
+
 - [Paine: BMP280](sensors/bmp280.c)
 - [Lämpötila ja ilmankosteus: HDC1000](sensors/hdc1000.c)
 - [Gyro ja kiihtyvyys: mpu9250](sensors/mpu9250.c)
