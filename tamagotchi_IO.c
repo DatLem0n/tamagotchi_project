@@ -327,6 +327,8 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
 
     int i;
     for (i = 0; i < songLength; ++i) {
+        if(soundSelection == SILENT)
+            break;
         buzzerOpen(buzzerHandle);
         int frequency = noteToFreq(sound[i].note);
         float duration = 1.0 / sound[i].length; // in notes
