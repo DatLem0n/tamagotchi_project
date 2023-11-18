@@ -177,7 +177,7 @@ int noteToFreq(char* note)
         frequency = 987;
         break;
     default:
-        frequency = 3; // lowest allowed by buzzerSetFrequency
+        frequency = 0;
     }
 
     if (note[1] == '#') {
@@ -220,7 +220,7 @@ struct Note Doom[] = {
         {"E",6},
         {"E",8},
         {"A#",4},
-        {"-",1}
+        {"-",4}
 };
 
 struct Note Victory[] = {
@@ -337,7 +337,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         buzzerSetFrequency(frequency);
         Task_sleep(tempo * duration /  Clock_tickPeriod);
         buzzerClose();
-        Task_sleep(tempo / 5000);
+        Task_sleep(tempo / 50000);
 
     }
 
