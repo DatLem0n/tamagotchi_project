@@ -56,22 +56,34 @@ void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float a
     int dataAmount = 10;
     int bufferFull;
     char msg[BUFFERSIZE];
-    char dataPrefixes[10][20] = {"time:", "ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:"};
+    char dataPrefixes[10][20] = {"ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:"};
     double dataPointerArray[10] = {(double) ax, (double) ay, (double) az, (double) gx, (double) gy,
                                      (double) gz, temp, press, light};
 
     int i = 0;
      for (; i < dataAmount; ++i) {
          if (i == 0) {
-             snprintf(msg, BUFFERSIZE, "%s%i", dataPrefixes[i], time);
+             snprintf(msg, BUFFERSIZE, "%s%i", "time:", time);
          }
          else{
-             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i], dataPointerArray[i - 1]);
+             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i], dataPointerArray[i]);
          }
          do{
              bufferFull = !writeMessageBuffer(msg, buffer);
          } while (bufferFull);
      }
+}
+
+void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz) {
+    char msg[BUFFERSIZE];
+    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
+        time, ax, ay, az, gx, gy, gz);
+    writeMessageBuffer(msg, buffer);
+}
+void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, double light){
+    char msg[BUFFERSIZE];
+    sprintf(msg,"temp:%f,press:%f,light:%f", temp, press, light);
+    writeMessageBuffer(msg, buffer);
 }
 
 /*
