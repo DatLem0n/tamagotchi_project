@@ -197,7 +197,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
    int index = 0;
    while (1) {
-      time = Clock_getTicks();
+      time = Clock_getTicks()/Clock_tickPeriod;
 
       // Avataan MPU9250 yhteys
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
