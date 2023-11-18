@@ -208,6 +208,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
       // Suljetaan yhteys
       I2C_close(i2c_mpu9250);
+      Task_sleep(SECOND/10);
 
       //PIN_setOutputValue(mpuPinHandle,Board_MPU_POWER, Board_MPU_POWER_OFF);
 
@@ -220,6 +221,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       light = opt3001_get_data(&i2c_opt3001);
       // Suljetaan yhteys
       I2C_close(i2c_opt3001);
+      Task_sleep(SECOND/10);
 
       // Avataan BMP280 yhteys
       i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
@@ -230,6 +232,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       bmp280_get_data(&i2c_bmp280, &temp, &press);
       // Suljetaan yhteys
       I2C_close(i2c_bmp280);
+      Task_sleep(SECOND/10);
 
       // Tallennetaan data sensor_data taulukkoon
       write_mpu9250_to_sensor_data(sensor_data, &index, &ax, &ay, &az, &gx, &gy, &gz);
