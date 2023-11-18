@@ -102,8 +102,8 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
       writeMessageBuffer("session:end", messageBuffer);
       sensorState = SENSORS_READY;
    }
-   //System_printf("MessageBuffer:%s\n", messageBuffer);
-   //System_flush();
+   System_printf("MessageBuffer:%s\n", messageBuffer);
+   System_flush();
    music_selection++;
    if(music_selection == END)
       music_selection = SILENT;

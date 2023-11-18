@@ -36,7 +36,7 @@ int writeMessageBuffer(char* message, char* buffer)
             strcat(buffer, message);
             return 1;
         }
-        Task_sleep(SECOND / 100);
+        Task_sleep(SECOND / 10);
     }
 }
 
@@ -58,25 +58,25 @@ int writeMessageBuffer(char* message, char* buffer)
 void writeSensorsToMsgBuffer(char* buffer, int* time, float* ax, float* ay, float* az, float* gx, float* gy, float* gz, double *temp, double *press, double *light) {
     char msg[BUFFERSIZE];
     sprintf(msg, "time:%i",*time);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "ax:%.2f",*ax);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "ay:%.2f",*ay);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "az:%.2f",*az);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "gx:%.2f",*gx);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "gy:%.2f",*gy);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "gz:%.2f",*gz);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "temp:%.2f",*temp);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "press:%.2f",*press);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
     sprintf(msg, "light:%.2f",*light);
-    writeMessageBuffer(buffer, msg);
+    writeMessageBuffer(msg, buffer);
 }
 
 /*
