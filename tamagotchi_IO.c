@@ -177,7 +177,7 @@ int noteToFreq(char* note)
         frequency = 987;
         break;
     default:
-        frequency = 0;
+        frequency = 3; // lowest allowed by buzzerSetFrequency
     }
 
     if (note[1] == '#') {
@@ -228,10 +228,10 @@ struct Note Victory[] = {
         {"c",8},
         {"c",8},
         {"c",4},
-        {"g#",4},
-        {"a#",4},
+        {"G#",4},
+        {"A#",4},
         {"c",6},
-        {"a#",16},
+        {"A#",16},
         {"c",2}
 };
 struct Note toBeContinued[] = {
