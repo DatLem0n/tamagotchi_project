@@ -5,41 +5,23 @@ Matias Björklund
 Ville Kujala  
 Kalle Asmundi
 
+## TODO
 
+- Sensoridatan siivoaminen
+- Eleiden tunnistus datasta
+- Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
+- Leikkiminen: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
+- Pet: ????
+- Eat: ????
 
-
-## Projektin kääntäminen virtuaalikoneessa
-
-### Jaa tarvittavat kansiot Virtualboxille
-
-1. [Lataa tyhjä projekti johonkin kansioon.](https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-examples/blob/main/emptyProjects/empty_CC2650STK_TI_2023.zip)
-1. Mene VirtualBox/Settings/Shared Folders/ ja lisää edellisen kohdan kansio
-1. Lisää myös paikallisen git-repon kansio ja ruksita auto-mount
-1. Aja VM:n terminaalissa komento `sudo usermod -aG vboxsf $USER`, salasana 1234
-
-### Tuo koodi VM:n Code Composer Studioon
-
-1. Avaa VM
-1. Käynnistä CCS ja mene yläreunassa Projects/Import CCS Projects
-1. Ruksita "Copy projects into workspace" ja importtaa tyhjä projekti
-1. Raahaa git-repon tiedostot CCS projektiin ja "Overwrite all"
-
-### Sensortagin debugaus
-
-1. Jos olet muuttanut koodia: raahaa git-repon tiedostot uudestaan, Overwrite all, Rebuild project
-2. Kiinnitä USB-johto
-3. Mene VirtualBoxin yläreunassa Devices/USB/ ja varmista että Sensortagin kohdalla on ruksi.
-4. Paina Debug-nappia
-5. Jos haluat nähdä UART-liikenteen: Paina Crtl-Shift-Alt-T, valitse Serial Terminal. Serial portiksi "/dev/tty/ACM0" ja Baud Rateksi 9600
 
 ## Sensorit
 
-- [Paine: BMP280](sensors/bmp280.c)
-- [Lämpötila ja ilmankosteus: HDC1000](sensors/hdc1000.c)
+- [Paine ja lämpötila: BMP280](sensors/bmp280.c)
+- [Lämpötila ja ilmankosteus: HDC1000](sensors/hdc1000.c) ei käytössä
 - [Gyro ja kiihtyvyys: mpu9250](sensors/mpu9250.c)
 - [Valoisuus: opt3001](sensors/opt3001.c)
-- [IR lämpötila: tmp007](sensors/tmp007.c)
-
+- [IR lämpötila: tmp007](sensors/tmp007.c) ei käytössä
 
 ## Vaatimukset
 
@@ -85,3 +67,27 @@ Kalle Asmundi
 1. Virtapainike
 2. Jokaiselle tunnistetulle toiminnolle oma äänimerkki ja/tai ledin vilkutus
 3. Bonus: musiikki
+
+## Projektin kääntäminen virtuaalikoneessa
+
+### Jaa tarvittavat kansiot Virtualboxille
+
+1. [Lataa tyhjä projekti johonkin kansioon.](https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-examples/blob/main/emptyProjects/empty_CC2650STK_TI_2023.zip)
+1. Mene VirtualBox/Settings/Shared Folders/ ja lisää edellisen kohdan kansio
+1. Lisää myös paikallisen git-repon kansio ja ruksita auto-mount
+1. Aja VM:n terminaalissa komento `sudo usermod -aG vboxsf $USER`, salasana 1234
+
+### Tuo koodi VM:n Code Composer Studioon
+
+1. Avaa VM
+1. Käynnistä CCS ja mene yläreunassa Projects/Import CCS Projects
+1. Ruksita "Copy projects into workspace" ja importtaa tyhjä projekti
+1. Raahaa git-repon tiedostot CCS projektiin ja "Overwrite all"
+
+### Sensortagin debugaus
+
+1. Jos olet muuttanut koodia: raahaa git-repon tiedostot uudestaan, Overwrite all, Rebuild project
+2. Kiinnitä USB-johto
+3. Mene VirtualBoxin yläreunassa Devices/USB/ ja varmista että Sensortagin kohdalla on ruksi.
+4. Paina Debug-nappia
+5. Jos haluat nähdä UART-liikenteen: Paina Crtl-Shift-Alt-T, valitse Serial Terminal. Serial portiksi "/dev/tty/ACM0" ja Baud Rateksi 9600
