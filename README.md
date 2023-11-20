@@ -26,6 +26,7 @@ Kalle Asmundi
   - [ ]  Jotakin tekemistä molemmille napeille ja LEDille
 
 ### Bonus
+
 - [ ] Viestitaskin muokkaus niin että bufferin tyhjyyden sijaan käytetään tiloja `{BUFFER_EMPTY, BUFFER_NOT_EMPTY, BUFFER_FULL}`
   - Määrittele `enum MsgBufferState`
   - Luo siitä muuttuja `msgBufferState`
