@@ -7,13 +7,31 @@ Kalle Asmundi
 
 ## TODO
 
-- Sensoridatan siivoaminen
-- Eleiden tunnistus datasta
-- Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
-- Leikkiminen: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
-- Pet: ????
-- Eat: ????
+### Pakolliset
 
+- [ ]  Jupiter-notebook algoritmien protoiluun
+- [ ]  MPU-datan käsittely
+  - [ ]  Testidatan keräys
+  - [ ]  Sensoridatan siivoaminen
+    - [ ]  esim. liukuva keskiarvo, liian pienien ja suurien mittausten poisto
+  - [ ]  Eleiden tunnistus datasta
+    - [ ]  Ainakin pöydällä pompottelu koska helppo tunnistaa
+    - [ ]  1-2 lisää elettä?
+- [ ]  Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
+- [ ]  Exercise: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
+- [ ]  Pet: Valosensorilla tunnistetaan kun käden varjo pyyhkii laitteen yli?
+- [ ]  Eat: ????
+- [ ]  `id,BEEP` viestien käsittely
+  - ohjeet: <https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-messages-from-the-gateway>
+  - [ ]  Jotakin tekemistä molemmille napeille ja LEDille
+
+### Bonus
+- [ ] Viestitaskin muokkaus niin että bufferin tyhjyyden sijaan käytetään tiloja `{BUFFER_EMPTY, BUFFER_NOT_EMPTY, BUFFER_FULL}`
+  - Määrittele `enum MsgBufferState`
+  - Luo siitä muuttuja `msgBufferState`
+  - Anna muuttuja parametrina funktioille että ne voivat muuttaa sen tilaa kirjoittaessaan messageBufferiin
+  - Kun uartTask lähettää ja tyhjentää bufferin, aseta `msgBufferState = BUFFER_EMPTY`
+- [ ]  `MSG1` ja `MSG2`-kentille jotakin järkevää lähetettävää, esim. sensoreilta
 
 ## Sensorit
 
