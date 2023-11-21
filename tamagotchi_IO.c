@@ -66,7 +66,7 @@ void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float a
              snprintf(msg, BUFFERSIZE, "%s%i", "time:", time);
          }
          else{
-             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i+1], dataPointerArray[i+1]);
+             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i-1], dataPointerArray[i-1]);
          }
          do{
              bufferFull = !writeMessageBuffer(msg, buffer);
@@ -382,7 +382,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         float duration = 1.0 / sound[i].length; // in notes
 
         buzzerSetFrequency(frequency);
-        Task_sleep(tempo * duration);
+        Task_sleep((float) tempo * duration);
         buzzerClose();
         Task_sleep(tempo * 0.0001);
 
