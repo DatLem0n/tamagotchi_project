@@ -391,7 +391,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     return 1;
 }
 
-void blinkLed(int ledSelection, int blinkTimes, int timesPerSecond) {
+int blinkLed(int ledSelection, int blinkTimes, int timesPerSecond) {
     char led;
     switch (ledSelection) {
         case 0:
@@ -401,6 +401,8 @@ void blinkLed(int ledSelection, int blinkTimes, int timesPerSecond) {
         case 1:
             led = Board_LED1;
             break;
+        default:
+            return 0;
     }
     int i;
     for (i = 0; i < blinkTimes; ++i) {
@@ -410,4 +412,6 @@ void blinkLed(int ledSelection, int blinkTimes, int timesPerSecond) {
         Task_sleep(SECOND / timesPerSecond);
     }
     PIN_setOutputValue(ledHandle, led, 0);
+
+    return 1;
 }
