@@ -40,9 +40,11 @@ int time;
 float sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
 
-// JTKJ: Exercise 3. Definition of the state machine
+// Tilakone sensoridatan lähetykseen backendille
 enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
 enum SensorState sensorState = SENSORS_READY;
+
+bool ledOn = FALSE;
 
 // JTKJ: Exercise 1. Add pins RTOS-variables and configuration here
 static PIN_Handle buttonHandle;
@@ -107,6 +109,10 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
    music_selection++;
    if(music_selection == END)
       music_selection = SILENT;
+
+   if(ledOn == TRUE)
+      blinkLed(ledHandle, 0, 9999, 1);
+   ledOn = !ledOn;
 
 }
 

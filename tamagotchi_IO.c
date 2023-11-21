@@ -391,7 +391,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     return 1;
 }
 
-int blinkLed(int ledSelection, int blinkTimes, float timesPerSecond) {
+int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float timesPerSecond) {
     char led;
     switch (ledSelection) {
         case 0:
@@ -415,7 +415,7 @@ int blinkLed(int ledSelection, int blinkTimes, float timesPerSecond) {
     return 1;
 }
 
-int turnOnLed(int ledSelection, float time) {
+int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
     char led;
     switch (ledSelection) {
         case 0:
