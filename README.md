@@ -7,13 +7,45 @@ Kalle Asmundi
 
 ## TODO
 
-- Sensoridatan siivoaminen
-- Eleiden tunnistus datasta
-- Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
-- Leikkiminen: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
-- Pet: ????
-- Eat: ????
+### Pakolliset
 
+- [ ]  Jupiter-notebook algoritmien protoiluun
+- [ ]  MPU-datan käsittely
+  - [ ]  Testidatan keräys
+  - [ ]  Sensoridatan siivoaminen
+    - [ ]  esim. liukuva keskiarvo, liian pienien ja suurien mittausten poisto
+  - [ ]  Eleiden tunnistus datasta
+    - [ ]  Ainakin pöydällä pompottelu koska helppo tunnistaa
+    - [ ]  1-2 lisää elettä?
+- [ ]  Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
+- [ ]  Exercise: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
+- [ ]  Pet: Valosensorilla tunnistetaan kun käden varjo pyyhkii laitteen yli?
+- [ ]  Eat: Nappi 1 syöttää, pitäisi keksiä jokin reaktio
+- [ ]  Nappi 2: Jukebox
+  - [ ]  Ei vielä käytössä, pitää alustaa Mainissa
+  - [ ]  Napin painaminen kiertää `music_selection` enumia niin että soiva kappale katkeaa ja seuraava alkaa suoraan
+  - [ ]  Muuta playSoundin logiikkaa niin että buzzerTask hoitaa looppaamisen, playSound soittaa vain kappaleen seuraavan nuotin
+- [ ]  `id,BEEP` viestien käsittely
+  - ohjeet: <https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-messages-from-the-gateway>
+  - [ ]  Pikkufunktiot Ledille
+    - [ ]  Nopea vilkkuminen
+    - [ ]  Hidas vilkkuminen
+    - [ ]  x sekuntia päällä
+
+### Bonus
+
+- [ ] uartTaskin muokkaus niin että bufferin tyhjyyden sijaan käytetään tiloja `{BUFFER_EMPTY, BUFFER_FULL}` (Ville do plz?)
+  - Määrittele `enum MsgBufferState`
+  - Luo siitä muuttuja `msgBufferState`
+  - Anna muuttuja parametrina funktioille että jotta voivat muuttaa sen tilaa kirjoittaessaan messageBufferiin
+  - `writeMessageBuffer` muutoksia:
+    - Jos `msgBufferState = BUFFER_EMPTY`: täyttää bufferia kunnes se on täynnä - 1 (Backend vaatii että viestin lopussa yksi tyhjä merkki. Taskissa on kutsu strlen(buffer) + 1 joten täysi bufferi johtaa liian pitkään viestiin), asettaa `msgBufferState = BUFFER_FULL`
+  - Jos `msgBufferState = BUFFER_FULL`: Nukkuu kunnes bufferi on tyhjä ja jatkaa sen täyttämistä. Pitäisi toimia koska bufferiin kirjoitetaan eri taskissa kuin sen tyhjennys
+  - `uartTaskFxn` muutoksia:
+    - Jos `msgBufferState = BUFFER_FULL`: Lähettää ja tyhjentää bufferin, asettaa `msgBufferState = BUFFER_EMPTY`
+    - Jos `msgBufferState = BUFFER_EMPTY`: Sleep
+- [ ]  `MSG1` ja `MSG2`-kentille jotakin järkevää lähetettävää, esim. sensoreilta
+- [ ] BMP280 lämpötila ei tunnu toimivan luotettavasti, ota käyttöön tmp007 ja hae lämpötila siltä (Sigmasetä hoitaa)
 
 ## Sensorit
 

@@ -390,3 +390,46 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
 
     return 1;
 }
+
+int blinkLed(int ledSelection, int blinkTimes, float timesPerSecond) {
+    char led;
+    switch (ledSelection) {
+        case 0:
+            led = Board_LED0;
+            break;
+        case 1:
+            led = Board_LED1;
+            break;
+        default:
+            return 0;
+    }
+    int i;
+    for (i = 0; i < blinkTimes; ++i) {
+        int pinValue = PIN_getOutputValue(led);
+        pinValue = !pinValue;
+        PIN_setOutputValue(ledHandle, led, pinValue);
+        Task_sleep(SECOND / timesPerSecond);
+    }
+    PIN_setOutputValue(ledHandle, led, 0);
+
+    return 1;
+}
+
+int turnOnLed(int ledSelection, float time) {
+    char led;
+    switch (ledSelection) {
+        case 0:
+            led = Board_LED0;
+            break;
+        case 1:
+            led = Board_LED1;
+            break;
+        default:
+            return 0;
+    }
+    PIN_setOutputValue(ledHandle, led, 1);
+    Task_sleep(SECOND * time);
+    PIN_setOutputValue(ledHandle, led, 0);
+
+    return 1;
+}
