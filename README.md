@@ -21,17 +21,20 @@ Kalle Asmundi
 - [ ]  Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
 - [ ]  Exercise: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
 - [ ]  Pet: Valosensorilla tunnistetaan kun käden varjo pyyhkii laitteen yli?
-- [ ]  Eat: Nappi 1 syöttää, pitäisi keksiä jokin reaktio
+- [x]  Eat: Nappi 1 syöttää, pitäisi keksiä jokin reaktio
 - [x]  Nappi 2: Jukebox
   - [x]  Ei vielä käytössä, pitää alustaa Mainissa
   - [ ]  Napin painaminen kiertää `music_selection` enumia niin että soiva kappale katkeaa ja seuraava alkaa suoraan
   - [ ]  Muuta playSoundin logiikkaa niin että buzzerTask hoitaa looppaamisen, playSound soittaa vain kappaleen seuraavan nuotin
 - [ ]  `id,BEEP` viestien käsittely
-  - ohjeet: <https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-messages-from-the-gateway>
-  - [x]  Pikkufunktiot Ledille
-    - [ ]  Nopea vilkkuminen
-    - [ ]  Hidas vilkkuminen
-    - [ ]  x sekuntia päällä
+  - <https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-messages-from-the-gateway>
+  - <https://lovelace.oulu.fi/tietokonej%C3%A4rjestelm%C3%A4t/tietokonej%C3%A4rjestelm%C3%A4t/sarjaliikenne/>
+  - <https://lovelace.oulu.fi/tietokonej%C3%A4rjestelm%C3%A4t/tietokonej%C3%A4rjestelm%C3%A4t/keskeytykset/>
+- [x]  Pikkufunktiot Ledille
+  - [ ]  Nopea vilkkuminen
+  - [ ]  Hidas vilkkuminen
+  - [ ]  x sekuntia päällä
+  - [x]  Toggle
 
 ### Bonus
 
