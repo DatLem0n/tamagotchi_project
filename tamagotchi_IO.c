@@ -352,6 +352,12 @@ struct Note toBeContinued[] = {
         {"-", 3}
 };
 
+struct Note eatSound[] ={
+        {"C", 16},
+        {"E", 16},
+        {"G", 16},
+        {"C", 16},
+        };
 /**
  *          END OF SOUNDBANK (for now)
  */
@@ -363,6 +369,7 @@ struct Note toBeContinued[] = {
    *    1 for Doom
    *    2 for Victory sound
    *    3 for roundabout
+   *    4 for eatSound
    *
    * @param buzzerHandle
    * @param soundSelection (int)
@@ -388,8 +395,12 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
           case 3:
               sound = toBeContinued;
               songLength = sizeof(toBeContinued)/sizeof(struct Note);
-              tempo = 2*SECOND;
+              tempo = 2 * SECOND;
               break;
+          case 4:
+              sound = eatSound;
+              songLength = sizeof (eatSound)/sizeof(struct Note);
+              tempo = 2 * SECOND;
           default:
               return 0;
       }
