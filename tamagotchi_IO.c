@@ -22,7 +22,7 @@ struct Note
  * @param buffer
  * @return 1 on success
  */
-int writeMessageBuffer(char* message, char* buffer)
+int writeMessageBuffer(char* buffer, char* message)
 {
     while (1){
         if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
@@ -70,7 +70,7 @@ void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float a
              snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i-1], dataPointerArray[i-1]);
          }
          do{
-             bufferFull = !writeMessageBuffer(msg, buffer);
+             bufferFull = !writeMessageBuffer(buffer, msg);
          } while (bufferFull);
      }
 }
@@ -79,12 +79,12 @@ void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, 
     char msg[BUFFERSIZE];
     sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
         time, ax, ay, az, gx, gy, gz);
-    writeMessageBuffer(msg, buffer);
+    writeMessageBuffer(buffer, msg);
 }
 void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, double light){
     char msg[BUFFERSIZE];
     sprintf(msg,"temp:%f,press:%f,light:%f", temp, press, light);
-    writeMessageBuffer(msg, buffer);
+    writeMessageBuffer(buffer, msg);
 }
 
 /*
@@ -117,7 +117,7 @@ int eat(int amount, char* buffer)
 
     char msg[10];
     sprintf(msg, "EAT:%i", amount);
-    writeMessageBuffer(msg, buffer);
+    writeMessageBuffer(buffer, msg);
     return 1;
 }
 
@@ -133,7 +133,7 @@ int exercise(int amount, char* buffer)
 
     char msg[10];
     sprintf(msg, "EXERCISE:%i", amount);
-    writeMessageBuffer(msg, buffer);
+    writeMessageBuffer(buffer, msg);
     return 1;
 }
 
@@ -149,7 +149,7 @@ int pet(int amount, char* buffer)
 
     char msg[10];
     sprintf(msg, "PET:%i", amount);
-    writeMessageBuffer(msg, buffer);
+    writeMessageBuffer(buffer, msg);
     return 1;
 }
 
@@ -167,7 +167,7 @@ int activate(int eat, int exercise, int pet, char* buffer)
 
     char msg[30];
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
-    writeMessageBuffer(msg, buffer);
+    writeMessageBuffer(buffer, msg);
     return 0;
 }
 

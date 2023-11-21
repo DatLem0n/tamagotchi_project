@@ -4,7 +4,7 @@
 #include <ti/drivers/PIN.h>
 
 
-void writeMessageBuffer(char* message, char* buffer);
+int writeMessageBuffer(char* buffer, char* message);
 
 void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz);
 void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, double light);

@@ -95,11 +95,11 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
 
    //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
    if (sensorState == SENSORS_READY) {
-      writeMessageBuffer("session:start", messageBuffer);
+      writeMessageBuffer(messageBuffer,"session:start");
       sensorState = SENSORS_SENDING_DATA;
    }
    else {
-      writeMessageBuffer("session:end", messageBuffer);
+      writeMessageBuffer(messageBuffer, "session:end");
       sensorState = SENSORS_READY;
    }
    //System_printf("MessageBuffer:%s\n", messageBuffer);
