@@ -1,0 +1,11 @@
+package.xdc
+package/ti.mw.sensortag.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-B06
+package/ti_mw_sensortag.java
+package/ti_mw_sensortag.class
+package/package_ti.mw.sensortag.c
+package/package.defs.h
+package/ti.mw.sensortag.ccs

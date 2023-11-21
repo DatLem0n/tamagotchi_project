@@ -1,0 +1,11 @@
+package/lib/lib/drivers_cc13xxware/I2S.oem3: I2S.c /db/vendors/ti/arm/5.2.5/Linux/include/stdint.h I2S.h /db/vendors/ti/arm/5.2.5/Linux/include/stddef.h utils/List.h /db/vendors/ti/arm/5.2.5/Linux/include/stdbool.h /db/vendors/ti/arm/5.2.5/Linux/include/yvals.h /db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h /db/vendors/ti/arm/5.2.5/Linux/include/linkage.h /db/vendors/ti/arm/5.2.5/Linux/include/_lock.h 
+I2S.c:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdint.h:
+I2S.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stddef.h:
+utils/List.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdbool.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/yvals.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/linkage.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/_lock.h:

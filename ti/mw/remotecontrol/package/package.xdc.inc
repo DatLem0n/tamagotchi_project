@@ -1,0 +1,11 @@
+package.xdc
+package/ti.mw.remotecontrol.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-B06
+package/ti_mw_remotecontrol.java
+package/ti_mw_remotecontrol.class
+package/package_ti.mw.remotecontrol.c
+package/package.defs.h
+package/ti.mw.remotecontrol.ccs

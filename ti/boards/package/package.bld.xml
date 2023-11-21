@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.boards" version="1, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/ti_boards.zip.dep" src="package/rel/ti_boards.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_boards"
+        pname="../../../exports/ti_boards.zip"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.bld"/>
+        <file name="CC1310DK_4XD"/>
+        <file name="CC1310DK_5XD"/>
+        <file name="CC1310DK_7XD"/>
+        <file name="CC1310_LAUNCHXL"/>
+        <file name="CC1350STK"/>
+        <file name="CC1350_LAUNCHXL"/>
+        <file name="BOOSTXL_CC2650MA"/>
+        <file name="CC2650DK_4XS"/>
+        <file name="CC2650DK_5XD"/>
+        <file name="CC2650DK_7ID"/>
+        <file name="CC2650DK_CXS"/>
+        <file name="CC2650RC"/>
+        <file name="CC2650STK"/>
+        <file name="CC2650_LAUNCHXL"/>
+        <file name="package/package.cfg.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

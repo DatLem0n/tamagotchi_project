@@ -1,0 +1,11 @@
+package/lib/lib/drivers_cc13xxware_instrumented/USBMSCHFatFs.oem3: USBMSCHFatFs.c /db/vendors/ti/arm/5.2.5/Linux/include/stdint.h /db/vendors/ti/arm/5.2.5/Linux/include/stdlib.h USBMSCHFatFs.h /db/vendors/ti/arm/5.2.5/Linux/include/linkage.h /db/vendors/ti/arm/5.2.5/Linux/include/stddef.h /db/vendors/ti/arm/5.2.5/Linux/include/stdbool.h /db/vendors/ti/arm/5.2.5/Linux/include/yvals.h /db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h /db/vendors/ti/arm/5.2.5/Linux/include/_lock.h 
+USBMSCHFatFs.c:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdint.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdlib.h:
+USBMSCHFatFs.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/linkage.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stddef.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdbool.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/yvals.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/_lock.h:

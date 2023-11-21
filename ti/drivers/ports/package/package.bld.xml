@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.drivers.ports" version="1, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.drivers.ports.c"/>
+        <srcFile name="./tirtos/ClockP_tirtos.c"/>
+        <srcFile name="./tirtos/DebugP_tirtos.c"/>
+        <srcFile name="./tirtos/HwiP_tirtos.c"/>
+        <srcFile name="./tirtos/MutexP_tirtos.c"/>
+        <srcFile name="./tirtos/SemaphoreP_tirtos.c"/>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/tirtosport.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/tirtosport/package/package_ti.drivers.ports.oem3.dep" src="package/package_ti.drivers.ports.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/ClockP_tirtos.oem3.dep" src="./tirtos/ClockP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/DebugP_tirtos.oem3.dep" src="./tirtos/DebugP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/HwiP_tirtos.oem3.dep" src="./tirtos/HwiP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/MutexP_tirtos.oem3.dep" src="./tirtos/MutexP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/SemaphoreP_tirtos.oem3.dep" src="./tirtos/SemaphoreP_tirtos.c"/>
+        <srcFile name="lib/tirtosport.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/tirtosport/package/package_ti.drivers.ports.om3g.dep" src="package/package_ti.drivers.ports.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/ClockP_tirtos.om3g.dep" src="./tirtos/ClockP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/DebugP_tirtos.om3g.dep" src="./tirtos/DebugP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/HwiP_tirtos.om3g.dep" src="./tirtos/HwiP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/MutexP_tirtos.om3g.dep" src="./tirtos/MutexP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/SemaphoreP_tirtos.om3g.dep" src="./tirtos/SemaphoreP_tirtos.c"/>
+        <srcFile name="lib/tirtosport.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/tirtosport/package/package_ti.drivers.ports.orm3.dep" src="package/package_ti.drivers.ports.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/ClockP_tirtos.orm3.dep" src="./tirtos/ClockP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/DebugP_tirtos.orm3.dep" src="./tirtos/DebugP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/HwiP_tirtos.orm3.dep" src="./tirtos/HwiP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/MutexP_tirtos.orm3.dep" src="./tirtos/MutexP_tirtos.c"/>
+        <srcFile name="package/lib/lib/tirtosport/./tirtos/SemaphoreP_tirtos.orm3.dep" src="./tirtos/SemaphoreP_tirtos.c"/>
+        <srcFile name="package/rel/ti_drivers_ports.zip.dep" src="package/rel/ti_drivers_ports.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.arm.elf.M3"
+            version="ti.targets.arm.elf.M3{1,0,5.2,5"
+            rawVersion="5.2.5"
+            platform="ti.platforms.simCM3"
+            isa="v7M"
+            suffix="em3"
+            rootDir="/db/vendors/ti/arm/5.2.5/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M3"
+            version="gnu.targets.arm.M3{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:TM4C1294NCPDT"
+            isa="v7M"
+            suffix="m3g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="iar.targets.arm.M3"
+            version="iar.targets.arm.M3{1,0,7.50,1"
+            rawVersion="7.50.1.22"
+            platform="ti.platforms.tiva:TM4C1294NCPDT:1"
+            isa="v7M"
+            suffix="rm3"
+            rootDir="/db/vendors/iar/arm/7.50/Linux"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/tirtosport"
+        pname="lib/tirtosport.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/tirtosport"
+        pname="lib/tirtosport.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/tirtosport"
+        pname="lib/tirtosport.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_drivers_ports"
+        pname="../../../../exports/ti_drivers_ports.zip"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="ClockP.h"/>
+        <file name="DebugP.h"/>
+        <file name="HwiP.h"/>
+        <file name="MutexP.h"/>
+        <file name="SemaphoreP.h"/>
+        <file name="package.bld"/>
+        <file name="tirtos"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/tirtosport.aem3"/>
+        <file name="package/package_ti.drivers.ports.c"/>
+        <file name="./tirtos/ClockP_tirtos.c"/>
+        <file name="./tirtos/DebugP_tirtos.c"/>
+        <file name="./tirtos/HwiP_tirtos.c"/>
+        <file name="./tirtos/MutexP_tirtos.c"/>
+        <file name="./tirtos/SemaphoreP_tirtos.c"/>
+        <file name="lib/tirtosport.am3g"/>
+        <file name="lib/tirtosport.arm3"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

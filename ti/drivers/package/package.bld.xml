@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.drivers" version="1, 0, 0" producerId="undefined">
+    <units>
+        <module name="Config"/>
+        <module name="Power"/>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.drivers.c"/>
+        <srcFile name="ADC.c"/>
+        <srcFile name="ADCBuf.c"/>
+        <srcFile name="Camera.c"/>
+        <srcFile name="EMAC.c"/>
+        <srcFile name="I2C.c"/>
+        <srcFile name="I2CSlave.c"/>
+        <srcFile name="I2S.c"/>
+        <srcFile name="NVS.c"/>
+        <srcFile name="PWM.c"/>
+        <srcFile name="SDSPI.c"/>
+        <srcFile name="SPI.c"/>
+        <srcFile name="UART.c"/>
+        <srcFile name="USBMSCHFatFs.c"/>
+        <srcFile name="Watchdog.c"/>
+        <srcFile name="WiFi.c"/>
+        <srcFile name="./utils/List.c"/>
+        <srcFile name="./utils/RingBuf.c"/>
+        <srcFile name="./adc/ADCCC26XX.c"/>
+        <srcFile name="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="./dma/UDMACC26XX.c"/>
+        <srcFile name="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="./i2c/I2CCC26XX.c"/>
+        <srcFile name="./nvs/NVSCC26XX.c"/>
+        <srcFile name="./pdm/Codec1.c"/>
+        <srcFile name="./pdm/PDMCC26XX.c"/>
+        <srcFile name="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="./pin/PINCC26XX.c"/>
+        <srcFile name="./power/PowerCC26XX.c"/>
+        <srcFile name="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="./uart/UARTCC26XX.c"/>
+        <srcFile name="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="./power/PowerCC26XX_tirtos.c"/>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/drivers_cc13xxware.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/ADC.oem3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/ADCBuf.oem3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/Camera.oem3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/EMAC.oem3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2C.oem3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2CSlave.oem3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2S.oem3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/NVS.oem3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/PWM.oem3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/SDSPI.oem3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/SPI.oem3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/UART.oem3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/USBMSCHFatFs.oem3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/Watchdog.oem3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/WiFi.oem3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./utils/List.oem3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./utils/RingBuf.oem3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./adc/ADCCC26XX.oem3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./adcbuf/ADCBufCC26XX.oem3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./crypto/CryptoCC26XX.oem3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./dma/UDMACC26XX.oem3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./gpio/GPIOCC26XX.oem3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./i2c/I2CCC26XX.oem3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./nvs/NVSCC26XX.oem3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/Codec1.oem3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/PDMCC26XX.oem3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/PDMCC26XX_util.oem3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pin/PINCC26XX.oem3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./power/PowerCC26XX.oem3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./power/PowerCC26XX_calibrateRCOSC.oem3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pwm/PWMTimerCC26XX.oem3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./spi/SPICC26XXDMA.oem3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./timer/GPTimerCC26XX.oem3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./uart/UARTCC26XX.oem3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./watchdog/WatchdogCC26XX.oem3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc13xxware_instrumented.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/ADC.oem3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/ADCBuf.oem3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/Camera.oem3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/EMAC.oem3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2C.oem3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2CSlave.oem3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2S.oem3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/NVS.oem3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/PWM.oem3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/SDSPI.oem3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/SPI.oem3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/UART.oem3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/USBMSCHFatFs.oem3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/Watchdog.oem3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/WiFi.oem3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./utils/List.oem3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./utils/RingBuf.oem3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./adc/ADCCC26XX.oem3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./adcbuf/ADCBufCC26XX.oem3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./crypto/CryptoCC26XX.oem3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./dma/UDMACC26XX.oem3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./gpio/GPIOCC26XX.oem3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./i2c/I2CCC26XX.oem3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./nvs/NVSCC26XX.oem3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/Codec1.oem3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/PDMCC26XX.oem3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/PDMCC26XX_util.oem3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pin/PINCC26XX.oem3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./power/PowerCC26XX.oem3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./power/PowerCC26XX_calibrateRCOSC.oem3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pwm/PWMTimerCC26XX.oem3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./spi/SPICC26XXDMA.oem3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./timer/GPTimerCC26XX.oem3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./uart/UARTCC26XX.oem3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./watchdog/WatchdogCC26XX.oem3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc13xxware.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/ADC.orm3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/ADCBuf.orm3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/Camera.orm3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/EMAC.orm3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2C.orm3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2CSlave.orm3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2S.orm3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/NVS.orm3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/PWM.orm3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/SDSPI.orm3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/SPI.orm3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/UART.orm3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/USBMSCHFatFs.orm3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/Watchdog.orm3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/WiFi.orm3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./utils/List.orm3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./utils/RingBuf.orm3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./adc/ADCCC26XX.orm3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./adcbuf/ADCBufCC26XX.orm3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./crypto/CryptoCC26XX.orm3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./dma/UDMACC26XX.orm3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./gpio/GPIOCC26XX.orm3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./i2c/I2CCC26XX.orm3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./nvs/NVSCC26XX.orm3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/Codec1.orm3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/PDMCC26XX.orm3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/PDMCC26XX_util.orm3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pin/PINCC26XX.orm3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./power/PowerCC26XX.orm3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./power/PowerCC26XX_calibrateRCOSC.orm3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pwm/PWMTimerCC26XX.orm3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./spi/SPICC26XXDMA.orm3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./timer/GPTimerCC26XX.orm3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./uart/UARTCC26XX.orm3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./watchdog/WatchdogCC26XX.orm3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc13xxware_instrumented.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/ADC.orm3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/ADCBuf.orm3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/Camera.orm3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/EMAC.orm3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2C.orm3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2CSlave.orm3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2S.orm3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/NVS.orm3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/PWM.orm3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/SDSPI.orm3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/SPI.orm3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/UART.orm3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/USBMSCHFatFs.orm3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/Watchdog.orm3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/WiFi.orm3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./utils/List.orm3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./utils/RingBuf.orm3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./adc/ADCCC26XX.orm3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./adcbuf/ADCBufCC26XX.orm3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./crypto/CryptoCC26XX.orm3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./dma/UDMACC26XX.orm3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./gpio/GPIOCC26XX.orm3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./i2c/I2CCC26XX.orm3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./nvs/NVSCC26XX.orm3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/Codec1.orm3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/PDMCC26XX.orm3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/PDMCC26XX_util.orm3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pin/PINCC26XX.orm3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./power/PowerCC26XX.orm3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./power/PowerCC26XX_calibrateRCOSC.orm3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pwm/PWMTimerCC26XX.orm3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./spi/SPICC26XXDMA.orm3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./timer/GPTimerCC26XX.orm3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./uart/UARTCC26XX.orm3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./watchdog/WatchdogCC26XX.orm3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc13xxware.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/ADC.om3g.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/ADCBuf.om3g.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/Camera.om3g.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/EMAC.om3g.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2C.om3g.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2CSlave.om3g.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/I2S.om3g.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/NVS.om3g.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/PWM.om3g.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/SDSPI.om3g.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/SPI.om3g.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/UART.om3g.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/USBMSCHFatFs.om3g.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/Watchdog.om3g.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/WiFi.om3g.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./utils/List.om3g.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./utils/RingBuf.om3g.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./adc/ADCCC26XX.om3g.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./adcbuf/ADCBufCC26XX.om3g.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./crypto/CryptoCC26XX.om3g.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./dma/UDMACC26XX.om3g.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./gpio/GPIOCC26XX.om3g.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./i2c/I2CCC26XX.om3g.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./nvs/NVSCC26XX.om3g.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/Codec1.om3g.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/PDMCC26XX.om3g.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pdm/PDMCC26XX_util.om3g.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pin/PINCC26XX.om3g.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./power/PowerCC26XX.om3g.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./power/PowerCC26XX_calibrateRCOSC.om3g.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./pwm/PWMTimerCC26XX.om3g.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./spi/SPICC26XXDMA.om3g.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./timer/GPTimerCC26XX.om3g.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./uart/UARTCC26XX.om3g.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware/./watchdog/WatchdogCC26XX.om3g.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc13xxware_instrumented.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/ADC.om3g.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/ADCBuf.om3g.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/Camera.om3g.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/EMAC.om3g.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2C.om3g.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2CSlave.om3g.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/I2S.om3g.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/NVS.om3g.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/PWM.om3g.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/SDSPI.om3g.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/SPI.om3g.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/UART.om3g.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/USBMSCHFatFs.om3g.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/Watchdog.om3g.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/WiFi.om3g.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./utils/List.om3g.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./utils/RingBuf.om3g.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./adc/ADCCC26XX.om3g.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./adcbuf/ADCBufCC26XX.om3g.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./crypto/CryptoCC26XX.om3g.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./dma/UDMACC26XX.om3g.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./gpio/GPIOCC26XX.om3g.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./i2c/I2CCC26XX.om3g.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./nvs/NVSCC26XX.om3g.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/Codec1.om3g.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/PDMCC26XX.om3g.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pdm/PDMCC26XX_util.om3g.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pin/PINCC26XX.om3g.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./power/PowerCC26XX.om3g.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./power/PowerCC26XX_calibrateRCOSC.om3g.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./pwm/PWMTimerCC26XX.om3g.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./spi/SPICC26XXDMA.om3g.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./timer/GPTimerCC26XX.om3g.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./uart/UARTCC26XX.om3g.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc13xxware_instrumented/./watchdog/WatchdogCC26XX.om3g.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/power_cc13xx_tirtos.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos/./power/PowerCC26XX_tirtos.oem3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc13xx_tirtos_instrumented.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos_instrumented/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos_instrumented/./power/PowerCC26XX_tirtos.oem3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc13xx_tirtos.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos/./power/PowerCC26XX_tirtos.orm3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc13xx_tirtos_instrumented.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos_instrumented/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos_instrumented/./power/PowerCC26XX_tirtos.orm3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc13xx_tirtos.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos/./power/PowerCC26XX_tirtos.om3g.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc13xx_tirtos_instrumented.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos_instrumented/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc13xx_tirtos_instrumented/./power/PowerCC26XX_tirtos.om3g.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/drivers_cc26xxware.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/ADC.oem3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/ADCBuf.oem3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/Camera.oem3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/EMAC.oem3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2C.oem3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2CSlave.oem3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2S.oem3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/NVS.oem3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/PWM.oem3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/SDSPI.oem3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/SPI.oem3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/UART.oem3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/USBMSCHFatFs.oem3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/Watchdog.oem3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/WiFi.oem3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./utils/List.oem3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./utils/RingBuf.oem3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./adc/ADCCC26XX.oem3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./adcbuf/ADCBufCC26XX.oem3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./crypto/CryptoCC26XX.oem3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./dma/UDMACC26XX.oem3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./gpio/GPIOCC26XX.oem3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./i2c/I2CCC26XX.oem3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./nvs/NVSCC26XX.oem3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/Codec1.oem3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/PDMCC26XX.oem3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/PDMCC26XX_util.oem3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pin/PINCC26XX.oem3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./power/PowerCC26XX.oem3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./power/PowerCC26XX_calibrateRCOSC.oem3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pwm/PWMTimerCC26XX.oem3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./spi/SPICC26XXDMA.oem3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./timer/GPTimerCC26XX.oem3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./uart/UARTCC26XX.oem3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./watchdog/WatchdogCC26XX.oem3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc26xxware_instrumented.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/ADC.oem3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/ADCBuf.oem3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/Camera.oem3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/EMAC.oem3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2C.oem3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2CSlave.oem3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2S.oem3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/NVS.oem3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/PWM.oem3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/SDSPI.oem3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/SPI.oem3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/UART.oem3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/USBMSCHFatFs.oem3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/Watchdog.oem3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/WiFi.oem3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./utils/List.oem3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./utils/RingBuf.oem3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./adc/ADCCC26XX.oem3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./adcbuf/ADCBufCC26XX.oem3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./crypto/CryptoCC26XX.oem3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./dma/UDMACC26XX.oem3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./gpio/GPIOCC26XX.oem3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./i2c/I2CCC26XX.oem3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./nvs/NVSCC26XX.oem3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/Codec1.oem3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/PDMCC26XX.oem3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/PDMCC26XX_util.oem3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pin/PINCC26XX.oem3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./power/PowerCC26XX.oem3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./power/PowerCC26XX_calibrateRCOSC.oem3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pwm/PWMTimerCC26XX.oem3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./spi/SPICC26XXDMA.oem3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./timer/GPTimerCC26XX.oem3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./uart/UARTCC26XX.oem3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./watchdog/WatchdogCC26XX.oem3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc26xxware.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/ADC.orm3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/ADCBuf.orm3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/Camera.orm3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/EMAC.orm3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2C.orm3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2CSlave.orm3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2S.orm3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/NVS.orm3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/PWM.orm3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/SDSPI.orm3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/SPI.orm3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/UART.orm3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/USBMSCHFatFs.orm3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/Watchdog.orm3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/WiFi.orm3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./utils/List.orm3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./utils/RingBuf.orm3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./adc/ADCCC26XX.orm3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./adcbuf/ADCBufCC26XX.orm3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./crypto/CryptoCC26XX.orm3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./dma/UDMACC26XX.orm3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./gpio/GPIOCC26XX.orm3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./i2c/I2CCC26XX.orm3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./nvs/NVSCC26XX.orm3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/Codec1.orm3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/PDMCC26XX.orm3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/PDMCC26XX_util.orm3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pin/PINCC26XX.orm3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./power/PowerCC26XX.orm3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./power/PowerCC26XX_calibrateRCOSC.orm3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pwm/PWMTimerCC26XX.orm3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./spi/SPICC26XXDMA.orm3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./timer/GPTimerCC26XX.orm3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./uart/UARTCC26XX.orm3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./watchdog/WatchdogCC26XX.orm3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc26xxware_instrumented.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/ADC.orm3.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/ADCBuf.orm3.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/Camera.orm3.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/EMAC.orm3.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2C.orm3.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2CSlave.orm3.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2S.orm3.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/NVS.orm3.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/PWM.orm3.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/SDSPI.orm3.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/SPI.orm3.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/UART.orm3.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/USBMSCHFatFs.orm3.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/Watchdog.orm3.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/WiFi.orm3.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./utils/List.orm3.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./utils/RingBuf.orm3.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./adc/ADCCC26XX.orm3.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./adcbuf/ADCBufCC26XX.orm3.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./crypto/CryptoCC26XX.orm3.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./dma/UDMACC26XX.orm3.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./gpio/GPIOCC26XX.orm3.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./i2c/I2CCC26XX.orm3.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./nvs/NVSCC26XX.orm3.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/Codec1.orm3.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/PDMCC26XX.orm3.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/PDMCC26XX_util.orm3.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pin/PINCC26XX.orm3.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./power/PowerCC26XX.orm3.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./power/PowerCC26XX_calibrateRCOSC.orm3.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pwm/PWMTimerCC26XX.orm3.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./spi/SPICC26XXDMA.orm3.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./timer/GPTimerCC26XX.orm3.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./uart/UARTCC26XX.orm3.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./watchdog/WatchdogCC26XX.orm3.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc26xxware.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/ADC.om3g.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/ADCBuf.om3g.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/Camera.om3g.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/EMAC.om3g.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2C.om3g.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2CSlave.om3g.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/I2S.om3g.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/NVS.om3g.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/PWM.om3g.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/SDSPI.om3g.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/SPI.om3g.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/UART.om3g.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/USBMSCHFatFs.om3g.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/Watchdog.om3g.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/WiFi.om3g.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./utils/List.om3g.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./utils/RingBuf.om3g.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./adc/ADCCC26XX.om3g.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./adcbuf/ADCBufCC26XX.om3g.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./crypto/CryptoCC26XX.om3g.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./dma/UDMACC26XX.om3g.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./gpio/GPIOCC26XX.om3g.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./i2c/I2CCC26XX.om3g.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./nvs/NVSCC26XX.om3g.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/Codec1.om3g.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/PDMCC26XX.om3g.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pdm/PDMCC26XX_util.om3g.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pin/PINCC26XX.om3g.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./power/PowerCC26XX.om3g.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./power/PowerCC26XX_calibrateRCOSC.om3g.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./pwm/PWMTimerCC26XX.om3g.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./spi/SPICC26XXDMA.om3g.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./timer/GPTimerCC26XX.om3g.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./uart/UARTCC26XX.om3g.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware/./watchdog/WatchdogCC26XX.om3g.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/drivers_cc26xxware_instrumented.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/ADC.om3g.dep" src="ADC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/ADCBuf.om3g.dep" src="ADCBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/Camera.om3g.dep" src="Camera.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/EMAC.om3g.dep" src="EMAC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2C.om3g.dep" src="I2C.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2CSlave.om3g.dep" src="I2CSlave.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/I2S.om3g.dep" src="I2S.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/NVS.om3g.dep" src="NVS.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/PWM.om3g.dep" src="PWM.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/SDSPI.om3g.dep" src="SDSPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/SPI.om3g.dep" src="SPI.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/UART.om3g.dep" src="UART.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/USBMSCHFatFs.om3g.dep" src="USBMSCHFatFs.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/Watchdog.om3g.dep" src="Watchdog.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/WiFi.om3g.dep" src="WiFi.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./utils/List.om3g.dep" src="./utils/List.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./utils/RingBuf.om3g.dep" src="./utils/RingBuf.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./adc/ADCCC26XX.om3g.dep" src="./adc/ADCCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./adcbuf/ADCBufCC26XX.om3g.dep" src="./adcbuf/ADCBufCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./crypto/CryptoCC26XX.om3g.dep" src="./crypto/CryptoCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./dma/UDMACC26XX.om3g.dep" src="./dma/UDMACC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./gpio/GPIOCC26XX.om3g.dep" src="./gpio/GPIOCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./i2c/I2CCC26XX.om3g.dep" src="./i2c/I2CCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./nvs/NVSCC26XX.om3g.dep" src="./nvs/NVSCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/Codec1.om3g.dep" src="./pdm/Codec1.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/PDMCC26XX.om3g.dep" src="./pdm/PDMCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pdm/PDMCC26XX_util.om3g.dep" src="./pdm/PDMCC26XX_util.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pin/PINCC26XX.om3g.dep" src="./pin/PINCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./power/PowerCC26XX.om3g.dep" src="./power/PowerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./power/PowerCC26XX_calibrateRCOSC.om3g.dep" src="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./pwm/PWMTimerCC26XX.om3g.dep" src="./pwm/PWMTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./spi/SPICC26XXDMA.om3g.dep" src="./spi/SPICC26XXDMA.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./timer/GPTimerCC26XX.om3g.dep" src="./timer/GPTimerCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./uart/UARTCC26XX.om3g.dep" src="./uart/UARTCC26XX.c"/>
+        <srcFile name="package/lib/lib/drivers_cc26xxware_instrumented/./watchdog/WatchdogCC26XX.om3g.dep" src="./watchdog/WatchdogCC26XX.c"/>
+        <srcFile name="lib/power_cc26xx_tirtos.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos/./power/PowerCC26XX_tirtos.oem3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc26xx_tirtos_instrumented.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos_instrumented/package/package_ti.drivers.oem3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos_instrumented/./power/PowerCC26XX_tirtos.oem3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc26xx_tirtos.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos/./power/PowerCC26XX_tirtos.orm3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc26xx_tirtos_instrumented.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos_instrumented/package/package_ti.drivers.orm3.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos_instrumented/./power/PowerCC26XX_tirtos.orm3.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc26xx_tirtos.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos/./power/PowerCC26XX_tirtos.om3g.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="lib/power_cc26xx_tirtos_instrumented.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos_instrumented/package/package_ti.drivers.om3g.dep" src="package/package_ti.drivers.c"/>
+        <srcFile name="package/lib/lib/power_cc26xx_tirtos_instrumented/./power/PowerCC26XX_tirtos.om3g.dep" src="./power/PowerCC26XX_tirtos.c"/>
+        <srcFile name="package/rel/ti_drivers.zip.dep" src="package/rel/ti_drivers.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.arm.elf.M3"
+            version="ti.targets.arm.elf.M3{1,0,5.2,5"
+            rawVersion="5.2.5"
+            platform="ti.platforms.simCM3"
+            isa="v7M"
+            suffix="em3"
+            rootDir="/db/vendors/ti/arm/5.2.5/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="iar.targets.arm.M3"
+            version="iar.targets.arm.M3{1,0,7.50,1"
+            rawVersion="7.50.1.22"
+            platform="ti.platforms.tiva:TM4C1294NCPDT:1"
+            isa="v7M"
+            suffix="rm3"
+            rootDir="/db/vendors/iar/arm/7.50/Linux"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M3"
+            version="gnu.targets.arm.M3{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:TM4C1294NCPDT"
+            isa="v7M"
+            suffix="m3g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/drivers_cc13xxware"
+        pname="lib/drivers_cc13xxware.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/drivers_cc13xxware_instrumented"
+        pname="lib/drivers_cc13xxware_instrumented.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/drivers_cc13xxware"
+        pname="lib/drivers_cc13xxware.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/drivers_cc13xxware_instrumented"
+        pname="lib/drivers_cc13xxware_instrumented.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/drivers_cc13xxware"
+        pname="lib/drivers_cc13xxware.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/drivers_cc13xxware_instrumented"
+        pname="lib/drivers_cc13xxware_instrumented.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/power_cc13xx_tirtos"
+        pname="lib/power_cc13xx_tirtos.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/power_cc13xx_tirtos_instrumented"
+        pname="lib/power_cc13xx_tirtos_instrumented.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/power_cc13xx_tirtos"
+        pname="lib/power_cc13xx_tirtos.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/power_cc13xx_tirtos_instrumented"
+        pname="lib/power_cc13xx_tirtos_instrumented.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/power_cc13xx_tirtos"
+        pname="lib/power_cc13xx_tirtos.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/power_cc13xx_tirtos_instrumented"
+        pname="lib/power_cc13xx_tirtos_instrumented.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/drivers_cc26xxware"
+        pname="lib/drivers_cc26xxware.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/drivers_cc26xxware_instrumented"
+        pname="lib/drivers_cc26xxware_instrumented.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/drivers_cc26xxware"
+        pname="lib/drivers_cc26xxware.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/drivers_cc26xxware_instrumented"
+        pname="lib/drivers_cc26xxware_instrumented.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/drivers_cc26xxware"
+        pname="lib/drivers_cc26xxware.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/drivers_cc26xxware_instrumented"
+        pname="lib/drivers_cc26xxware_instrumented.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/power_cc26xx_tirtos"
+        pname="lib/power_cc26xx_tirtos.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/power_cc26xx_tirtos_instrumented"
+        pname="lib/power_cc26xx_tirtos_instrumented.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/power_cc26xx_tirtos"
+        pname="lib/power_cc26xx_tirtos.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/power_cc26xx_tirtos_instrumented"
+        pname="lib/power_cc26xx_tirtos_instrumented.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/power_cc26xx_tirtos"
+        pname="lib/power_cc26xx_tirtos.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/power_cc26xx_tirtos_instrumented"
+        pname="lib/power_cc26xx_tirtos_instrumented.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_drivers"
+        pname="../../../exports/ti_drivers.zip"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="Config.xml"/>
+        <file name="msp43xOptions.xs"/>
+        <file name="package.bld"/>
+        <file name="xdcArgParser.xs"/>
+        <file name="ADC.h"/>
+        <file name="ADCBuf.h"/>
+        <file name="Camera.h"/>
+        <file name="EMAC.h"/>
+        <file name="GPIO.h"/>
+        <file name="I2C.h"/>
+        <file name="I2CSlave.h"/>
+        <file name="I2S.h"/>
+        <file name="NVS.h"/>
+        <file name="PIN.h"/>
+        <file name="Power.h"/>
+        <file name="PWM.h"/>
+        <file name="SDSPI.h"/>
+        <file name="SPI.h"/>
+        <file name="UART.h"/>
+        <file name="USBMSCHFatFs.h"/>
+        <file name="Watchdog.h"/>
+        <file name="WiFi.h"/>
+        <file name="./utils/List.h"/>
+        <file name="./utils/RingBuf.h"/>
+        <file name="./adc/ADCCC26XX.h"/>
+        <file name="./adcbuf/ADCBufCC26XX.h"/>
+        <file name="./crypto/CryptoCC26XX.h"/>
+        <file name="./dma/UDMACC26XX.h"/>
+        <file name="./gpio/GPIOCC26XX.h"/>
+        <file name="./i2c/I2CCC26XX.h"/>
+        <file name="./nvs/NVSCC26XX.h"/>
+        <file name="./pdm/Codec1.h"/>
+        <file name="./pdm/PDMCC26XX.h"/>
+        <file name="./pdm/PDMCC26XX_util.h"/>
+        <file name="./pin/PINCC26XX.h"/>
+        <file name="./power/PowerCC26XX.h"/>
+        <file name="./pwm/PWMTimerCC26XX.h"/>
+        <file name="./spi/SPICC26XXDMA.h"/>
+        <file name="./timer/GPTimerCC26XX.h"/>
+        <file name="./uart/UARTCC26XX.h"/>
+        <file name="./watchdog/WatchdogCC26XX.h"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/drivers_cc13xxware.aem3"/>
+        <file name="package/package_ti.drivers.c"/>
+        <file name="ADC.c"/>
+        <file name="ADCBuf.c"/>
+        <file name="Camera.c"/>
+        <file name="EMAC.c"/>
+        <file name="I2C.c"/>
+        <file name="I2CSlave.c"/>
+        <file name="I2S.c"/>
+        <file name="NVS.c"/>
+        <file name="PWM.c"/>
+        <file name="SDSPI.c"/>
+        <file name="SPI.c"/>
+        <file name="UART.c"/>
+        <file name="USBMSCHFatFs.c"/>
+        <file name="Watchdog.c"/>
+        <file name="WiFi.c"/>
+        <file name="./utils/List.c"/>
+        <file name="./utils/RingBuf.c"/>
+        <file name="./adc/ADCCC26XX.c"/>
+        <file name="./adcbuf/ADCBufCC26XX.c"/>
+        <file name="./crypto/CryptoCC26XX.c"/>
+        <file name="./dma/UDMACC26XX.c"/>
+        <file name="./gpio/GPIOCC26XX.c"/>
+        <file name="./i2c/I2CCC26XX.c"/>
+        <file name="./nvs/NVSCC26XX.c"/>
+        <file name="./pdm/Codec1.c"/>
+        <file name="./pdm/PDMCC26XX.c"/>
+        <file name="./pdm/PDMCC26XX_util.c"/>
+        <file name="./pin/PINCC26XX.c"/>
+        <file name="./power/PowerCC26XX.c"/>
+        <file name="./power/PowerCC26XX_calibrateRCOSC.c"/>
+        <file name="./pwm/PWMTimerCC26XX.c"/>
+        <file name="./spi/SPICC26XXDMA.c"/>
+        <file name="./timer/GPTimerCC26XX.c"/>
+        <file name="./uart/UARTCC26XX.c"/>
+        <file name="./watchdog/WatchdogCC26XX.c"/>
+        <file name="lib/drivers_cc13xxware_instrumented.aem3"/>
+        <file name="lib/drivers_cc13xxware.arm3"/>
+        <file name="lib/drivers_cc13xxware_instrumented.arm3"/>
+        <file name="lib/drivers_cc13xxware.am3g"/>
+        <file name="lib/drivers_cc13xxware_instrumented.am3g"/>
+        <file name="lib/power_cc13xx_tirtos.aem3"/>
+        <file name="./power/PowerCC26XX_tirtos.c"/>
+        <file name="lib/power_cc13xx_tirtos_instrumented.aem3"/>
+        <file name="lib/power_cc13xx_tirtos.arm3"/>
+        <file name="lib/power_cc13xx_tirtos_instrumented.arm3"/>
+        <file name="lib/power_cc13xx_tirtos.am3g"/>
+        <file name="lib/power_cc13xx_tirtos_instrumented.am3g"/>
+        <file name="lib/drivers_cc26xxware.aem3"/>
+        <file name="lib/drivers_cc26xxware_instrumented.aem3"/>
+        <file name="lib/drivers_cc26xxware.arm3"/>
+        <file name="lib/drivers_cc26xxware_instrumented.arm3"/>
+        <file name="lib/drivers_cc26xxware.am3g"/>
+        <file name="lib/drivers_cc26xxware_instrumented.am3g"/>
+        <file name="lib/power_cc26xx_tirtos.aem3"/>
+        <file name="lib/power_cc26xx_tirtos_instrumented.aem3"/>
+        <file name="lib/power_cc26xx_tirtos.arm3"/>
+        <file name="lib/power_cc26xx_tirtos_instrumented.arm3"/>
+        <file name="lib/power_cc26xx_tirtos.am3g"/>
+        <file name="lib/power_cc26xx_tirtos_instrumented.am3g"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

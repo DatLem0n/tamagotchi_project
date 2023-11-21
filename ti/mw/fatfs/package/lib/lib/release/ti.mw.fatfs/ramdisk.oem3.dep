@@ -1,0 +1,10 @@
+package/lib/lib/release/ti.mw.fatfs/ramdisk.oem3: ramdisk.c /db/vendors/ti/arm/5.2.5/Linux/include/stdio.h /db/vendors/ti/arm/5.2.5/Linux/include/string.h ./ffconf.h ./diskio.h ff.h /db/vendors/ti/arm/5.2.5/Linux/include/linkage.h /db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h ./integer.h 
+ramdisk.c:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdio.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/string.h:
+./ffconf.h:
+./diskio.h:
+ff.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/linkage.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h:
+./integer.h:

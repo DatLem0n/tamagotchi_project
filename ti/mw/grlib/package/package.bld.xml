@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.mw.grlib" version="1, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.mw.grlib.c"/>
+        <srcFile name="./fonts/fontfixed6x8.c"/>
+        <srcFile name="./circle.c"/>
+        <srcFile name="./context.c"/>
+        <srcFile name="./image.c"/>
+        <srcFile name="./line.c"/>
+        <srcFile name="./rectangle.c"/>
+        <srcFile name="./string.c"/>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/grlib.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/grlib/package/package_ti.mw.grlib.oem3.dep" src="package/package_ti.mw.grlib.c"/>
+        <srcFile name="package/lib/lib/grlib/./fonts/fontfixed6x8.oem3.dep" src="./fonts/fontfixed6x8.c"/>
+        <srcFile name="package/lib/lib/grlib/./circle.oem3.dep" src="./circle.c"/>
+        <srcFile name="package/lib/lib/grlib/./context.oem3.dep" src="./context.c"/>
+        <srcFile name="package/lib/lib/grlib/./image.oem3.dep" src="./image.c"/>
+        <srcFile name="package/lib/lib/grlib/./line.oem3.dep" src="./line.c"/>
+        <srcFile name="package/lib/lib/grlib/./rectangle.oem3.dep" src="./rectangle.c"/>
+        <srcFile name="package/lib/lib/grlib/./string.oem3.dep" src="./string.c"/>
+        <srcFile name="lib/grlib.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/grlib/package/package_ti.mw.grlib.orm3.dep" src="package/package_ti.mw.grlib.c"/>
+        <srcFile name="package/lib/lib/grlib/./fonts/fontfixed6x8.orm3.dep" src="./fonts/fontfixed6x8.c"/>
+        <srcFile name="package/lib/lib/grlib/./circle.orm3.dep" src="./circle.c"/>
+        <srcFile name="package/lib/lib/grlib/./context.orm3.dep" src="./context.c"/>
+        <srcFile name="package/lib/lib/grlib/./image.orm3.dep" src="./image.c"/>
+        <srcFile name="package/lib/lib/grlib/./line.orm3.dep" src="./line.c"/>
+        <srcFile name="package/lib/lib/grlib/./rectangle.orm3.dep" src="./rectangle.c"/>
+        <srcFile name="package/lib/lib/grlib/./string.orm3.dep" src="./string.c"/>
+        <srcFile name="lib/grlib.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/grlib/package/package_ti.mw.grlib.om3g.dep" src="package/package_ti.mw.grlib.c"/>
+        <srcFile name="package/lib/lib/grlib/./fonts/fontfixed6x8.om3g.dep" src="./fonts/fontfixed6x8.c"/>
+        <srcFile name="package/lib/lib/grlib/./circle.om3g.dep" src="./circle.c"/>
+        <srcFile name="package/lib/lib/grlib/./context.om3g.dep" src="./context.c"/>
+        <srcFile name="package/lib/lib/grlib/./image.om3g.dep" src="./image.c"/>
+        <srcFile name="package/lib/lib/grlib/./line.om3g.dep" src="./line.c"/>
+        <srcFile name="package/lib/lib/grlib/./rectangle.om3g.dep" src="./rectangle.c"/>
+        <srcFile name="package/lib/lib/grlib/./string.om3g.dep" src="./string.c"/>
+        <srcFile name="package/rel/ti_mw_grlib.zip.dep" src="package/rel/ti_mw_grlib.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.arm.elf.M3"
+            version="ti.targets.arm.elf.M3{1,0,5.2,5"
+            rawVersion="5.2.5"
+            platform="ti.platforms.simCM3"
+            isa="v7M"
+            suffix="em3"
+            rootDir="/db/vendors/ti/arm/5.2.5/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="iar.targets.arm.M3"
+            version="iar.targets.arm.M3{1,0,7.50,1"
+            rawVersion="7.50.1.22"
+            platform="ti.platforms.tiva:TM4C1294NCPDT:1"
+            isa="v7M"
+            suffix="rm3"
+            rootDir="/db/vendors/iar/arm/7.50/Linux"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M3"
+            version="gnu.targets.arm.M3{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:TM4C1294NCPDT"
+            isa="v7M"
+            suffix="m3g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/grlib"
+        pname="lib/grlib.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/grlib"
+        pname="lib/grlib.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/grlib"
+        pname="lib/grlib.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_mw_grlib"
+        pname="../../../../exports/ti_mw_grlib.zip"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/grlib.aem3"/>
+        <file name="lib/grlib.arm3"/>
+        <file name="lib/grlib.am3g"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

@@ -1,0 +1,120 @@
+/*
+ * Copyright (c) 2016, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ *  ======== package.bld ========
+ */
+
+var rfMultiModeSources = [
+    "./RFCC26XX_multiMode.c"
+];
+
+var rfSingleModeSources = [
+    "./RFCC26XX_singleMode.c"
+];
+
+/* Get deviceWare directories from XDCARGS */
+var xdcArgs = java.lang.System.getenv("XDCARGS");
+var deviceWareOpts =
+    xdc.loadCapsule("ti/drivers/xdcArgParser.xs").getDeviceWareOpts(xdcArgs);
+
+if (deviceWareOpts.cc13xxware || deviceWareOpts.cc26xxware) {
+    var targets = [
+        "ti.targets.arm.elf.M3",
+        "iar.targets.arm.M3",
+        "gnu.targets.arm.M3"
+    ];
+
+    var iarM3 = xdc.module('iar.targets.arm.M3');
+    iarM3.profiles["release"].compileOpts.copts =
+        iarM3.profiles["release"].compileOpts.copts.replace("Ohs", "Ohz");
+
+    for each (var targetName in targets) {
+        /* Only proceed if target already in Build object */
+        if (Build.printBuildTargets().indexOf(targetName + "\n") < 0) {
+            continue;
+        }
+
+        var attrs = {
+            copts: " -Dxdc_runtime_Log_DISABLE_ALL -Dxdc_runtime_Assert_DISABLE_ALL"
+        }
+        var instrumentedAttrs = {
+            copts: " -Dxdc_runtime_Assert_DISABLE_CONDITIONAL_ASSERT" +
+                " -DDebugP_ASSERT_ENABLED -DDebugP_LOG_ENABLED"
+        }
+
+        var target = xdc.module(targetName);
+
+        if (deviceWareOpts.cc13xxware) {
+            attrs.copts += " -I../.. -I" + deviceWareOpts.cc13xxware;
+            instrumentedAttrs.copts += " -I../.. -I" + deviceWareOpts.cc13xxware;
+
+            var multiModeLib = Pkg.addLibrary("lib/rf_multiMode_cc13xxware", target, attrs);
+            multiModeLib.addObjects(rfMultiModeSources);
+
+            var multiModeLibInstrumented = Pkg.addLibrary("lib/rf_multiMode_cc13xxware_instrumented", target, instrumentedAttrs);
+            multiModeLibInstrumented.addObjects(rfMultiModeSources);
+
+            var singleModeLib = Pkg.addLibrary("lib/rf_singleMode_cc13xxware", target, attrs);
+            singleModeLib.addObjects(rfSingleModeSources);
+
+            var singleModeLibInstrumented = Pkg.addLibrary("lib/rf_singleMode_cc13xxware_instrumented", target, instrumentedAttrs);
+            singleModeLibInstrumented.addObjects(rfSingleModeSources);
+        }
+
+        if (deviceWareOpts.cc26xxware) {
+            attrs.copts += " -I../.. -I" + deviceWareOpts.cc26xxware;
+            instrumentedAttrs.copts += " -I../.. -I" + deviceWareOpts.cc26xxware;
+
+            var multiModeLib = Pkg.addLibrary("lib/rf_multiMode_cc26xxware", target, attrs);
+            multiModeLib.addObjects(rfMultiModeSources);
+
+            var multiModeLibInstrumented = Pkg.addLibrary("lib/rf_multiMode_cc26xxware_instrumented", target, instrumentedAttrs);
+            multiModeLibInstrumented.addObjects(rfMultiModeSources);
+
+            var singleModeLib = Pkg.addLibrary("lib/rf_singleMode_cc26xxware", target, attrs);
+            singleModeLib.addObjects(rfSingleModeSources);
+
+            var singleModeLibInstrumented = Pkg.addLibrary("lib/rf_singleMode_cc26xxware_instrumented", target, instrumentedAttrs);
+            singleModeLibInstrumented.addObjects(rfSingleModeSources);
+        }
+    }
+
+    Pkg.attrs.exportAll = true;
+}
+else {
+    /*
+     * If device is unsupported, make sure release does not place the .zip
+     * in exports.  Keep in current directory instead.
+     */
+    Pkg.releasePrefix = "./";
+}

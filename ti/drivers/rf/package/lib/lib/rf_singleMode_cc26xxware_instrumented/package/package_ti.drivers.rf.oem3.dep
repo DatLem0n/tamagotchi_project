@@ -1,0 +1,9 @@
+package/lib/lib/rf_singleMode_cc26xxware_instrumented/package/package_ti.drivers.rf.oem3: package/package_ti.drivers.rf.c /db/rtree/library/trees/xdcprod/xdcprod-v06/product/xdccore/Linux/xdctools_3_32_00_06_core/packages/xdc/std.h /db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h /db/vendors/ti/arm/5.2.5/Linux/include/stddef.h /db/vtree/library/trees/zumaprod/zumaprod-o08/exports/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages/ti/targets/arm/elf/std.h /db/vtree/library/trees/zumaprod/zumaprod-o08/exports/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages/ti/targets/select.h /db/vtree/library/trees/zumaprod/zumaprod-o08/exports/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages/ti/targets/std.h /db/vendors/ti/arm/5.2.5/Linux/include/stdint.h 
+package/package_ti.drivers.rf.c:
+/db/rtree/library/trees/xdcprod/xdcprod-v06/product/xdccore/Linux/xdctools_3_32_00_06_core/packages/xdc/std.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdarg.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stddef.h:
+/db/vtree/library/trees/zumaprod/zumaprod-o08/exports/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages/ti/targets/arm/elf/std.h:
+/db/vtree/library/trees/zumaprod/zumaprod-o08/exports/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages/ti/targets/select.h:
+/db/vtree/library/trees/zumaprod/zumaprod-o08/exports/tirtos_cc13xx_cc26xx_2_21_01_08/products/bios_6_46_01_38/packages/ti/targets/std.h:
+/db/vendors/ti/arm/5.2.5/Linux/include/stdint.h:

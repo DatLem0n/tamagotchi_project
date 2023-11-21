@@ -1,0 +1,11 @@
+package.xdc
+package/ti.mw.sensors.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-B06
+package/ti_mw_sensors.java
+package/ti_mw_sensors.class
+package/package_ti.mw.sensors.c
+package/package.defs.h
+package/ti.mw.sensors.ccs
