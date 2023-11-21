@@ -7,24 +7,15 @@
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
 
-#define GROUP_ID_STRING "id:3430"
-
-
-struct Note
-{
-    char note[3];
-    int length;
-};
-
 /**
  * Writes given message to the messagebuffer. Will try writing untill buffer is not full.
  * @param message
  * @param buffer
  * @return 1 on success
  */
-int writeMessageBuffer(char* buffer, char* message)
+int write_to_messageBuffer(char* buffer, char* message)
 {
-    while (1){
+    while (1) {
         if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
             // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
             if (buffer[0] == '\0') {
@@ -53,72 +44,56 @@ int writeMessageBuffer(char* buffer, char* message)
   * @param press pressure
   * @param light light
   */
-void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light) {
+void write_sensor_readings_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light) {
     int dataAmount = 10;
     int bufferFull;
     char msg[BUFFERSIZE];
-    char dataPrefixes[10][20] = {"ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:"};
-    double dataPointerArray[10] = {(double) ax, (double) ay, (double) az, (double) gx, (double) gy,
-                                     (double) gz, temp, press, light};
+    char dataPrefixes[10][20] = { "ax:", "ay:", "az:", "gx:", "gy:", "gz:", "temp:", "press:", "light:" };
+    double dataPointerArray[10] = { (double)ax, (double)ay, (double)az, (double)gx, (double)gy,
+                                     (double)gz, temp, press, light };
 
     int i = 0;
-     for (; i < dataAmount; ++i) {
-         if (i == 0) {
-             snprintf(msg, BUFFERSIZE, "%s%i", "time:", time);
-         }
-         else{
-             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i-1], dataPointerArray[i-1]);
-         }
-         do{
-             bufferFull = !writeMessageBuffer(buffer, msg);
-         } while (bufferFull);
-     }
-}
-
-void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz) {
-    char msg[BUFFERSIZE];
-    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
-        time, ax, ay, az, gx, gy, gz);
-    writeMessageBuffer(buffer, msg);
-}
-void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, double light){
-    char msg[BUFFERSIZE];
-    sprintf(msg,"temp:%f,press:%f,light:%f", temp, press, light);
-    writeMessageBuffer(buffer, msg);
+    for (; i < dataAmount; ++i) {
+        if (i == 0) {
+            snprintf(msg, BUFFERSIZE, "%s%i", "time:", time);
+        }
+        else {
+            snprintf(msg, BUFFERSIZE, "%s%.02f", dataPrefixes[i - 1], dataPointerArray[i - 1]);
+        }
+        do {
+            bufferFull = !write_to_messageBuffer(buffer, msg);
+        } while (bufferFull);
+    }
 }
 
 // If a mpu9250 measurement is outside the threshold, forces it back inside range [-threshold,threshold] 
-int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz){
+int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
     float threshold = 2;
     uint8_t data_amount = 6;
-    float * data[6] = {ax, ay, az, gx, gy, gz};
+    float* data[6] = { ax, ay, az, gx, gy, gz };
 
     uint8_t i;
-    for(i=0; i < data_amount; i++){
-        if(*data[i] < -threshold)
+    for (i = 0; i < data_amount; i++) {
+        if (*data[i] < -threshold)
             *data[i] = -threshold;
-        if(*data[i] > threshold)
+        if (*data[i] > threshold)
             *data[i] = threshold;
     }
     return 1;
 }
 
-
-/*
- * writes sensor measurements to the sensor_data array
- */
-void write_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
-                                  float gx, float gy, float gz, double temp, double press, double light) {
-    sensor_data[index][TIME] = (float) time;
-    sensor_data[index][AX] = ax;
-    sensor_data[index][AY] = ay;
-    sensor_data[index][AZ] = az;
-    sensor_data[index][GX] = gx;
-    sensor_data[index][GY] = gy;
-    sensor_data[index][GZ] = gz;
-    sensor_data[index][TEMP] = (float)temp;
-    sensor_data[index][PRESS] = (float)press;
-    sensor_data[index][LIGHT] = (float)light;
+void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
+    float gx, float gy, float gz, double temp, double press, double light) {
+    sensorDataArray[index][TIME] = (float)time;
+    sensorDataArray[index][AX] = ax;
+    sensorDataArray[index][AY] = ay;
+    sensorDataArray[index][AZ] = az;
+    sensorDataArray[index][GX] = gx;
+    sensorDataArray[index][GY] = gy;
+    sensorDataArray[index][GZ] = gz;
+    sensorDataArray[index][TEMP] = (float)temp;
+    sensorDataArray[index][PRESS] = (float)press;
+    sensorDataArray[index][LIGHT] = (float)light;
 }
 
 /**
@@ -134,7 +109,7 @@ int eat(int amount, char* buffer)
 
     char msg[10];
     sprintf(msg, "EAT:%i", amount);
-    writeMessageBuffer(buffer, msg);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
@@ -150,7 +125,7 @@ int exercise(int amount, char* buffer)
         return 0;
     char msg[20];
     sprintf(msg, "EXERCISE:%i", amount);
-    writeMessageBuffer(buffer, msg);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
@@ -168,7 +143,7 @@ int pet(int amount, char* buffer)
 
     char msg[10];
     sprintf(msg, "PET:%i", amount);
-    writeMessageBuffer(buffer, msg);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
@@ -187,9 +162,21 @@ int activate(int eat, int exercise, int pet, char* buffer)
 
     char msg[30];
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
-    writeMessageBuffer(buffer, msg);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
+
+
+// TODO: siirrä omaan tiedostoon?
+/*
+* Music data types and functions
+*/
+
+struct Note
+{
+    char note[3];
+    int length;
+};
 
 /**
  *Returns frequency of note
@@ -352,59 +339,59 @@ struct Note toBeContinued[] = {
         {"-", 3}
 };
 
-struct Note eatSound[] ={
+struct Note eatSound[] = {
         {"C", 16},
         {"E", 16},
         {"G", 16},
         {"c", 16}
-        };
+};
 /**
  *          END OF SOUNDBANK (for now)
  */
 
-  /**
-   * Plays the selected sound,
-   * Sound selection:
-   *    0 for silence
-   *    1 for Doom
-   *    2 for Victory sound
-   *    3 for roundabout
-   *    4 for eatSound
-   *
-   * @param buzzerHandle
-   * @param soundSelection (int)
-   *
-   * @return
-   */
+ /**
+  * Plays the selected sound,
+  * Sound selection:
+  *    0 for silence
+  *    1 for Doom
+  *    2 for Victory sound
+  *    3 for roundabout
+  *    4 for eatSound
+  *
+  * @param buzzerHandle
+  * @param soundSelection (int)
+  *
+  * @return
+  */
 int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     struct Note* sound;
     int songLength;
     int tempo;
-      switch (soundSelection) {
-          case 1:
-              sound = Doom;
-              songLength = sizeof(Doom)/sizeof(struct Note);
-              tempo = SECOND;
-              break;
+    switch (soundSelection) {
+    case 1:
+        sound = Doom;
+        songLength = sizeof(Doom) / sizeof(struct Note);
+        tempo = SECOND;
+        break;
 
-          case 2:
-              sound = Victory;
-              songLength = sizeof(Victory)/sizeof(struct Note);
-              tempo = SECOND * 1.5;
-              break;
-          case 3:
-              sound = toBeContinued;
-              songLength = sizeof(toBeContinued)/sizeof(struct Note);
-              tempo = 2 * SECOND;
-              break;
-          case 4:
-              sound = eatSound;
-              songLength = sizeof (eatSound)/sizeof(struct Note);
-              tempo = 2 * SECOND;
-              break;
-          default:
-              return 0;
-      }
+    case 2:
+        sound = Victory;
+        songLength = sizeof(Victory) / sizeof(struct Note);
+        tempo = SECOND * 1.5;
+        break;
+    case 3:
+        sound = toBeContinued;
+        songLength = sizeof(toBeContinued) / sizeof(struct Note);
+        tempo = 2 * SECOND;
+        break;
+    case 4:
+        sound = eatSound;
+        songLength = sizeof(eatSound) / sizeof(struct Note);
+        tempo = 2 * SECOND;
+        break;
+    default:
+        return 0;
+    }
 
     int i;
     for (i = 0; i < songLength; ++i) {
@@ -413,7 +400,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         float duration = 1.0 / sound[i].length; // in notes
 
         buzzerSetFrequency(frequency);
-        Task_sleep((float) tempo * duration);
+        Task_sleep((float)tempo * duration);
         buzzerClose();
         Task_sleep(tempo * 0.0001);
 
@@ -421,6 +408,14 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
 
     return 1;
 }
+
+/*
+* Led functions
+*/
+
+// TODO: Siirrä sleepiä vaativat led-funktiot sopivaan taskiin että Task_sleep toimii
+// TAI: alusta kaikki ledit ja vaihtele niiden välillä niin että ne näyttävät vilkkuvan samaan aikaan
+
 /**
  * blinks the led for given time and frequency
  * @param ledHandle
@@ -432,15 +427,16 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
 int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float timesPerSecond) {
     char led;
     switch (ledSelection) {
-        case 0:
-            led = Board_LED0;
-            break;
-        case 1:
-            led = Board_LED1;
-            break;
-        default:
-            return 0;
+    case 0:
+        led = Board_LED0;
+        break;
+    case 1:
+        led = Board_LED1;
+        break;
+    default:
+        return 0;
     }
+
     int i;
     for (i = 0; i < blinkTimes; ++i) {
         int pinValue = PIN_getOutputValue(led);
@@ -463,14 +459,14 @@ int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float times
 int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
     char led;
     switch (ledSelection) {
-        case 0:
-            led = Board_LED0;
-            break;
-        case 1:
-            led = Board_LED1;
-            break;
-        default:
-            return 0;
+    case 0:
+        led = Board_LED0;
+        break;
+    case 1:
+        led = Board_LED1;
+        break;
+    default:
+        return 0;
     }
     PIN_setOutputValue(ledHandle, led, 1);
     Task_sleep(SECOND * time);
@@ -481,28 +477,30 @@ int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
 
 
 /**
- *
- * @param ledHandle
- * @param ledSelection
- * @return
+ * @param ledHandle handle of the led being toggled
+ * @param board_led char of the BOARD_LED being toggled
  */
-int toggleLed(PIN_Handle ledHandle, int ledSelection) {
-    char led;
-    switch (ledSelection) {
-        case 0:
-            led = Board_LED0;
-            break;
-        case 1:
-            led = Board_LED1;
-            break;
-        default:
-            return 0;
-    }
-    bool isOn = PIN_getOutputValue(led);
-    isOn = !isOn;
-    PIN_setOutputValue(ledHandle, led, isOn);
+void toggleLed(PIN_Handle ledHandle, char board_led) {
 
-    return 1;
+    if (PIN_getOutputValue(board_led) == FALSE) {
+        PIN_setOutputValue(ledHandle, board_led, ON);
+    }
+    else {
+        PIN_setOutputValue(ledHandle, board_led, OFF);
+    }
 }
 
-
+/*
+* Currently unused functions
+*/
+void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz) {
+    char msg[BUFFERSIZE];
+    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
+        time, ax, ay, az, gx, gy, gz);
+    write_to_messageBuffer(buffer, msg);
+}
+void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, double light) {
+    char msg[BUFFERSIZE];
+    sprintf(msg, "temp:%f,press:%f,light:%f", temp, press, light);
+    write_to_messageBuffer(buffer, msg);
+}
