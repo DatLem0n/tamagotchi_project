@@ -44,8 +44,6 @@ enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
 enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
 enum SensorState sensorState = SENSORS_READY;
 
-bool ledOn = FALSE;
-
 // JTKJ: Exercise 1. Add pins RTOS-variables and configuration here
 static PIN_Handle buttonHandle;
 static PIN_State buttonState;
@@ -110,9 +108,7 @@ void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
    if(music_selection == END)
       music_selection = SILENT;
 
-   if(ledOn == TRUE)
-      blinkLed(ledHandle, 0, 9999, 1);
-   ledOn = !ledOn;
+      toggleLed(ledHandle, 0);
 
 }
 
