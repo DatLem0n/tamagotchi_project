@@ -356,7 +356,7 @@ struct Note eatSound[] ={
         {"C", 16},
         {"E", 16},
         {"G", 16},
-        {"c", 16},
+        {"c", 16}
         };
 /**
  *          END OF SOUNDBANK (for now)
@@ -401,6 +401,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
               sound = eatSound;
               songLength = sizeof (eatSound)/sizeof(struct Note);
               tempo = 2 * SECOND;
+              break;
           default:
               return 0;
       }
