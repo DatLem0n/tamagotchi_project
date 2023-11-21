@@ -92,7 +92,12 @@ int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, fl
     uint8_t threshold = 2;
     uint8_t data_amount = 6;
     float data[data_amount];
-    data[data_amount] = {*ax, *ay, *az, *gx, *gy, *gz};
+    data[0] = *ax;
+    data[1] = *ay;
+    data[2] = *az;
+    data[3] = *gx;
+    data[4] = *gy;
+    data[5] = *gz;
     
     if(data == NULL)
         return 0;
