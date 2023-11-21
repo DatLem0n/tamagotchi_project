@@ -27,7 +27,7 @@ Kalle Asmundi
   - [ ]  Muuta playSoundin logiikkaa niin että buzzerTask hoitaa looppaamisen, playSound soittaa vain kappaleen seuraavan nuotin
 - [ ]  `id,BEEP` viestien käsittely
   - ohjeet: <https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-messages-from-the-gateway>
-  - [ ]  Pikkufunktiot Ledille
+  - [x]  Pikkufunktiot Ledille
     - [ ]  Nopea vilkkuminen
     - [ ]  Hidas vilkkuminen
     - [ ]  x sekuntia päällä

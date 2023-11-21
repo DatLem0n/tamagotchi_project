@@ -52,8 +52,10 @@ enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
 enum SensorState sensorState = SENSORS_READY;
 
 // JTKJ: Exercise 1. Add pins RTOS-variables and configuration here
-static PIN_Handle buttonHandle;
-static PIN_State buttonState;
+static PIN_Handle button0_Handle;
+static PIN_Handle button1_Handle;
+static PIN_State button0_State;
+static PIN_State button1_State;
 static PIN_Handle ledHandle;
 static PIN_State ledState;
 static PIN_Handle buzzerHandle;
@@ -75,9 +77,14 @@ static const I2CCC26XX_I2CPinCfg i2cMPUCfg = {
     .pinSCL = Board_I2C0_SCL1
 };
 
-PIN_Config buttonConfig[] = {
+PIN_Config button0_Config[] = {
    Board_BUTTON0 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+};
+
+PIN_Config button1_Config[] = {
+        Board_BUTTON1 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
+        PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
 PIN_Config ledConfig[] = {
@@ -95,28 +102,16 @@ PIN_Config buzzerConfig[] = {
 */
 
 enum Music music_selection = SILENT;
-void buttonFxn(PIN_Handle handle, PIN_Id pinId) {
+void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
 
-   //TEST
-   //eat(1, messageBuffer);
-
-   //Painamalla nappia aloitetaan tai lopetetaan datan lähetys
-   if (sensorState == SENSORS_READY) {
-      writeMessageBuffer(messageBuffer,"session:start");
-      sensorState = SENSORS_SENDING_DATA;
-   }
-   else {
-      writeMessageBuffer(messageBuffer, "session:end");
-      sensorState = SENSORS_READY;
-   }
-   //System_printf("MessageBuffer:%s\n", messageBuffer);
-   //System_flush();
    music_selection++;
    if(music_selection == END)
       music_selection = SILENT;
+}
 
-      toggleLed(ledHandle, 0);
+void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
 
+    toggleLed(ledHandle, 0);
 }
 
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
@@ -295,16 +290,26 @@ int main(void) {
       System_abort("Error initializing LED pin\n");
    }
 
-   // Painonappi käyttöön ohjelmassa
-   buttonHandle = PIN_open(&buttonState, buttonConfig);
-   if (!buttonHandle) {
-      System_abort("Error initializing button pin\n");
+   // Painonappi 0 käyttöön ohjelmassa
+   button0_Handle = PIN_open(&button0_State, button0_Config);
+   if (!button0_Handle) {
+      System_abort("Error initializing button0 pin\n");
    }
+    // Painonappi 1 käyttöön ohjelmassa
+    button1_Handle = PIN_open(&button1_State, button1_Config);
+    if (!button1_Handle) {
+        System_abort("Error initializing button1 pin\n");
+    }
 
-   // Painonapille keskeytyksen käsittellijä
-   if (PIN_registerIntCb(buttonHandle, &buttonFxn) != 0) {
+   // Painonapille 0 keskeytyksen käsittellijä
+   if (PIN_registerIntCb(button0_Handle, &button0_Fxn) != 0) {
       System_abort("Error registering button callback function");
    }
+
+    // Painonapille 1 keskeytyksen käsittellijä
+    if (PIN_registerIntCb(button1_Handle, &button1_Fxn) != 0) {
+        System_abort("Error registering button callback function");
+    }
 
    // Buzzer
    buzzerHandle = PIN_open(&buzzerState, buzzerConfig);

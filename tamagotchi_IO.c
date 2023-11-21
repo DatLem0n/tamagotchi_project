@@ -418,7 +418,14 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
 
     return 1;
 }
-
+/**
+ * blinks the led for given time and frequency
+ * @param ledHandle
+ * @param ledSelection
+ * @param blinkTimes
+ * @param timesPerSecond
+ * @return
+ */
 int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float timesPerSecond) {
     char led;
     switch (ledSelection) {
@@ -443,6 +450,13 @@ int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float times
     return 1;
 }
 
+/**
+ * turns on the led for given time, then turns it off
+ * @param ledHandle
+ * @param ledSelection
+ * @param time
+ * @return
+ */
 int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
     char led;
     switch (ledSelection) {
@@ -463,6 +477,12 @@ int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
 }
 
 
+/**
+ *
+ * @param ledHandle
+ * @param ledSelection
+ * @return
+ */
 int toggleLed(PIN_Handle ledHandle, int ledSelection) {
     char led;
     switch (ledSelection) {
