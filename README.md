@@ -9,11 +9,12 @@ Kalle Asmundi
 
 ### Pakolliset
 
-- [ ]  Jupiter-notebook algoritmien protoiluun
+- [x]  Jupiter-notebook algoritmien protoiluun
 - [ ]  MPU-datan käsittely
   - [ ]  Testidatan keräys
   - [ ]  Sensoridatan siivoaminen
-    - [ ]  esim. liukuva keskiarvo, liian pienien ja suurien mittausten poisto
+    - [x] liian pienien ja suurien mittausten poisto
+    - [ ] liukuva keskiarvo?
   - [ ]  Eleiden tunnistus datasta
     - [ ]  Ainakin pöydällä pompottelu koska helppo tunnistaa
     - [ ]  1-2 lisää elettä?
@@ -21,8 +22,8 @@ Kalle Asmundi
 - [ ]  Exercise: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
 - [ ]  Pet: Valosensorilla tunnistetaan kun käden varjo pyyhkii laitteen yli?
 - [ ]  Eat: Nappi 1 syöttää, pitäisi keksiä jokin reaktio
-- [ ]  Nappi 2: Jukebox
-  - [ ]  Ei vielä käytössä, pitää alustaa Mainissa
+- [x]  Nappi 2: Jukebox
+  - [x]  Ei vielä käytössä, pitää alustaa Mainissa
   - [ ]  Napin painaminen kiertää `music_selection` enumia niin että soiva kappale katkeaa ja seuraava alkaa suoraan
   - [ ]  Muuta playSoundin logiikkaa niin että buzzerTask hoitaa looppaamisen, playSound soittaa vain kappaleen seuraavan nuotin
 - [ ]  `id,BEEP` viestien käsittely
