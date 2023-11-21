@@ -13,8 +13,11 @@ void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float a
 
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 
-void write_other_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, double* temp, double* press, double* light);
+int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
+
+void write_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light);
 void write_mpu9250_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
+
 
 int eat(int amount, char* buffer);
 int exercise(int amount, char* buffer);

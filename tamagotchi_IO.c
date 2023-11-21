@@ -115,21 +115,20 @@ int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, fl
 
 
 /*
- * writes mpu9250 sensor measurements to the sensor_data array
+ * writes sensor measurements to the sensor_data array
  */
-enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
-void write_mpu9250_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
-    sensor_data[*index][AX] = *ax;
-    sensor_data[*index][AY] = *ay;
-    sensor_data[*index][AZ] = *az;
-    sensor_data[*index][GX] = *gx;
-    sensor_data[*index][GY] = *gy;
-    sensor_data[*index][GZ] = *gz;
-}
-void write_other_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, double* temp, double* press, double* light) {
-    sensor_data[*index][TEMP] = (float)*temp;
-    sensor_data[*index][PRESS] = (float)*press;
-    sensor_data[*index][LIGHT] = (float)*light;
+void write_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
+                                  float gx, float gy, float gz, double temp, double press, double light) {
+    sensor_data[index][TIME] = (float) time;
+    sensor_data[index][AX] = ax;
+    sensor_data[index][AY] = ay;
+    sensor_data[index][AZ] = az;
+    sensor_data[index][GX] = gx;
+    sensor_data[index][GY] = gy;
+    sensor_data[index][GZ] = gz;
+    sensor_data[index][TEMP] = (float)temp;
+    sensor_data[index][PRESS] = (float)press;
+    sensor_data[index][LIGHT] = (float)light;
 }
 
 /**
@@ -157,7 +156,6 @@ int exercise(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
-
     char msg[10];
     sprintf(msg, "EXERCISE:%i", amount);
     writeMessageBuffer(buffer, msg);
@@ -173,6 +171,7 @@ int pet(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
+
 
     char msg[10];
     sprintf(msg, "PET:%i", amount);
@@ -191,6 +190,7 @@ int activate(int eat, int exercise, int pet, char* buffer)
 {
     if (eat < 1 || exercise < 1 || pet < 1 || buffer == NULL)
         return 0;
+
 
     char msg[30];
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
@@ -481,3 +481,5 @@ int toggleLed(PIN_Handle ledHandle, int ledSelection) {
 
     return 1;
 }
+
+
