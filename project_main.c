@@ -37,8 +37,15 @@ float ax, ay, az, gx, gy, gz;
 double temp, press, light;
 int time;
 
+/**
+ * format for data (columns)
+ * TIME   | AX | AY | AZ | GX | GY | GZ | TEMP | PRESS | LIGHT
+ * time x | ... |
+ * time y | ... |
+ *
+ * e.g. sensorData [1,TIME] would return *time y*
+ */
 float sensor_data[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
-enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
 
 // Tilakone sensoridatan lähetykseen backendille
 enum SensorState { SENSORS_READY, SENSORS_SENDING_DATA };
@@ -246,8 +253,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       Task_sleep(SECOND/10);
 
       // Tallennetaan data sensor_data taulukkoon
-      write_mpu9250_to_sensor_data(sensor_data, &index, &ax, &ay, &az, &gx, &gy, &gz);
-      write_other_sensors_to_sensor_data(sensor_data, &index, &temp, &press, &light);
+      write_sensors_to_sensor_data(sensor_data, index, ax, ay, az, gx, gy, gz, temp, press, light);
 
       if (sensorState == SENSORS_SENDING_DATA) {
          writeSensorsToMsgBuffer(&messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
