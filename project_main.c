@@ -100,7 +100,7 @@ PIN_Config buzzerConfig[] = {
 /*
 * Taskit ja nappifunktio
 */
-
+bool eatButtonPressed = FALSE;
 enum Music music_selection = SILENT;
 void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
    music_selection++;
@@ -110,13 +110,19 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
 
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
     eat(1, messageBuffer);
-    makeSound(buzzerHandle, EAT);
+    eatButtonPressed = TRUE;
     toggleLed(ledHandle, 0);
 }
 
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
    while (1) {
-      makeSound(buzzerHandle, music_selection);
+      if(eatButtonPressed){
+         makeSound(buzzerHandle, EAT);
+         eatButtonPressed = FALSE;
+      }else{
+         makeSound(buzzerHandle, music_selection);
+      }
+
       //Task_sleep(SECOND/2);
    }
 }
