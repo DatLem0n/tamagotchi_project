@@ -148,7 +148,7 @@ int exercise(int amount, char* buffer)
 {
     if (amount < 1)
         return 0;
-    char msg[10];
+    char msg[20];
     sprintf(msg, "EXERCISE:%i", amount);
     writeMessageBuffer(buffer, msg);
     return 1;
@@ -188,7 +188,7 @@ int activate(int eat, int exercise, int pet, char* buffer)
     char msg[30];
     sprintf(msg, "ACTIVATE:%i;%i;%i", eat, exercise, pet);
     writeMessageBuffer(buffer, msg);
-    return 0;
+    return 1;
 }
 
 /**
@@ -196,7 +196,7 @@ int activate(int eat, int exercise, int pet, char* buffer)
  * @param note char (e.g. 'C' for 261 hz)
  * @return frequency value (int)
  */
-int noteToFreq(char* note)
+int noteToFreq(const char* note)
 {
     int frequency;
     switch (note[0])
@@ -396,8 +396,6 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
 
     int i;
     for (i = 0; i < songLength; ++i) {
-        if(soundSelection == SILENT)
-            break;
         buzzerOpen(buzzerHandle);
         int frequency = noteToFreq(sound[i].note);
         float duration = 1.0 / sound[i].length; // in notes
