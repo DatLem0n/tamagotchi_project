@@ -110,7 +110,7 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
 }
 
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
-
+    eat(1, messageBuffer);
     toggleLed(ledHandle, 0);
 }
 

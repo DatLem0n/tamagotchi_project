@@ -134,6 +134,7 @@ void write_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int 
 /**
  * sends UART to raise tamagotchi food level
  * @param amount
+ * @param buffer
  * @return 1 on success, 0 on fail
  */
 int eat(int amount, char* buffer)
@@ -150,6 +151,7 @@ int eat(int amount, char* buffer)
 /**
  * sends UART to raise tamagotchi exercise level
  * @param amount
+ * @param buffer
  * @return 1 on success, 0 on fail
  */
 int exercise(int amount, char* buffer)
@@ -165,6 +167,7 @@ int exercise(int amount, char* buffer)
 /**
  * sends UART to raise tamagotchi pet level
  * @param amount
+ * @param buffer
  * @return 1 on success, 0 on fail
  */
 int pet(int amount, char* buffer)
