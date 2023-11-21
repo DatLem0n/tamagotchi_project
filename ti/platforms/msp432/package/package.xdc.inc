@@ -1,0 +1,14 @@
+package.xdc
+Platform.xdc
+Platform.xs
+Platform.xdt
+package/ti.platforms.msp432.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-B06
+package/ti_platforms_msp432.java
+package/ti_platforms_msp432.class
+package/package_ti.platforms.msp432.c
+package/package.defs.h
+package/ti.platforms.msp432.ccs

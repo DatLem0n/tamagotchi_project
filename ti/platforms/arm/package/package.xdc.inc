@@ -1,0 +1,13 @@
+package.xdc
+Platform.xdc
+Platform.xs
+package/ti.platforms.arm.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-B06
+package/ti_platforms_arm.java
+package/ti_platforms_arm.class
+package/package_ti.platforms.arm.c
+package/package.defs.h
+package/ti.platforms.arm.ccs

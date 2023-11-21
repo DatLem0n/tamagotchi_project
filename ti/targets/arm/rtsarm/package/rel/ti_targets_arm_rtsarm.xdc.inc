@@ -1,0 +1,9 @@
+package/package.bld.xml
+package/build.cfg
+package/package.xdc.inc
+boot.asm
+auto_init.asm
+package/package.cfg.xdc.inc
+lib/ti.targets.arm.rtsarm.aem3
+lib/boot.aem3
+lib/auto_init.aem3
