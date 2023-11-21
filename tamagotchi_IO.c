@@ -437,7 +437,6 @@ int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
 
 int toggleLed(PIN_Handle ledHandle, int ledSelection) {
     char led;
-    bool isOn = false;
     switch (ledSelection) {
         case 0:
             led = Board_LED0;
@@ -448,6 +447,7 @@ int toggleLed(PIN_Handle ledHandle, int ledSelection) {
         default:
             return 0;
     }
+    bool isOn = PIN_getOutputValue(led);
     isOn = !isOn;
     PIN_setOutputValue(ledHandle, led, isOn);
 
