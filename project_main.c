@@ -103,7 +103,6 @@ PIN_Config buzzerConfig[] = {
 
 enum Music music_selection = SILENT;
 void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
-
    music_selection++;
    if(music_selection == END)
       music_selection = SILENT;
@@ -111,11 +110,11 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
 
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
     eat(1, messageBuffer);
+    makeSound(buzzerHandle, EAT);
     toggleLed(ledHandle, 0);
 }
 
 void buzzerTaskFxn(UArg arg0, UArg arg1) {
-
    while (1) {
       makeSound(buzzerHandle, music_selection);
       //Task_sleep(SECOND/2);

@@ -11,6 +11,6 @@
 #define SENSOR_DATA_COLUMNS 10
 
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
-enum Music {SILENT, DOOM, VICTORY, ROUNDABOUT, END};
+enum Music {SILENT, DOOM, VICTORY, ROUNDABOUT, EAT, END};
 
 #endif
