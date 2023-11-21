@@ -66,7 +66,7 @@ void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float a
              snprintf(msg, BUFFERSIZE, "%s%i", "time:", time);
          }
          else{
-             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i], dataPointerArray[i]);
+             snprintf(msg,BUFFERSIZE, "%s%.02f", dataPrefixes[i+1], dataPointerArray[i+1]);
          }
          do{
              bufferFull = !writeMessageBuffer(msg, buffer);
