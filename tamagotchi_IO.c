@@ -356,7 +356,7 @@ struct Note eatSound[] ={
         {"C", 16},
         {"E", 16},
         {"G", 16},
-        {"C", 16},
+        {"c", 16},
         };
 /**
  *          END OF SOUNDBANK (for now)
