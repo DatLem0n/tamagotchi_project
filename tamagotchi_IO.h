@@ -11,6 +11,8 @@ void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, doubl
 
 void writeSensorsToMsgBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light);
 
+int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
+
 void write_other_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, double* temp, double* press, double* light);
 void write_mpu9250_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 

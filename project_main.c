@@ -245,6 +245,7 @@ Void sensorTaskFxn(UArg arg0, UArg arg1) {
       I2C_close(i2c_bmp280);
       Task_sleep(SECOND/10);
 
+      clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // Tallennetaan data sensor_data taulukkoon
       write_mpu9250_to_sensor_data(sensor_data, &index, &ax, &ay, &az, &gx, &gy, &gz);
       write_other_sensors_to_sensor_data(sensor_data, &index, &temp, &press, &light);

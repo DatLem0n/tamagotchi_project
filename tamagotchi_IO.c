@@ -87,6 +87,33 @@ void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, doubl
     writeMessageBuffer(buffer, msg);
 }
 
+// If a mpu9250 measurement is outside the threshold, forces it back inside range [-threshold,threshold] 
+int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz){
+    uint8_t threshold = 2;
+    uint8_t data_amount = 6;
+    float data[data_amount];
+    data = {*ax, *ay, *az, *gx, *gy, *gz};
+    
+    if(data == NULL)
+        return 0;
+    uint8_t i;
+    for(i=0; i < data_amount; i++){
+        if(data[i] < - threshold)
+            data[i] = - threshold;
+        if(data[i] > threshold)
+            data[i] = threshold;
+    }
+    *ax = data[0];
+    *ay = data[1];
+    *az = data[2];
+    *gx = data[3];
+    *gy = data[4];
+    *gz = data[5];
+
+    return 1;
+}
+
+
 /*
  * writes mpu9250 sensor measurements to the sensor_data array
  */
@@ -434,6 +461,7 @@ int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
 
     return 1;
 }
+
 
 int toggleLed(PIN_Handle ledHandle, int ledSelection) {
     char led;
