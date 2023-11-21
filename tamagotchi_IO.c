@@ -90,8 +90,9 @@ void writeOtherSensorsToMsgBuffer(char *buffer, double temp, double press, doubl
 /*
  * writes sensor measurements to the sensor_data array
  */
-void write_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int index, float ax, float ay, float az,
+void write_sensors_to_sensor_data(float sensor_data[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
                                   float gx, float gy, float gz, double temp, double press, double light) {
+    sensor_data[index][TIME] = (float) time;
     sensor_data[index][AX] = ax;
     sensor_data[index][AY] = ay;
     sensor_data[index][AZ] = az;
