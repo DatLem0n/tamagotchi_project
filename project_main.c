@@ -162,46 +162,54 @@ void uartTaskFxn(UArg arg0, UArg arg1) {
    }
 }
 
+void
+sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Params *i2cParams_mpu9250,
+            I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280) {
+    // Alustetaan i2c-väylä
+    I2C_Params_init(i2cParams_mpu9250);
+    I2C_Params_init(i2cParams_opt3001);
+    I2C_Params_init(i2cParams_bmp280);
+    (*i2cParams_mpu9250).bitRate = I2C_400kHz;
+    (*i2cParams_mpu9250).custom = (uintptr_t) & i2cMPUCfg;
+    (*i2cParams_opt3001).bitRate = I2C_400kHz;
+    (*i2cParams_bmp280).bitRate = I2C_400kHz;
+
+    // Alustetaan MPU9250
+    (*i2c_mpu9250) = I2C_open(Board_I2C_TMP, i2cParams_mpu9250);
+    if ((*i2c_mpu9250) == NULL)
+       System_abort("Error Initializing mpu9250 I2C\n");
+    PIN_setOutputValue(mpuPinHandle, Board_MPU_POWER, Board_MPU_POWER_ON);
+    Task_sleep(SECOND/10);
+    mpu9250_setup(i2c_mpu9250);
+    I2C_close((*i2c_mpu9250));
+
+    //Alustetaan OPT3001
+    (*i2c_opt3001) = I2C_open(Board_I2C_TMP, i2cParams_opt3001);
+    if ((*i2c_opt3001) == NULL)
+       System_abort("Error Initializing opt3001 I2C\n");
+    Task_sleep(SECOND/10);
+    opt3001_setup(i2c_opt3001);
+    I2C_close((*i2c_opt3001));
+
+    // Alustetaan BMP280
+    (*i2c_bmp280) = I2C_open(Board_I2C_TMP, i2cParams_bmp280);
+    if ((*i2c_bmp280) == NULL)
+       System_abort("Error Initializing mpu9250 I2C\n");
+    Task_sleep(SECOND/10);
+    bmp280_setup(i2c_bmp280);
+    I2C_close((*i2c_opt3001));
+}
+
+
+
 Void sensorTaskFxn(UArg arg0, UArg arg1) {
 
    I2C_Handle      i2c_mpu9250, i2c_opt3001, i2c_bmp280;
    I2C_Params      i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280;
 
-   // Alustetaan i2c-väylä
-   I2C_Params_init(&i2cParams_mpu9250);
-   I2C_Params_init(&i2cParams_opt3001);
-   I2C_Params_init(&i2cParams_bmp280);
-   i2cParams_mpu9250.bitRate = I2C_400kHz;
-   i2cParams_mpu9250.custom = (uintptr_t)&i2cMPUCfg;
-   i2cParams_opt3001.bitRate = I2C_400kHz;
-   i2cParams_bmp280.bitRate = I2C_400kHz;
+   sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
 
-   // Alustetaan MPU9250
-   i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
-   if (i2c_mpu9250 == NULL)
-      System_abort("Error Initializing mpu9250 I2C\n");
-   PIN_setOutputValue(mpuPinHandle, Board_MPU_POWER, Board_MPU_POWER_ON);
-   Task_sleep(SECOND/10);
-   mpu9250_setup(&i2c_mpu9250);
-   I2C_close(i2c_mpu9250);
-
-   //Alustetaan OPT3001
-   i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
-   if (i2c_opt3001 == NULL)
-      System_abort("Error Initializing opt3001 I2C\n");
-   Task_sleep(SECOND/10);
-   opt3001_setup(&i2c_opt3001);
-   I2C_close(i2c_opt3001);
-
-   // Alustetaan BMP280
-   i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
-   if (i2c_bmp280 == NULL)
-      System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND/10);
-   bmp280_setup(&i2c_bmp280);
-   I2C_close(i2c_opt3001);
-
-   int index = 0;
+    int index = 0;
    while (1) {
       time = Clock_getTicks()/Clock_tickPeriod;
       time = time/1000;
