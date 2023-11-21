@@ -24,4 +24,3 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection);
 
 int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float timesPerSecond);
 int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time);
-

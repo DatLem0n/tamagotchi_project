@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ti/sysbios/knl/Task.h>
@@ -430,6 +431,25 @@ int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
     PIN_setOutputValue(ledHandle, led, 1);
     Task_sleep(SECOND * time);
     PIN_setOutputValue(ledHandle, led, 0);
+
+    return 1;
+}
+
+int toggleLed(PIN_Handle ledHandle, int ledSelection) {
+    char led;
+    bool isOn = false;
+    switch (ledSelection) {
+        case 0:
+            led = Board_LED0;
+            break;
+        case 1:
+            led = Board_LED1;
+            break;
+        default:
+            return 0;
+    }
+    isOn = !isOn;
+    PIN_setOutputValue(ledHandle, led, isOn);
 
     return 1;
 }
