@@ -115,7 +115,8 @@ enum Music music_selection = SILENT;
 void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
    music_selection++;
-   nowPlaying(music_selection, messageBuffer);
+   //nowPlaying(music_selection, messageBuffer);
+   testMessage(messageBuffer);
    if (music_selection == END)
       music_selection = SILENT;
 }

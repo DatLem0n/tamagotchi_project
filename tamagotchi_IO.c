@@ -201,6 +201,12 @@ int msg2(char* message, char* buffer)
     return 1;
 }
 
+void testMessage(char* buffer){
+    char message[20];
+    strcpy(message, "Yaas queen");
+    msg1(message, buffer);
+}
+
 void nowPlaying(int musicSelection, char* buffer){
     char message[40];
     switch (musicSelection) {

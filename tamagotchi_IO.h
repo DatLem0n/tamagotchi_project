@@ -21,6 +21,7 @@ int activate(int eat, int exercise, int pet, char* buffer);
 int noteToFreq(int note);
 int makeSound(PIN_Handle buzzerHandle, int soundSelection);
 void nowPlaying(int musicSelection, char* buffer);
+void testMessage(char* buffer);
 
 
 // Led functions
