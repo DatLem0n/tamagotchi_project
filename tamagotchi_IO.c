@@ -526,3 +526,15 @@ void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, doubl
     sprintf(msg, "temp:%f,press:%f,light:%f", temp, press, light);
     write_to_messageBuffer(buffer, msg);
 }
+
+int checkMessage(char msg[80]){
+    int i;
+    char* token = strtok(msg, ",");
+    if (strcmp(token, GROUP_ID_NUM) == 0){
+        token = strtok(NULL, ",");
+        if (strcmp(token, "BEEP") == 0){
+            return 1;
+        }
+    }
+    else return 0;
+}
