@@ -8,7 +8,7 @@
 #include "shared.h"
 
 /**
- * Writes given message to the messagebuffer. Will try writing untill buffer is not full.
+ * Writes given message to the message buffer. Will try writing until buffer is not full.
  * @param message
  * @param buffer
  * @return 1 on success
@@ -185,7 +185,7 @@ int msg1(char message, char* buffer)
 
     char msg[10];
     sprintf(msg, "MSG1:%c", message);
-    writeMessageBuffer(buffer, msg);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
@@ -196,7 +196,7 @@ int msg2(char message, char* buffer)
 
     char msg[10];
     sprintf(msg, "MSG2:%c", message);
-    writeMessageBuffer(buffer, msg);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
