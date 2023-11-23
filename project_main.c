@@ -114,6 +114,7 @@ bool eatButtonPressed = FALSE;
 enum Music music_selection = SILENT;
 void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
    music_selection++;
+   nowPlaying(music_selection, messageBuffer);
    if (music_selection == END)
       music_selection = SILENT;
 }
