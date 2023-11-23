@@ -96,7 +96,7 @@ void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], floa
     }
 
     // Calculate the change in mpu9250 measurements between timesteps
-    SensorDataKeys sensorDataKey = AX;
+    enum SensorDataKeys sensorDataKey = AX;
     for(sensorDataKey = AX; sensorDataKey <= GZ; sensorDataKey++){
         mpu9250DeltasArray[sensorDataKey] = sensorDataArray[t1][sensorDataKey] - sensorDataArray[t2][sensorDataKey];
     }
@@ -199,36 +199,14 @@ struct Note
     int length;
 };
 
-int msg1(char* message, char* buffer)
-{
-    if (strlen(message) == 0)
-        return 0;
-
-    char msg[40];
-    sprintf(msg, "MSG1:%s", message);
-    write_to_messageBuffer(buffer, msg);
-    return 1;
-}
-
-int msg2(char* message, char* buffer)
-{
-    if (strlen(message) == 0)
-        return 0;
-
-    char msg[80];
-    sprintf(msg, "MSG2:%s", message);
-    write_to_messageBuffer(buffer, msg);
-    return 1;
-}
-
 void testMessage(char* buffer){
-    char message[20];
-    strcpy(message, "Yaas queen");
-    msg1(message, buffer);
+    char message[20] = "MSG1:Yaas queen";
+    write_to_messageBuffer(buffer, message);
+    Task_sleep(SECOND);
 }
 
 void nowPlaying(int musicSelection, char* buffer){
-    char message[40];
+    char message[80];
     switch (musicSelection) {
         case DOOM:
             strcpy(message, "Now Playing: Doom");
@@ -243,7 +221,7 @@ void nowPlaying(int musicSelection, char* buffer){
             strcpy(message, "Currently not playing anything.");
             break;
     }
-    msg1(message, buffer);
+    write_to_messageBuffer(buffer, message);
 }
 
 /**

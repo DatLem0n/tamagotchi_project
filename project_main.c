@@ -60,6 +60,7 @@ float mpu9250DeltasArray[6];
 
 // Sensoridatan lähetykseen backendille
 bool sendSensorDataToBackend = TRUE;
+int timesSenttoBackend = 0;
 
 bool bouncingDetected = FALSE;
 int inDistress = 0;
@@ -151,7 +152,7 @@ void buzzerTaskFxn()
       
       makeSound(buzzerHandle, music_selection);
       
-      // Task_sleep(SECOND/2);
+       Task_sleep(SECOND/5);
    }
 }
 
@@ -164,14 +165,15 @@ void Beep()
 }
 
 static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
-    char* token = strtok(receiveBuffer, ",");
+    char* token = strtok(rxBuf, ",");
     if (atoi(token) == GROUP_ID_NUM){
         token = strtok(NULL, ":");
         if (strcmp(token, "BEEP") == 0){
             Beep();
         }
     }
-    UART_read(handle, rxBuf, len);
+    UART_read(handle, rxBuf, 80);
+    Task_sleep(SECOND/5);
 }
 
 void uartTaskFxn()
@@ -195,7 +197,7 @@ void uartTaskFxn()
    {
       System_abort("Error opening the UART");
    }
-   UART_read(uartHandle, receiveBuffer, 1);
+   UART_read(uartHandle, receiveBuffer, 80);
    while (1)
    {
       // TODO: korvaa tilakoneella
@@ -270,17 +272,20 @@ Void sensorTaskFxn()
       write_sensor_readings_to_sensorDataArray(sensorDataArray, index, time, ax, ay, az, gx, gy, gz, temp, press, light);
       
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
-      
+
 
       if (sendSensorDataToBackend == TRUE)
       {
-         if (index == 1)
+         if (timesSenttoBackend == 0)
             write_to_messageBuffer(messageBuffer, "session:start");
+         
          write_sensor_readings_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
-         if (index == 9){
+         
+         if (timesSenttoBackend == 20){
             write_to_messageBuffer(messageBuffer, "session:end");
             sendSensorDataToBackend = FALSE;
          }
+         timesSenttoBackend++;
       }
 
       // Used to turn the sensor data array into a ring buffer
