@@ -159,18 +159,15 @@ void Beep()
    inDistress = 1;
 }
 
-static void checkMessage(UART_Handle handle, void *rxBuf, size_t len)
-{
-   char *token = strtok(rxBuf, ",");
-   if (strcmp(token, GROUP_ID_NUM) == 0)
-   {
-      token = strtok(NULL, ":");
-      if (strcmp(token, "BEEP") == 0)
-      {
-         Beep();
-      }
-   }
-   UART_read(handle, rxBuf, len);
+static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
+    char* token = strtok(receiveBuffer, ",");
+    if (atoi(token) == GROUP_ID_NUM){
+        token = strtok(NULL, ":");
+        if (strcmp(token, "BEEP") == 0){
+            Beep();
+        }
+    }
+    UART_read(handle, rxBuf, len);
 }
 
 void uartTaskFxn()
