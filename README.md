@@ -112,6 +112,7 @@ Kalle Asmundi
 1. Mene VirtualBox/Settings/Shared Folders/ ja lisää edellisen kohdan kansio
 1. Lisää myös paikallisen git-repon kansio ja ruksita auto-mount
 1. Aja VM:n terminaalissa komento `sudo usermod -aG vboxsf $USER`, salasana 1234
+1. Käynnistä VM uudestaan
 
 ### Tuo koodi VM:n Code Composer Studioon
 

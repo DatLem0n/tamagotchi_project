@@ -179,18 +179,18 @@ struct Note
     int length;
 };
 
-int msg1(char message[], char* buffer)
+int msg1(char* message, char* buffer)
 {
     if (strlen(message) == 0)
         return 0;
 
-    char msg[80];
+    char msg[40];
     sprintf(msg, "MSG1:%s", message);
     write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
-int msg2(char message[], char* buffer)
+int msg2(char* message, char* buffer)
 {
     if (strlen(message) == 0)
         return 0;
@@ -201,8 +201,8 @@ int msg2(char message[], char* buffer)
     return 1;
 }
 
-void nowPlaying(enum Music musicSelection, char* buffer){
-    char message[80];
+void nowPlaying(int musicSelection, char* buffer){
+    char message[40];
     switch (musicSelection) {
         case DOOM:
             strcpy(message, "Now Playing: Doom");

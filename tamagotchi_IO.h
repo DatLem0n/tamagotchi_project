@@ -20,7 +20,7 @@ int activate(int eat, int exercise, int pet, char* buffer);
 // Sound functions
 int noteToFreq(int note);
 int makeSound(PIN_Handle buzzerHandle, int soundSelection);
-void nowPlaying(enum Music musicSelection, char* buffer);
+void nowPlaying(int musicSelection, char* buffer);
 
 
 // Led functions
