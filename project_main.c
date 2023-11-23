@@ -249,9 +249,9 @@ int main(void) {
    Board_initGeneral();
    initialize_handles();
 
-   initialize_task(sensorTaskHandle, sensorTaskParams, sensorTaskFxn, sensorTaskStack, 2);
-   initialize_task(uartTaskHandle, uartTaskParams, uartTaskFxn, uartTaskStack, 2);
-   initialize_task(buzzerTaskHandle, buzzerTaskParams, (Task_FuncPtr)buzzerTaskFxn, buzzerTaskStack, 0);
+   initialize_task(&sensorTaskHandle, &sensorTaskParams, &sensorTaskFxn, &sensorTaskStack, 2);
+   initialize_task(&uartTaskHandle, &uartTaskParams, &uartTaskFxn, &uartTaskStack, 2);
+   initialize_task(&buzzerTaskHandle, &buzzerTaskParams, (Task_FuncPtr)&buzzerTaskFxn, &buzzerTaskStack, 0);
 
    /* Sanity check */
    System_printf("Hello world!\n");
@@ -307,16 +307,16 @@ void initialize_handles() {
 }
 
 void initialize_task(I2C_Handle* handle, I2C_Params* params, void(*taskFxn), char* stack, uint8_t priority) {
-   Task_Params_init(&params);
-   *params.stackSize = STACKSIZE;
-   *params.stack = &stack;
-   *handle = Task_create(taskFxn, &params, NULL);
+   Task_Params_init(params);
+   (*params).stackSize = STACKSIZE;
+   (*params).stack = &stack;
+   (*handle) = Task_create(taskFxn, &params, NULL);
 
    if (handle == NULL) {
       System_abort("Task create failed!");
    }
    if (priority != 0)
-      *params.priority = priority;
+      (*params).priority = priority;
 }
 
 void sensorSetup(I2C_Handle* i2c_mpu9250, I2C_Handle* i2c_opt3001, I2C_Handle* i2c_bmp280,
