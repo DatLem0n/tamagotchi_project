@@ -545,22 +545,3 @@ void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, doubl
     sprintf(msg, "temp:%f,press:%f,light:%f", temp, press, light);
     write_to_messageBuffer(buffer, msg);
 }
-
-/**
- * react to
- */
-void Beep(){
-    Beeping = 1;
-}
-
-static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
-    char* token = strtok(rxBuf, ",");
-    if (strcmp(token, GROUP_ID_NUM) == 0){
-        token = strtok(NULL, ":");
-        if (strcmp(token, "BEEP") == 0){
-            Beep();
-        }
-    }
-    UART_read(handle, rxBuf, len);
-}
-

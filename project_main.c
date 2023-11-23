@@ -39,6 +39,7 @@ char receiveBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
+int minullaOnHÄTÄsaatana = 0;
 
 float ax, ay, az, gx, gy, gz;
 double temp, press, light;
@@ -128,6 +129,10 @@ void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
 
 void buzzerTaskFxn() {
    while (1) {
+       if(minullaOnHÄTÄsaatana){
+           makeSound(buzzerHandle, DOOM);
+           minullaOnHÄTÄsaatana = 0;
+       }
       if (eatButtonPressed) {
          makeSound(buzzerHandle, EAT);
          eatButtonPressed = FALSE;
@@ -140,9 +145,23 @@ void buzzerTaskFxn() {
    }
 }
 
-/*
-*  Task functions
-*/
+/**
+ * react to
+ */
+void Beep(){
+    minullaOnHÄTÄsaatana = 1;
+}
+
+static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
+    char* token = strtok(rxBuf, ",");
+    if (strcmp(token, GROUP_ID_NUM) == 0){
+        token = strtok(NULL, ":");
+        if (strcmp(token, "BEEP") == 0){
+            Beep();
+        }
+    }
+    UART_read(handle, rxBuf, len);
+}
 
 void uartTaskFxn() {
    UART_Handle uartHandle;

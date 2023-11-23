@@ -18,6 +18,5 @@
 
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
 enum Music { SILENT, DOOM, VICTORY, ROUNDABOUT, EAT, END };
-int Beeping = 0;
 
 #endif
