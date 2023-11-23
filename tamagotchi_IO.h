@@ -27,6 +27,7 @@ void nowPlaying(enum Music musicSelection, char* buffer);
 int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float timesPerSecond);
 int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time);
 int toggleLed(PIN_Handle ledHandle, char board_led);
+static void checkMessage(UART_Handle handle, void *rxBuf, size_t len);
 
 /*
 * Currently unused functions

@@ -20,7 +20,7 @@
 #include "Board.h"
 #include "sensors/opt3001.h" //valoisuus
 #include "sensors/mpu9250.h" //kiihtyvyys
-#include "sensors/bmp280.h" //lämpötila ja paine
+#include "sensors/bmp280.h"  //lämpötila ja paine
 
 #include "tamagotchi_IO.h"
 #include "shared.h"
@@ -35,6 +35,7 @@ void initialize_handles();
 * Globaalit muuttujat
 */
 char messageBuffer[BUFFERSIZE];
+char receiveBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
@@ -151,9 +152,10 @@ void uartTaskFxn() {
    uartParams.writeDataMode = UART_DATA_TEXT;
    uartParams.readDataMode = UART_DATA_TEXT;
    uartParams.readEcho = UART_ECHO_OFF;
-   uartParams.readMode = UART_MODE_BLOCKING;
-   uartParams.baudRate = 9600; // nopeus 9600baud
-   uartParams.dataLength = UART_LEN_8; // 8
+   uartParams.readMode = UART_MODE_CALLBACK;
+   uartParams.readCallback = &checkMessage;
+   uartParams.baudRate = 9600;            // nopeus 9600baud
+   uartParams.dataLength = UART_LEN_8;    // 8
    uartParams.parityType = UART_PAR_NONE; // n
    uartParams.stopBits = UART_STOP_ONE; // 1
 
@@ -161,9 +163,9 @@ void uartTaskFxn() {
    if (uartHandle == NULL) {
       System_abort("Error opening the UART");
    }
-
-   while (1) {
-
+    UART_read(uartHandle, receiveBuffer, 1);
+   while (1)
+   {
       // TODO: korvaa tilakoneella
       //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
       if (messageBuffer[0] != '\0') {

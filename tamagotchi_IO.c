@@ -6,6 +6,7 @@
 #include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
+#include "ti/drivers/UART.h"
 
 /**
  * Writes given message to the message buffer. Will try writing until buffer is not full.
@@ -545,14 +546,21 @@ void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, doubl
     write_to_messageBuffer(buffer, msg);
 }
 
-int checkMessage(char msg[80]){
-    int i;
-    char* token = strtok(msg, ",");
+/**
+ * react to
+ */
+void Beep(){
+    Beeping = 1;
+}
+
+static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
+    char* token = strtok(rxBuf, ",");
     if (strcmp(token, GROUP_ID_NUM) == 0){
-        token = strtok(NULL, ",");
+        token = strtok(NULL, ":");
         if (strcmp(token, "BEEP") == 0){
-            return 1;
+            Beep();
         }
     }
-    else return 0;
+    UART_read(handle, rxBuf, len);
 }
+
