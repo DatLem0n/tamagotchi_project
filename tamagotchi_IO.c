@@ -221,6 +221,12 @@ int msg2(char* message, char* buffer)
     return 1;
 }
 
+void testMessage(char* buffer){
+    char message[20];
+    strcpy(message, "Yaas queen");
+    msg1(message, buffer);
+}
+
 void nowPlaying(int musicSelection, char* buffer){
     char message[40];
     switch (musicSelection) {
@@ -382,23 +388,7 @@ struct Note toBeContinued[] = {
         {"f#", 4},
         {"g", 4},
         {"f#", 8},
-        {"e", 2},
-        {"-", 3},
-        {"e", 4},
-        {"e", 8},
-        {"f#",4},
-        {"g", 4},
-        {"f#", 4},
-        {"g", 4},
-        {"f#", 8},
-        {"e", 2},
-        {"e", 4},
-        {"e", 8},
-        {"f#", 4},
-        {"g", 4},
-        {"f#", 8},
-        {"e", 2},
-        {"-", 3}
+        {"e", 2}
 };
 
 struct Note eatSound[] = {
@@ -518,7 +508,7 @@ int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float times
  * @param time
  * @return
  */
-int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time) {
+int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time){
     char led;
     switch (ledSelection) {
     case 0:

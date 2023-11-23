@@ -120,7 +120,8 @@ enum Music music_selection = SILENT;
 void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
    music_selection++;
-   nowPlaying(music_selection, messageBuffer);
+   //nowPlaying(music_selection, messageBuffer);
+   testMessage(messageBuffer);
    if (music_selection == END)
       music_selection = SILENT;
 }
@@ -162,18 +163,15 @@ void Beep()
    inDistress = 1;
 }
 
-static void checkMessage(UART_Handle handle, void *rxBuf, size_t len)
-{
-   char *token = strtok(rxBuf, ",");
-   if (strcmp(token, GROUP_ID_NUM) == 0)
-   {
-      token = strtok(NULL, ":");
-      if (strcmp(token, "BEEP") == 0)
-      {
-         Beep();
-      }
-   }
-   UART_read(handle, rxBuf, len);
+static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
+    char* token = strtok(receiveBuffer, ",");
+    if (atoi(token) == GROUP_ID_NUM){
+        token = strtok(NULL, ":");
+        if (strcmp(token, "BEEP") == 0){
+            Beep();
+        }
+    }
+    UART_read(handle, rxBuf, len);
 }
 
 void uartTaskFxn()
