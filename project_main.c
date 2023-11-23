@@ -37,12 +37,13 @@ void initialize_handles();
  */
 char messageBuffer[BUFFERSIZE];
 char receiveBuffer[BUFFERSIZE];
+
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
-int inDistress = 0;
 
 float ax, ay, az, gx, gy, gz;
+
 double temp, press, light;
 int time;
 
@@ -55,9 +56,13 @@ int time;
  * e.g. sensorData [1,TIME] would return *time y*
  */
 float sensorDataArray[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
+float mpu9250DeltasArray[6];
 
 // Sensoridatan lähetykseen backendille
-bool sendSensorDataToBackend = FALSE;
+bool sendSensorDataToBackend = TRUE;
+
+bool bouncingDetected = FALSE;
+int inDistress = 0;
 
 // Pin RTOS-variables and configurations
 static PIN_Handle button0_Handle;
@@ -131,8 +136,7 @@ void buzzerTaskFxn()
 {
    while (1)
    {
-      
-      
+        
       if (inDistress)
       {
          makeSound(buzzerHandle, DOOM);
@@ -261,20 +265,24 @@ Void sensorTaskFxn()
       I2C_close(i2c_bmp280);
 
       /*
-       * Clean sensor data, write it to sensor_data_array and send it to backend
-       */
+         */
       clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
 
       write_sensor_readings_to_sensorDataArray(sensorDataArray, index, time, ax, ay, az, gx, gy, gz, temp, press, light);
+      
+      calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
+      
 
       if (sendSensorDataToBackend == TRUE)
       {
          if (index == 1)
             write_to_messageBuffer(messageBuffer, "session:start");
          write_sensor_readings_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
-         if (index == 9)
+         if (index == 9){
             write_to_messageBuffer(messageBuffer, "session:end");
+            sendSensorDataToBackend = FALSE;
+         }
       }
 
       // Used to turn the sensor data array into a ring buffer

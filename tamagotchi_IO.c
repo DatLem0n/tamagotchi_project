@@ -83,6 +83,26 @@ int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, fl
     return 1;
 }
 
+void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], float mpu9250DeltasArray[6]){
+    uint8_t t1, t2;
+    // Make sure that t1 < t2. Because the sensorDataArray is a ring buffer, the measurements might not be in ascending time order. 
+    if(sensorDataArray[0][TIME] < sensorDataArray[1][TIME]){
+        t1 = 0;
+        t2 = 1;
+    }
+    else{
+        t1 = 1;
+        t2 = 0;
+    }
+
+    // Calculate the change in mpu9250 measurements between timesteps
+    SensorDataKeys sensorDataKey = AX;
+    for(sensorDataKey = AX; sensorDataKey <= GZ; sensorDataKey++){
+        mpu9250DeltasArray[sensorDataKey] = sensorDataArray[t1][sensorDataKey] - sensorDataArray[t2][sensorDataKey];
+    }
+
+}
+
 void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
     float gx, float gy, float gz, double temp, double press, double light) {
     sensorDataArray[index][TIME] = (float)time;

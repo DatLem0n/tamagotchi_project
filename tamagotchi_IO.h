@@ -10,6 +10,8 @@ void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DAT
 
 // Data cleaning functions
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
+void calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
+
 
 // Tamagotchi functions
 int eat(int amount, char* buffer);

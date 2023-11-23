@@ -10,7 +10,7 @@
 
 #define SECOND (1000000.0 / Clock_tickPeriod)
 // TODO: Suurenna jos muistia riittää
-#define SENSOR_DATA_ROWS 10
+#define SENSOR_DATA_ROWS 2
 #define SENSOR_DATA_COLUMNS 10
 
 #define GROUP_ID_STRING "id:3430"
