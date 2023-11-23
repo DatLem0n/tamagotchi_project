@@ -26,14 +26,16 @@
 #include "shared.h"
 
 /* prototypes */
-void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280);
+void sensorSetup(I2C_Handle* i2c_mpu9250, I2C_Handle* i2c_opt3001, I2C_Handle* i2c_bmp280,
+                 I2C_Params* i2cParams_mpu9250, I2C_Params* i2cParams_opt3001, I2C_Params* i2cParams_bmp280);
+void initialize_task(Task_Handle* handle, Task_Params* params, void(*taskFxn), char* stack, uint8_t priority);
 void initialize_handles();
 
 /*
- * Globaalit muuttujat
- */
+* Globaalit muuttujat
+*/
 char messageBuffer[BUFFERSIZE];
+char receiveBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
@@ -67,85 +69,82 @@ static PIN_State buzzerState;
 
 // MPU power pin global variables
 static PIN_Handle mpuPinHandle;
-static PIN_State mpuPinState;
+static PIN_State  mpuPinState;
 
 /*
- * Initialize Pin configs here
- */
+* Initialize Pin configs here
+*/
 
 // MPU power pin
 static PIN_Config mpuPowerPinConfig[] = {
     Board_MPU_POWER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-    PIN_TERMINATE};
+    PIN_TERMINATE
+};
 
 // MPU uses its own I2C interface
 static const I2CCC26XX_I2CPinCfg mpuI2cPinConfig = {
     .pinSDA = Board_I2C0_SDA1,
-    .pinSCL = Board_I2C0_SCL1};
+    .pinSCL = Board_I2C0_SCL1
+};
 
 PIN_Config button0_Config[] = {
-    Board_BUTTON0 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
-    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+   Board_BUTTON0 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
+   PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
 PIN_Config button1_Config[] = {
-    Board_BUTTON1 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
-    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+        Board_BUTTON1 | PIN_INPUT_EN | PIN_PULLUP | PIN_IRQ_NEGEDGE,
+        PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
 PIN_Config ledConfig[] = {
-    Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-    PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
+   Board_LED0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+   PIN_TERMINATE // Asetustaulukko lopetetaan aina tällä vakiolla
 };
 
 PIN_Config buzzerConfig[] = {
-    Board_BUZZER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-    PIN_TERMINATE};
+  Board_BUZZER | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+  PIN_TERMINATE
+};
 
 /*
- *  Button functions
- */
+*  Button functions
+*/
 
 bool eatButtonPressed = FALSE;
 enum Music music_selection = SILENT;
-void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
-{
+void button0_Fxn(PIN_Handle handle, PIN_Id pinId) {
    music_selection++;
+   nowPlaying(music_selection, messageBuffer);
    if (music_selection == END)
       music_selection = SILENT;
 }
 
-void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
-{
+void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
    eat(1, messageBuffer);
    eatButtonPressed = TRUE;
    toggleLed(ledHandle, Board_LED0);
 }
 
-void buzzerTaskFxn()
-{
-   while (1)
-   {
-      if (eatButtonPressed)
-      {
+void buzzerTaskFxn() {
+   while (1) {
+      if (eatButtonPressed) {
          makeSound(buzzerHandle, EAT);
          eatButtonPressed = FALSE;
       }
-      else
-      {
+      else {
          makeSound(buzzerHandle, music_selection);
       }
 
-      // Task_sleep(SECOND/2);
+      //Task_sleep(SECOND/2);
    }
 }
 
 /*
- *  Task functions
- */
+*  Task functions
+*/
 
-void uartTaskFxn()
-{
+void uartTaskFxn() {
    UART_Handle uartHandle;
    UART_Params uartParams;
 
@@ -153,25 +152,23 @@ void uartTaskFxn()
    uartParams.writeDataMode = UART_DATA_TEXT;
    uartParams.readDataMode = UART_DATA_TEXT;
    uartParams.readEcho = UART_ECHO_OFF;
-   uartParams.readMode = UART_MODE_BLOCKING;
+   uartParams.readMode = UART_MODE_CALLBACK;
+   uartParams.readCallback = &checkMessage;
    uartParams.baudRate = 9600;            // nopeus 9600baud
    uartParams.dataLength = UART_LEN_8;    // 8
    uartParams.parityType = UART_PAR_NONE; // n
-   uartParams.stopBits = UART_STOP_ONE;   // 1
+   uartParams.stopBits = UART_STOP_ONE; // 1
 
    uartHandle = UART_open(Board_UART0, &uartParams);
-   if (uartHandle == NULL)
-   {
+   if (uartHandle == NULL) {
       System_abort("Error opening the UART");
    }
-
+    UART_read(uartHandle, receiveBuffer, 1);
    while (1)
    {
-
       // TODO: korvaa tilakoneella
-      // Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
-      if (messageBuffer[0] != '\0')
-      {
+      //Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
+      if (messageBuffer[0] != '\0') {
          UART_write(uartHandle, messageBuffer, strlen(messageBuffer) + 1);
          strcpy(messageBuffer, '\0');
       }
@@ -184,8 +181,7 @@ void uartTaskFxn()
 // TODO: bmp280 palauttaa aina samat arvot, plz fix
 // TODO: ota käyttöön tmp007
 // TODO: poista sleepit, testaa ja laita takaisin ne mikä eivät olleet turhia
-Void sensorTaskFxn()
-{
+Void sensorTaskFxn() {
    I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280;
    I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280;
 
@@ -193,14 +189,13 @@ Void sensorTaskFxn()
    write_to_messageBuffer(messageBuffer, "session:start");
 
    int index = 0;
-   while (1)
-   {
+   while (1) {
       time = Clock_getTicks() / Clock_tickPeriod;
       time = time / 1000;
 
       /*
-       * Get data from sensors
-       */
+      * Get data from sensors
+      */
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
@@ -233,10 +228,10 @@ Void sensorTaskFxn()
       I2C_close(i2c_bmp280);
 
       /*
-       * Clean sensor data, write it to sensor_data_array and send it to backend
-       */
+      * Clean sensor data, write it to sensor_data_array and send it to backend
+      */
       clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
-      // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
+      //TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
 
       write_sensor_readings_to_sensorDataArray(sensorDataArray, index, time, ax, ay, az, gx, gy, gz, temp, press, light);
 
@@ -258,8 +253,7 @@ Void sensorTaskFxn()
    }
 }
 
-int main(void)
-{
+int main(void) {
 
    Task_Handle sensorTaskHandle;
    Task_Params sensorTaskParams;
@@ -314,59 +308,64 @@ int main(void)
 }
 
 /*
- * Initialize pins and handles
- */
-void initialize_handles()
-{
+* Initialize pins and handles
+*/
+void initialize_handles() {
    mpuPinHandle = PIN_open(&mpuPinState, mpuPowerPinConfig);
-   if (!mpuPinHandle)
-   {
+   if (!mpuPinHandle) {
       System_abort("Error initializing MPU power pin\n");
    }
 
    // Ledi käyttöön ohjelmassa
    ledHandle = PIN_open(&ledState, ledConfig);
-   if (!ledHandle)
-   {
+   if (!ledHandle) {
       System_abort("Error initializing LED pin\n");
    }
 
    // Painonappi 0 käyttöön ohjelmassa
    button0_Handle = PIN_open(&button0_State, button0_Config);
-   if (!button0_Handle)
-   {
+   if (!button0_Handle) {
       System_abort("Error initializing button0 pin\n");
    }
    // Painonappi 1 käyttöön ohjelmassa
    button1_Handle = PIN_open(&button1_State, button1_Config);
-   if (!button1_Handle)
-   {
+   if (!button1_Handle) {
       System_abort("Error initializing button1 pin\n");
    }
 
    // Painonapille 0 keskeytyksen käsittellijä
-   if (PIN_registerIntCb(button0_Handle, &button0_Fxn) != 0)
-   {
+   if (PIN_registerIntCb(button0_Handle, &button0_Fxn) != 0) {
       System_abort("Error registering button callback function");
    }
 
    // Painonapille 1 keskeytyksen käsittellijä
-   if (PIN_registerIntCb(button1_Handle, &button1_Fxn) != 0)
-   {
+   if (PIN_registerIntCb(button1_Handle, &button1_Fxn) != 0) {
       System_abort("Error registering button callback function");
    }
 
    // Buzzer
    buzzerHandle = PIN_open(&buzzerState, buzzerConfig);
-   if (buzzerHandle == NULL)
-   {
+   if (buzzerHandle == NULL) {
       System_abort("Buzzer pin open failed!");
    }
 }
 
-void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280)
-{
+void initialize_task(Task_Handle* handle, Task_Params* params, void(*taskFxn), char* stack, uint8_t priority) {
+   Task_Params_init(params);
+   (*params).stackSize = STACKSIZE;
+   (*params).stack = &stack;
+
+   (*handle) = Task_create(taskFxn, &params, NULL);
+
+   if (handle == NULL) {
+      System_abort("Task create failed!");
+   }
+   if (priority != 0)
+      (*params).priority = priority;
+}
+
+void sensorSetup(I2C_Handle* i2c_mpu9250, I2C_Handle* i2c_opt3001, I2C_Handle* i2c_bmp280,
+   I2C_Params* i2cParams_mpu9250, I2C_Params* i2cParams_opt3001, I2C_Params* i2cParams_bmp280) {
    // Alustetaan i2c-väylä
    I2C_Params_init(i2cParams_mpu9250);
    I2C_Params_init(i2cParams_opt3001);
@@ -385,7 +384,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    mpu9250_setup(i2c_mpu9250);
    I2C_close((*i2c_mpu9250));
 
-   // Alustetaan OPT3001
+   //Alustetaan OPT3001
    (*i2c_opt3001) = I2C_open(Board_I2C_TMP, i2cParams_opt3001);
    if ((*i2c_opt3001) == NULL)
       System_abort("Error Initializing opt3001 I2C\n");
@@ -401,3 +400,4 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    bmp280_setup(i2c_bmp280);
    I2C_close((*i2c_opt3001));
 }
+

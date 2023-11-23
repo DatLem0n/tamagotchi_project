@@ -6,9 +6,10 @@
 #include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
+#include "ti/drivers/UART.h"
 
 /**
- * Writes given message to the messagebuffer. Will try writing untill buffer is not full.
+ * Writes given message to the message buffer. Will try writing until buffer is not full.
  * @param message
  * @param buffer
  * @return 1 on success
@@ -178,26 +179,45 @@ struct Note
     int length;
 };
 
-int msg1(char message, char* buffer)
+int msg1(char message[], char* buffer)
 {
-    if (message == 0)
+    if (strlen(message) == 0)
         return 0;
 
-    char msg[10];
-    sprintf(msg, "MSG1:%c", message);
-    writeMessageBuffer(buffer, msg);
+    char msg[80];
+    sprintf(msg, "MSG1:%s", message);
+    write_to_messageBuffer(buffer, msg);
     return 1;
 }
 
-int msg2(char message, char* buffer)
+int msg2(char message[], char* buffer)
 {
-    if (message == 0)
+    if (strlen(message) == 0)
         return 0;
 
-    char msg[10];
-    sprintf(msg, "MSG2:%c", message);
-    writeMessageBuffer(buffer, msg);
+    char msg[80];
+    sprintf(msg, "MSG2:%s", message);
+    write_to_messageBuffer(buffer, msg);
     return 1;
+}
+
+void nowPlaying(enum Music musicSelection, char* buffer){
+    char message[80];
+    switch (musicSelection) {
+        case DOOM:
+            strcpy(message, "Now Playing: Doom");
+            break;
+        case VICTORY:
+            strcpy(message, "Now Playing: Victory");
+            break;
+        case ROUNDABOUT:
+            strcpy(message, "Now Playing: Roundabout");
+            break;
+        default:
+            strcpy(message, "Currently not playing anything.");
+            break;
+    }
+    msg1(message, buffer);
 }
 
 /**
@@ -395,7 +415,6 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         songLength = sizeof(Doom) / sizeof(struct Note);
         tempo = SECOND;
         break;
-
     case 2:
         sound = Victory;
         songLength = sizeof(Victory) / sizeof(struct Note);
@@ -526,3 +545,22 @@ void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, doubl
     sprintf(msg, "temp:%f,press:%f,light:%f", temp, press, light);
     write_to_messageBuffer(buffer, msg);
 }
+
+/**
+ * react to
+ */
+void Beep(){
+    Beeping = 1;
+}
+
+static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
+    char* token = strtok(rxBuf, ",");
+    if (strcmp(token, GROUP_ID_NUM) == 0){
+        token = strtok(NULL, ":");
+        if (strcmp(token, "BEEP") == 0){
+            Beep();
+        }
+    }
+    UART_read(handle, rxBuf, len);
+}
+
