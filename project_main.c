@@ -52,8 +52,8 @@ int time;
  */
 float sensorDataArray[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
 
-// "Tilakone" sensoridatan lähetykseen backendille
-bool sendSensorDataToBackend = FALSE;
+// Sensoridatan lähetykseen backendille
+bool sendSensorDataToBackend = TRUE;
 
 // Pin RTOS-variables and configurations
 static PIN_Handle button0_Handle;
@@ -190,6 +190,7 @@ Void sensorTaskFxn()
    I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280;
 
    sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
+   write_to_messageBuffer(messageBuffer, "session:start");
 
    int index = 0;
    while (1)
@@ -203,34 +204,33 @@ Void sensorTaskFxn()
       i2c_mpu9250 = I2C_open(Board_I2C_TMP, &i2cParams_mpu9250);
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND / 10);
+      // Task_sleep(SECOND / 10);
 
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
 
       I2C_close(i2c_mpu9250);
-      Task_sleep(SECOND / 10);
+      // Task_sleep(SECOND / 10);
 
       // OPT3001
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
-      Task_sleep(SECOND);
+      // Task_sleep(SECOND);
 
       light = opt3001_get_data(&i2c_opt3001);
 
       I2C_close(i2c_opt3001);
-      Task_sleep(SECOND / 10);
+      // Task_sleep(SECOND / 10);
 
       // BMP280
       i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
       if (i2c_bmp280 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
-      Task_sleep(SECOND / 10);
+      // Task_sleep(SECOND / 10);
 
-      bmp280_get_data(&i2c_bmp280, &temp, &press);
+      bmp280_get_data(&i2c_bmp280, &press, &temp);
 
       I2C_close(i2c_bmp280);
-      Task_sleep(SECOND / 10);
 
       /*
        * Clean sensor data, write it to sensor_data_array and send it to backend
@@ -242,13 +242,19 @@ Void sensorTaskFxn()
 
       if (sendSensorDataToBackend == TRUE)
       {
+         if (index == 1)
+            write_to_messageBuffer(messageBuffer, "session:start");
          write_sensor_readings_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
+         if (index == 9)
+            write_to_messageBuffer(messageBuffer, "session:end");
       }
 
       // Used to turn the sensor data array into a ring buffer
       index++;
       if (index == SENSOR_DATA_ROWS)
          index = 0;
+
+      Task_sleep(SECOND / 5);
    }
 }
 
@@ -264,8 +270,8 @@ int main(void)
 
    Board_initGeneral();
    initialize_handles();
-   
-    // Sensor Task
+
+   // Sensor Task
    Task_Params_init(&sensorTaskParams);
    sensorTaskParams.stackSize = STACKSIZE;
    sensorTaskParams.stack = &sensorTaskStack;
