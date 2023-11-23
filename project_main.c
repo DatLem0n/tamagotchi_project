@@ -28,7 +28,7 @@
 /* prototypes */
 void sensorSetup(I2C_Handle* i2c_mpu9250, I2C_Handle* i2c_opt3001, I2C_Handle* i2c_bmp280,
                  I2C_Params* i2cParams_mpu9250, I2C_Params* i2cParams_opt3001, I2C_Params* i2cParams_bmp280);
-void initialize_task(I2C_Handle* handle, I2C_Params* params, void(*taskFxn), char* stack, uint8_t priority);
+void initialize_task(Task_Handle* handle, Task_Params* params, void(*taskFxn), char* stack, uint8_t priority);
 void initialize_handles();
 
 /*
