@@ -306,7 +306,7 @@ void initialize_handles() {
    }
 }
 
-void initialize_task(I2C_Handle* handle, I2C_Params* params, void(*taskFxn), char* stack, uint8_t priority) {
+void initialize_task(Task_Handle* handle, Task_Params* params, void(*taskFxn), char* stack, uint8_t priority) {
    Task_Params_init(params);
    (*params).stackSize = STACKSIZE;
    (*params).stack = &stack;
