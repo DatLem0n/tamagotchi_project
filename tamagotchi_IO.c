@@ -178,6 +178,28 @@ struct Note
     int length;
 };
 
+int msg1(char message, char* buffer)
+{
+    if (message == 0)
+        return 0;
+
+    char msg[10];
+    sprintf(msg, "MSG1:%c", message);
+    writeMessageBuffer(buffer, msg);
+    return 1;
+}
+
+int msg2(char message, char* buffer)
+{
+    if (message == 0)
+        return 0;
+
+    char msg[10];
+    sprintf(msg, "MSG2:%c", message);
+    writeMessageBuffer(buffer, msg);
+    return 1;
+}
+
 /**
  *Returns frequency of note
  * @param note char (e.g. 'C' for 261 hz)
