@@ -1,6 +1,7 @@
 /* C Standard library */
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 /* XDCtools files */
 #include <xdc/std.h>
 #include <xdc/runtime/System.h>
@@ -39,7 +40,7 @@ char receiveBuffer[BUFFERSIZE];
 char sensorTaskStack[STACKSIZE];
 char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
-int minullaOnHÄTÄsaatana = 0;
+int inDistress = 0;
 
 float ax, ay, az, gx, gy, gz;
 double temp, press, light;
@@ -129,9 +130,9 @@ void button1_Fxn(PIN_Handle handle, PIN_Id pinId) {
 
 void buzzerTaskFxn() {
    while (1) {
-       if(minullaOnHÄTÄsaatana){
+       if(inDistress){
            makeSound(buzzerHandle, DOOM);
-           minullaOnHÄTÄsaatana = 0;
+           inDistress = 0;
        }
       if (eatButtonPressed) {
          makeSound(buzzerHandle, EAT);
@@ -149,12 +150,12 @@ void buzzerTaskFxn() {
  * react to
  */
 void Beep(){
-    minullaOnHÄTÄsaatana = 1;
+    inDistress = 1;
 }
 
 static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
     char* token = strtok(rxBuf, ",");
-    if (strcmp(token, GROUP_ID_NUM) == 0){
+    if (atoi(token) == GROUP_ID_NUM){
         token = strtok(NULL, ":");
         if (strcmp(token, "BEEP") == 0){
             Beep();
