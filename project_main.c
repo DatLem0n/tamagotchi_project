@@ -1,6 +1,7 @@
 /* C Standard library */
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 /* XDCtools files */
 #include <xdc/std.h>
 #include <xdc/runtime/System.h>

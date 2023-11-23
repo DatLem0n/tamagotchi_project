@@ -431,6 +431,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         tempo = 2 * SECOND;
         break;
     default:
+        Task_sleep(SECOND / 2);
         return 0;
     }
 
