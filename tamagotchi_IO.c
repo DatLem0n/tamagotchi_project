@@ -206,19 +206,19 @@ void testMessage(char* buffer){
 }
 
 void nowPlaying(int musicSelection, char* buffer){
-    char message[80];
+    char message[80] = "MSG1:";
     switch (musicSelection) {
         case DOOM:
-            strcpy(message, "Now Playing: Doom");
+            strcat(message, "Now Playing: Doom");
             break;
         case VICTORY:
-            strcpy(message, "Now Playing: Victory");
+            strcat(message, "Now Playing: Victory");
             break;
         case ROUNDABOUT:
-            strcpy(message, "Now Playing: Roundabout");
+            strcat(message, "Now Playing: Roundabout");
             break;
         default:
-            strcpy(message, "Currently not playing anything.");
+            strcat(message, "Currently not playing anything.");
             break;
     }
     write_to_messageBuffer(buffer, message);
