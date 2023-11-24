@@ -124,7 +124,7 @@ bool detect_Exercise(float mpu9250DeltasArray[6]){
         return true;
         ayBounces = 0;}
     if(azBounces > 10){
-        return true
+        return true;
         azBounces = 0;}
     
     return false;
