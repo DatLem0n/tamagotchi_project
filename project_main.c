@@ -311,8 +311,8 @@ Void sensorTaskFxn()
       Task_sleep(SECOND / 10);
    }
 }
-const short neededPets = 5;
-short petBoolArray[neededPets];
+const short neededPets = 3;
+bool petBoolArray[neededPets];
 int petAmount = 0;
 bool gotPET = true;
 
@@ -320,13 +320,13 @@ void detectPets(){
     float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
     if (lightAmount > 0){
         if (lightAmount < 25) {
-            petBoolArray[petAmount] = 0;
+            petBoolArray[petAmount] = true;
         }
         else {
-            petBoolArray[petAmount] = 1;
+            petBoolArray[petAmount] = false;
         }
         petAmount++;
-        if (petAmount > neededPets){
+        if (petAmount == neededPets){
             int i;
             for (i = 1; i < neededPets; ++i) {
                 if (petBoolArray[i] == petBoolArray[i - 1]){
