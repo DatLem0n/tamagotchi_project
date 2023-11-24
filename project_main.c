@@ -289,8 +289,6 @@ Void sensorTaskFxn()
          makeSound(buzzerHandle, DOOM);
       }
 
-      calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
-
       if (sendSensorDataToBackend == TRUE)
       {
          if (timesSenttoBackend == 0)

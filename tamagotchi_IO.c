@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include <ti/sysbios/knl/Task.h>
 #include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
