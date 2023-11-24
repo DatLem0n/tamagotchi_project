@@ -18,7 +18,7 @@
 int write_to_messageBuffer(char* buffer, char* message)
 {
     while (1) {
-        if (strlen(buffer) + strlen(message) < BUFFERSIZE) {
+        if (strlen(buffer) + strlen(message) < BUFFERSIZE - 1) {
             // Jos viestibufferi on tyhjä, lisätään alkuun ryhmän id
             if (buffer[0] == '\0') {
                 strcpy(buffer, GROUP_ID_STRING);

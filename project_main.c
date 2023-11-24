@@ -109,16 +109,14 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
    music_selection++;
    nowPlaying(music_selection, messageBuffer);
-   //testMessage(messageBuffer);
    if (music_selection == END)
       music_selection = SILENT;
 }
 
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
-   //eat(1, messageBuffer);
+   eat(1, messageBuffer);
    eatButtonPressed = TRUE;
-   sendSensorDataToBackend = !sendSensorDataToBackend;
 }
 
 void buzzerTaskFxn()
@@ -167,7 +165,7 @@ static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
         }
     }
     UART_read(handle, rxBuf, BUFFERSIZE);
-    Task_sleep(SECOND/5);
+    Task_sleep(SECOND/25);
 }
 
 void uartTaskFxn()
@@ -194,7 +192,7 @@ void uartTaskFxn()
    UART_read(uartHandle, receiveBuffer, BUFFERSIZE);
    while (1)
    {
-      // TODO: korvaa tilakoneella
+   
       // Jos viestibufferissa on dataa, lähetetään se ja nollataan bufferi
       if (messageBuffer[0] != '\0')
       {
@@ -207,9 +205,6 @@ void uartTaskFxn()
    }
 }
 
-// TODO: bmp280 palauttaa aina samat arvot, plz fix
-// TODO: ota käyttöön tmp007
-// TODO: poista sleepit, testaa ja laita takaisin ne mikä eivät olleet turhia
 Void sensorTaskFxn()
 {
    I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280;
@@ -217,6 +212,7 @@ Void sensorTaskFxn()
 
    sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, 
    &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
+   sendSensorDataToBackend = TRUE;
 
    while (1)
    {
@@ -257,7 +253,7 @@ Void sensorTaskFxn()
       detectPets();
 
       
-      float exerciseThreshold = 1.5;
+      float exerciseThreshold = 1.7;
       if(acceleration_vector_length(ax, ay, az) > exerciseThreshold){
          exercise(5, messageBuffer);
          makeSound(buzzerHandle, DOOM);
@@ -270,12 +266,14 @@ Void sensorTaskFxn()
          
          write_sensor_readings_to_messageBuffer(messageBuffer, time, ax, ay, az, gx, gy, gz, temp, press, light);
          
-         if (timesSenttoBackend == 20){
+         if (timesSenttoBackend == 10){
             write_to_messageBuffer(messageBuffer, "session:end");
             sendSensorDataToBackend = FALSE;
             timesSenttoBackend = -1;
          }
          timesSenttoBackend++;
+      } else{
+         timesSenttoBackend = 0;
       }
 
       Task_sleep(SECOND / 10);
@@ -289,7 +287,7 @@ bool gotPET = true;
 void detectPets(){
    gotPET = true;
     if (light > 0){
-        if (light < 25) {
+        if (light < 50) {
             petBoolArray[petAmount] = true;
         }
         else {
@@ -439,7 +437,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    mpu9250_setup(i2c_mpu9250);
    I2C_close((*i2c_mpu9250));
-   Task_sleep(SECOND / 10);
+   //Task_sleep(SECOND / 5);
 
    // Alustetaan OPT3001
    (*i2c_opt3001) = I2C_open(Board_I2C_TMP, i2cParams_opt3001);
@@ -448,7 +446,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    opt3001_setup(i2c_opt3001);
    I2C_close((*i2c_opt3001));
-   Task_sleep(SECOND / 10);
+   //Task_sleep(SECOND / 5);
 
    // Alustetaan BMP280
    (*i2c_bmp280) = I2C_open(Board_I2C_TMP, i2cParams_bmp280);
@@ -457,5 +455,5 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    bmp280_setup(i2c_bmp280);
    I2C_close((*i2c_bmp280));
-   Task_sleep(SECOND / 10);
+   //Task_sleep(SECOND / 5);
 }
