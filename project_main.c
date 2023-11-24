@@ -59,8 +59,7 @@ float sensorDataArray[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
 float mpu9250DeltasArray[6];
 
 // Sensoridatan lähetykseen backendille
-bool sendSensorDataToBackend = TRUE;
-bool printSensorReadings = FALSE;
+bool sendSensorDataToBackend = FALSE;
 int timesSenttoBackend = 0;
 
 bool bouncingDetected = FALSE;
@@ -133,7 +132,7 @@ void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
    //eat(1, messageBuffer);
    //eatButtonPressed = TRUE;
    toggleLed(ledHandle, Board_LED0);
-   printSensorReadings = !printSensorReadings;
+   sendSensorDataToBackend = !sendSensorDataToBackend;
 }
 
 void buzzerTaskFxn()
@@ -211,7 +210,7 @@ void uartTaskFxn()
       }
 
       // 10x per second
-      Task_sleep((SECOND / 5));
+      Task_sleep((SECOND / 50));
    }
 }
 
@@ -268,15 +267,12 @@ Void sensorTaskFxn()
 
       /*
          */
-      clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
+      //clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
 
       write_sensor_readings_to_sensorDataArray(sensorDataArray, index, time, ax, ay, az, gx, gy, gz, temp, press, light);
       
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
-
-      if(printSensorReadings)
-         print_sensor_readings_csv(time, ax, ay, az, gx, gy, gz, temp, press, light);
 
       if (sendSensorDataToBackend == TRUE)
       {
@@ -288,6 +284,7 @@ Void sensorTaskFxn()
          if (timesSenttoBackend == 20){
             write_to_messageBuffer(messageBuffer, "session:end");
             sendSensorDataToBackend = FALSE;
+            timesSenttoBackend = -1;
          }
          timesSenttoBackend++;
       }
@@ -297,7 +294,7 @@ Void sensorTaskFxn()
       if (index == SENSOR_DATA_ROWS)
          index = 0;
 
-      Task_sleep(SECOND / 5);
+      Task_sleep(SECOND / 10);
    }
 }
 

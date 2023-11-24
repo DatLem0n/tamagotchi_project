@@ -8,12 +8,6 @@
 #include "shared.h"
 #include "ti/drivers/UART.h"
 
-void print_sensor_readings_csv(int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light) {
-    System_printf("time:%i,ax:%.02f,ay:%.02f,az:%.02f,gx:%.02f,gy:%.02f,gz:%.02f,temp:%.02f,press:%.02f,light:%.02f\n",
-        time, ax, ay, az, gx, gy, gz, temp, press, light);
-    System_flush();
-}
-
 /**
  * Writes given message to the message buffer. Will try writing until buffer is not full.
  * @param message
