@@ -42,21 +42,9 @@ char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
 
 float ax, ay, az, gx, gy, gz;
-int sensorArrayHEAD = 0;
 
 double temp, press, light;
 int time;
-
-/**
- * format for data (columns)
- * TIME   | AX | AY | AZ | GX | GY | GZ | TEMP | PRESS | LIGHT
- * time x | ... |
- * time y | ... |
- *
- * e.g. sensorData [1,TIME] would return *time y*
- */
-//float sensorDataArray[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
-//float mpu9250DeltasArray[6];
 
 // Sensoridatan lähetykseen backendille
 bool sendSensorDataToBackend = FALSE;
@@ -129,7 +117,7 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
    //eat(1, messageBuffer);
-   //eatButtonPressed = TRUE;
+   eatButtonPressed = TRUE;
    sendSensorDataToBackend = !sendSensorDataToBackend;
 }
 
@@ -151,7 +139,7 @@ void buzzerTaskFxn()
       
       makeSound(buzzerHandle, music_selection);
       
-       Task_sleep(SECOND/5);
+       Task_sleep(SECOND/50);
    }
 }
 
@@ -266,17 +254,14 @@ Void sensorTaskFxn()
 
       clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
-
-      //write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
-
       detectPets();
 
-      /*
+      
       float exerciseThreshold = 1.5;
       if(acceleration_vector_length(ax, ay, az) > exerciseThreshold){
          exercise(5, messageBuffer);
          makeSound(buzzerHandle, DOOM);
-      }*/
+      }
 
       if (sendSensorDataToBackend == TRUE)
       {
@@ -292,13 +277,6 @@ Void sensorTaskFxn()
          }
          timesSenttoBackend++;
       }
-
-      /*
-      // Used to turn the sensor data array into a ring buffer
-      sensorArrayHEAD++;
-      if (sensorArrayHEAD == SENSOR_DATA_ROWS)
-          sensorArrayHEAD = 0;
-      */
 
       Task_sleep(SECOND / 10);
    }
@@ -461,6 +439,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    mpu9250_setup(i2c_mpu9250);
    I2C_close((*i2c_mpu9250));
+   Task_sleep(SECOND / 10);
 
    // Alustetaan OPT3001
    (*i2c_opt3001) = I2C_open(Board_I2C_TMP, i2cParams_opt3001);
@@ -469,6 +448,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    opt3001_setup(i2c_opt3001);
    I2C_close((*i2c_opt3001));
+   Task_sleep(SECOND / 10);
 
    // Alustetaan BMP280
    (*i2c_bmp280) = I2C_open(Board_I2C_TMP, i2cParams_bmp280);
@@ -477,5 +457,5 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    bmp280_setup(i2c_bmp280);
    I2C_close((*i2c_bmp280));
-
+   Task_sleep(SECOND / 10);
 }
