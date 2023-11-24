@@ -1,9 +1,31 @@
 # Tamagotchi
->
-> **Ryhmä 3430**  
-Matias Björklund  
-Ville Kujala  
-Kalle Asmundi
+
+## **Ryhmä 3430**  
+
+### Matias Björklund
+
+- SensorTask
+- Pinnien, taskien ja sensorien alustukset
+- Uart-kirjoitus
+- Sensoridatan keräys ja tulkinta
+- README
+- Suunnittelu
+
+### Ville Kujala
+
+- tamagotchi_IO
+- Uart-lukeminen
+- messageBuffer-kirjoitus
+- musiikkifunktiot
+- musiikkia
+- Suunnittelu
+
+### Kalle Asmundi
+
+- tamagotchi_IO
+- Led-funktiot
+- musiikkia
+- Suunnittelu
 
 ## TODO
 

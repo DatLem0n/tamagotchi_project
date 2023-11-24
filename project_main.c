@@ -219,7 +219,8 @@ Void sensorTaskFxn()
 {
    I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280;
    I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280;
-
+   
+   Task_sleep(SECOND);
    sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, 
    &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
    sendSensorDataToBackend = TRUE;
