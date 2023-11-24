@@ -29,7 +29,6 @@
 void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
                  I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280);
 void initialize_handles();
-void detectPets();
 
 /*
  * Globaalit muuttujat
@@ -103,7 +102,7 @@ PIN_Config buzzerConfig[] = {
  *  Button functions
  */
 
-bool eatButtonPressed = FALSE;
+// Jukebox-nappi
 enum Music music_selection = SILENT;
 void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
@@ -113,10 +112,13 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
       music_selection = SILENT;
 }
 
+// Eat-nappi
+bool eatButtonPressed = FALSE;
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
-   eat(1, messageBuffer);
+   eat(2, messageBuffer);
    eatButtonPressed = TRUE;
+   toggleLed(ledHandle, Board_LED0);
 }
 
 void buzzerTaskFxn()
@@ -142,7 +144,7 @@ void buzzerTaskFxn()
 }
 
 /**
- * react to
+ * react to id,BEEP
  */
 void Beep(char* warningMsg)
 {
@@ -153,6 +155,7 @@ void Beep(char* warningMsg)
     write_to_messageBuffer(messageBuffer, msg);
 }
 
+// Kutsutaan UART_write keskeytyksellä
 static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
     char* token = strtok(rxBuf, ",");
     char msg[BUFFERSIZE];
@@ -200,8 +203,15 @@ void uartTaskFxn()
          strcpy(messageBuffer, '\0');
       }
 
-      // 10x per second
       Task_sleep((SECOND / 50));
+   }
+}
+
+// Tunnistetaan kevyt kosketus kun Tamagotchi on selällään ja kutsutaan pet
+void detectBellyRubs(){
+   if(az > 1.1){
+      pet(2, messageBuffer);
+      makeSound(buzzerHandle, ONEUP);
    }
 }
 
@@ -214,6 +224,7 @@ Void sensorTaskFxn()
    &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
    sendSensorDataToBackend = TRUE;
 
+   
    while (1)
    {
       time = Clock_getTicks() / Clock_tickPeriod;
@@ -248,17 +259,21 @@ Void sensorTaskFxn()
       I2C_close(i2c_bmp280);
 
 
+      /*
+      * Sensoridatan tulkinta
+      */
       clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
-      // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
-      detectPets();
-
       
-      float exerciseThreshold = 1.7;
-      if(acceleration_vector_length(ax, ay, az) > exerciseThreshold){
+      detectBellyRubs();
+
+      // Tunnistetaan ylittääkö kiihtyvyys kynnysarvo, kutsutaan excerise jos näin käy
+      float exerciseThreshold = 2.0;
+      if(acceleration_vector_length(ax, ay, az) > exerciseThreshold && az < 1.0){
          exercise(5, messageBuffer);
          makeSound(buzzerHandle, DOOM);
       }
 
+      // Lähetetään 10 mittausta backendille kun laite käynnistyy
       if (sendSensorDataToBackend == TRUE)
       {
          if (timesSenttoBackend == 0)
@@ -278,36 +293,6 @@ Void sensorTaskFxn()
 
       Task_sleep(SECOND / 10);
    }
-}
-const short neededPets = 3;
-bool petBoolArray[neededPets];
-int petAmount = 0;
-bool gotPET = true;
-
-void detectPets(){
-   gotPET = true;
-    if (light > 0){
-        if (light < 50) {
-            petBoolArray[petAmount] = true;
-        }
-        else {
-            petBoolArray[petAmount] = false;
-        }
-        petAmount++;
-        if (petAmount == neededPets){
-            int i;
-            for (i = 1; i < neededPets; ++i) {
-                if (petBoolArray[i] == petBoolArray[i - 1]){
-                    gotPET = false;
-                }
-            }
-            if(gotPET){
-                petAmount = 0;
-                pet(neededPets, messageBuffer);
-                makeSound(buzzerHandle,ONEUP);
-            }
-        }
-    }
 }
 
 int main(void)

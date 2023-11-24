@@ -84,22 +84,9 @@ int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, fl
     return 1;
 }
 
+// Calculates the length of the total acceleration vector
 float acceleration_vector_length(float ax, float ay, float az){
     return sqrt(ax*ax + ay*ay + az*az);
-}
-
-void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
-    float gx, float gy, float gz, double temp, double press, double light) {
-    sensorDataArray[index][TIME] = (float)time;
-    sensorDataArray[index][AX] = ax;
-    sensorDataArray[index][AY] = ay;
-    sensorDataArray[index][AZ] = az;
-    sensorDataArray[index][GX] = gx;
-    sensorDataArray[index][GY] = gy;
-    sensorDataArray[index][GZ] = gz;
-    sensorDataArray[index][TEMP] = (float)temp;
-    sensorDataArray[index][PRESS] = (float)press;
-    sensorDataArray[index][LIGHT] = (float)light;
 }
 
 /**

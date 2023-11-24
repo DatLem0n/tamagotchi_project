@@ -6,7 +6,6 @@
 // Writing to messageBuffer and sensorDataArray
 int write_to_messageBuffer(char* buffer, char* message);
 void write_sensor_readings_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light);
-void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az, float gx, float gy, float gz, double temp, double press, double light);
 
 // Data cleaning functions
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);

@@ -168,8 +168,8 @@ void bmp280_get_data(I2C_Handle *i2c, double *pressure, double *temperature) {
     } else {
 
         // Oops, something went wrong..
-        System_printf("BMP280: Data read failed!\n");
-        System_flush();
+        //System_printf("BMP280: Data read failed!\n");
+        //System_flush();
     }
 }
 
