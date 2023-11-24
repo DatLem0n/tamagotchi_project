@@ -60,6 +60,7 @@ float mpu9250DeltasArray[6];
 
 // Sensoridatan lähetykseen backendille
 bool sendSensorDataToBackend = TRUE;
+bool printSensorReadings = FALSE;
 int timesSenttoBackend = 0;
 
 bool bouncingDetected = FALSE;
@@ -129,9 +130,10 @@ void button0_Fxn(PIN_Handle handle, PIN_Id pinId)
 
 void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
-   eat(1, messageBuffer);
-   eatButtonPressed = TRUE;
+   //eat(1, messageBuffer);
+   //eatButtonPressed = TRUE;
    toggleLed(ledHandle, Board_LED0);
+   printSensorReadings = !printSensorReadings;
 }
 
 void buzzerTaskFxn()
@@ -209,7 +211,7 @@ void uartTaskFxn()
       }
 
       // 10x per second
-      Task_sleep((SECOND / 50));
+      Task_sleep((SECOND / 5));
    }
 }
 
@@ -273,6 +275,8 @@ Void sensorTaskFxn()
       
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
 
+      if(printSensorReadings)
+         print_sensor_readings_csv(time, ax, ay, az, gx, gy, gz, temp, press, light);
 
       if (sendSensorDataToBackend == TRUE)
       {
