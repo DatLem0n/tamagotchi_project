@@ -160,20 +160,27 @@ void buzzerTaskFxn()
 /**
  * react to
  */
-void Beep()
+void Beep(char* warningMsg)
 {
-   inDistress = 1;
+    inDistress = 1;
+
+    char msg[BUFFERSIZE] = "MSG2:";
+    strcat(msg, warningMsg);
+    write_to_messageBuffer(messageBuffer, msg);
 }
 
 static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
     char* token = strtok(rxBuf, ",");
+    char msg[BUFFERSIZE];
     if (atoi(token) == GROUP_ID_NUM){
         token = strtok(NULL, ":");
         if (strcmp(token, "BEEP") == 0){
-            Beep();
+            token = strtok(NULL,",");
+            strcpy(msg,token);
+            Beep(msg);
         }
     }
-    UART_read(handle, rxBuf, 80);
+    UART_read(handle, rxBuf, BUFFERSIZE);
     Task_sleep(SECOND/5);
 }
 
@@ -198,7 +205,7 @@ void uartTaskFxn()
    {
       System_abort("Error opening the UART");
    }
-   UART_read(uartHandle, receiveBuffer, 80);
+   UART_read(uartHandle, receiveBuffer, BUFFERSIZE);
    while (1)
    {
       // TODO: korvaa tilakoneella
