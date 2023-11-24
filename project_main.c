@@ -12,6 +12,8 @@
 #include <ti/drivers/pin/PINCC26XX.h>
 #include <ti/drivers/I2C.h>
 #include <ti/drivers/i2c/I2CCC26XX.h>
+#include <ti/drivers/Power.h>
+#include <ti/drivers/power/PowerCC26XX.h>
 #include <ti/drivers/UART.h>
 
 /* Board Header files */

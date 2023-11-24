@@ -1,9 +1,13 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
 #include <ti/sysbios/knl/Task.h>
+#include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
+#include "ti/drivers/UART.h"
 
 /**
  * Writes given message to the message buffer. Will try writing until buffer is not full.
