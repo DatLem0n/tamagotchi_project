@@ -274,7 +274,7 @@ Void sensorTaskFxn()
 
       /*
          */
-      //clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
+      clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
 
       write_sensor_readings_to_sensorDataArray(sensorDataArray, index, time, ax, ay, az, gx, gy, gz, temp, press, light);

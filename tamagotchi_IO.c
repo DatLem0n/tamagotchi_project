@@ -69,7 +69,7 @@ void write_sensor_readings_to_messageBuffer(char* buffer, int time, float ax, fl
 
 // If a mpu9250 measurement is outside the threshold, forces it back inside range [-threshold,threshold] 
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz) {
-    float threshold = 2;
+    float threshold = 5;
     uint8_t data_amount = 6;
     float* data[6] = { ax, ay, az, gx, gy, gz };
 
