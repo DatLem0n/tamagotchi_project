@@ -105,15 +105,16 @@ void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], floa
 
 uint8_t axBounces=0, ayBounces=0, azBounces=0;
 bool detect_Exercise(float mpu9250DeltasArray[6]){
+    float threshold = 0.3;
     float d_ax = mpu9250DeltasArray[AX];
     float d_ay = mpu9250DeltasArray[AY];
     float d_az = mpu9250DeltasArray[AZ];
 
-    if(d_ax < -0,2 || d_ax > 0,2)
+    if(d_ax < -threshold || d_ax > threshold)
         axBounces++;
-    if(d_ay < -0,2 || d_ay > 0,2)
+    if(d_ay < threshold || d_ay > threshold)
         ayBounces++;
-    if(d_az < -0,2 || d_az > 0,2)
+    if(d_az < -threshold || d_az > threshold)
         azBounces++;
     
     if(axBounces > 10){

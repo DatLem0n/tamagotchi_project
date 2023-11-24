@@ -283,8 +283,8 @@ Void sensorTaskFxn()
 
       detectPets();
       if(detect_Exercise(mpu9250DeltasArray)){
-         exercise(5, messageBuffer);
-         makeSound(buzzerHandle, DOOM);
+        // exercise(5, messageBuffer);
+         //makeSound(buzzerHandle, DOOM);
       }
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
 
