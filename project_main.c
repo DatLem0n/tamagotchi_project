@@ -235,8 +235,6 @@ Void sensorTaskFxn()
 
    sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2c_tmp007, 
    &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280, &i2cParams_tmp007);
-   write_to_messageBuffer(messageBuffer, "session:start");
-
 
    while (1)
    {
@@ -266,7 +264,7 @@ Void sensorTaskFxn()
       // BMP280
       i2c_bmp280 = I2C_open(Board_I2C_TMP, &i2cParams_bmp280);
       if (i2c_bmp280 == NULL)
-         System_abort("Error Initializing mpu9250 I2C\n");
+         System_abort("Error Initializing BMP280 I2C\n");
       // Task_sleep(SECOND / 10);
       bmp280_get_data(&i2c_bmp280, &press, &temp);
       I2C_close(i2c_bmp280);
@@ -276,7 +274,7 @@ Void sensorTaskFxn()
       if (i2c_tmp007 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
       // Task_sleep(SECOND / 10);
-      temp = tmp007_get_data(i2c_tmp007);
+      temp = tmp007_get_data(&i2c_tmp007);
       I2C_close(i2c_tmp007);
 
       /*
