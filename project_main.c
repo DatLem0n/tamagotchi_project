@@ -55,8 +55,8 @@ int time;
  *
  * e.g. sensorData [1,TIME] would return *time y*
  */
-float sensorDataArray[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
-float mpu9250DeltasArray[6];
+//float sensorDataArray[SENSOR_DATA_ROWS][SENSOR_DATA_COLUMNS];
+//float mpu9250DeltasArray[6];
 
 // Sensoridatan lähetykseen backendille
 bool sendSensorDataToBackend = FALSE;
@@ -130,7 +130,6 @@ void button1_Fxn(PIN_Handle handle, PIN_Id pinId)
 {
    //eat(1, messageBuffer);
    //eatButtonPressed = TRUE;
-   toggleLed(ledHandle, Board_LED0);
    sendSensorDataToBackend = !sendSensorDataToBackend;
 }
 
@@ -247,6 +246,16 @@ Void sensorTaskFxn()
       I2C_close(i2c_mpu9250);
       // Task_sleep(SECOND / 10);
 
+      /**
+       // TMP007
+      i2c_tmp007 = I2C_open(Board_I2C_TMP, &i2cParams_tmp007);
+      if (i2c_tmp007 == NULL)
+         System_abort("Error Initializing mpu9250 I2C\n");
+      // Task_sleep(SECOND / 10);
+      temp = tmp007_get_data(&i2c_tmp007);
+      I2C_close(i2c_tmp007);
+      **/
+
       // OPT3001
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
       if (i2c_opt3001 == NULL)
@@ -264,20 +273,11 @@ Void sensorTaskFxn()
       bmp280_get_data(&i2c_bmp280, &press, &temp);
       I2C_close(i2c_bmp280);
 
-      // TMP007
-      i2c_tmp007 = I2C_open(Board_I2C_TMP, &i2cParams_tmp007);
-      if (i2c_tmp007 == NULL)
-         System_abort("Error Initializing mpu9250 I2C\n");
-      // Task_sleep(SECOND / 10);
-      temp = tmp007_get_data(&i2c_tmp007);
-      I2C_close(i2c_tmp007);
 
-      /*
-         */
       clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
 
-      write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
+      //write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
 
       detectPets();
 
@@ -303,10 +303,12 @@ Void sensorTaskFxn()
          timesSenttoBackend++;
       }
 
+      /*
       // Used to turn the sensor data array into a ring buffer
       sensorArrayHEAD++;
       if (sensorArrayHEAD == SENSOR_DATA_ROWS)
           sensorArrayHEAD = 0;
+      */
 
       Task_sleep(SECOND / 10);
    }
@@ -317,9 +319,9 @@ int petAmount = 0;
 bool gotPET = true;
 
 void detectPets(){
-    float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
-    if (lightAmount > 0){
-        if (lightAmount < 25) {
+   gotPET = true;
+    if (light > 0){
+        if (light < 25) {
             petBoolArray[petAmount] = true;
         }
         else {
