@@ -168,13 +168,16 @@ void Beep()
 
 static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
     char* token = strtok(rxBuf, ",");
+    char msg[BUFFERSIZE];
     if (atoi(token) == GROUP_ID_NUM){
         token = strtok(NULL, ":");
         if (strcmp(token, "BEEP") == 0){
+            //token = strtok(NULL,)
+            //strcpy(msg,token)
             Beep();
         }
     }
-    UART_read(handle, rxBuf, 80);
+    UART_read(handle, rxBuf, BUFFERSIZE);
     Task_sleep(SECOND/5);
 }
 
@@ -199,7 +202,7 @@ void uartTaskFxn()
    {
       System_abort("Error opening the UART");
    }
-   UART_read(uartHandle, receiveBuffer, 80);
+   UART_read(uartHandle, receiveBuffer, BUFFERSIZE);
    while (1)
    {
       // TODO: korvaa tilakoneella

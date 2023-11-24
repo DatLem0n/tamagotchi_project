@@ -289,6 +289,9 @@ int noteToFreq(const char* note)
     if (note[1] == '#') {
         frequency = (float)frequency * 1.06;
     }
+    else if (note[1] == 'b'){
+        frequency = (float)frequency * 0.945;
+    }
 
     return frequency;
 
@@ -381,6 +384,12 @@ struct Note eatSound[] = {
         {"G", 16},
         {"c", 16}
 };
+
+struct Note alert[] = {
+        {"Hb", 8},
+        {"db", 8},
+        {"G", 1}
+};
 /**
  *          END OF SOUNDBANK (for now)
  */
@@ -422,6 +431,11 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     case 4:
         sound = eatSound;
         songLength = sizeof(eatSound) / sizeof(struct Note);
+        tempo = 2 * SECOND;
+        break;
+    case 5:
+        sound = alert;
+        songLength = sizeof(alert) / sizeof(struct Note);
         tempo = 2 * SECOND;
         break;
     default:
