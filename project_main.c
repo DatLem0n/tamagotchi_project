@@ -27,8 +27,8 @@
 #include "shared.h"
 
 /* prototypes */
-void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280);
+void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
+                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007);
 void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), char *stack, uint8_t priority);
 void initialize_handles();
 void detectPets();
@@ -228,10 +228,11 @@ void uartTaskFxn()
 // TODO: poista sleepit, testaa ja laita takaisin ne mikä eivät olleet turhia
 Void sensorTaskFxn()
 {
-   I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280;
-   I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280;
+   I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280, i2c_tmp007;
+   I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280, i2cParams_tmp007;
 
-   sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
+   sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2c_tmp007, 
+   &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280, &i2cParams_tmp007);
    write_to_messageBuffer(messageBuffer, "session:start");
 
 
@@ -247,9 +248,7 @@ Void sensorTaskFxn()
       if (i2c_mpu9250 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
       // Task_sleep(SECOND / 10);
-
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
-
       I2C_close(i2c_mpu9250);
       // Task_sleep(SECOND / 10);
 
@@ -258,9 +257,7 @@ Void sensorTaskFxn()
       if (i2c_opt3001 == NULL)
          System_abort("Error Initializing opt3001 I2C\n");
       // Task_sleep(SECOND);
-
       light = opt3001_get_data(&i2c_opt3001);
-
       I2C_close(i2c_opt3001);
       // Task_sleep(SECOND / 10);
 
@@ -269,10 +266,16 @@ Void sensorTaskFxn()
       if (i2c_bmp280 == NULL)
          System_abort("Error Initializing mpu9250 I2C\n");
       // Task_sleep(SECOND / 10);
-
       bmp280_get_data(&i2c_bmp280, &press, &temp);
-
       I2C_close(i2c_bmp280);
+
+      // TMP007
+      i2c_tmp007 = I2C_open(Board_I2C_TMP, &i2cParams_tmp007);
+      if (i2c_tmp007 == NULL)
+         System_abort("Error Initializing mpu9250 I2C\n");
+      // Task_sleep(SECOND / 10);
+      temp = tmp007_get_data(i2c_tmp007);
+      I2C_close(i2c_tmp007);
 
       /*
          */
@@ -283,11 +286,12 @@ Void sensorTaskFxn()
 
       detectPets();
 
+      /*
       float exerciseThreshold = 1.5;
       if(acceleration_vector_length(ax, ay, az) > exerciseThreshold){
          exercise(5, messageBuffer);
          makeSound(buzzerHandle, DOOM);
-      }
+      }*/
 
       if (sendSensorDataToBackend == TRUE)
       {
@@ -465,17 +469,20 @@ void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), c
       (*params).priority = priority;
 }
 
-void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280)
+void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
+                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007);
 {
    // Alustetaan i2c-väylä
    I2C_Params_init(i2cParams_mpu9250);
    I2C_Params_init(i2cParams_opt3001);
    I2C_Params_init(i2cParams_bmp280);
+   I2C_Params_init(i2cParams_tmp007);
    (*i2cParams_mpu9250).bitRate = I2C_400kHz;
    (*i2cParams_mpu9250).custom = (uintptr_t)&mpuI2cPinConfig;
    (*i2cParams_opt3001).bitRate = I2C_400kHz;
    (*i2cParams_bmp280).bitRate = I2C_400kHz;
+   (*i2cParams_tmp007).bitRate = I2C_400kHz;
+
 
    // Alustetaan MPU9250
    (*i2c_mpu9250) = I2C_open(Board_I2C_TMP, i2cParams_mpu9250);
@@ -500,5 +507,14 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
       System_abort("Error Initializing mpu9250 I2C\n");
    Task_sleep(SECOND / 10);
    bmp280_setup(i2c_bmp280);
-   I2C_close((*i2c_opt3001));
+   I2C_close((*i2c_bmp280));
+
+   // Alustetaan TMP007
+   (*i2c_tmp007) = I2C_open(Board_I2C_TMP, i2cParams_tmp007);
+   if ((*i2c_tmp007) == NULL)
+      System_abort("Error Initializing tmp007 I2C\n");
+   Task_sleep(SECOND / 10);
+   tmp007_setup(i2c_tmp007);
+   I2C_close((*i2c_tmp007));
+
 }
