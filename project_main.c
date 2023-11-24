@@ -17,17 +17,15 @@
 /* Board Header files */
 #include "Board.h"
 #include "sensors/opt3001.h" // valoisuus
-#include "sensors/mpu9250.h" //kiihtyvyys
-#include "sensors/bmp280.h"  //  lämpötila ja paine
-#include "sensors/tmp007.h"  // IR lämpötila
-
+#include "sensors/mpu9250.h" // kiihtyvyys
+#include "sensors/bmp280.h"  //  lämpötila ja pain
 
 #include "tamagotchi_IO.h"
 #include "shared.h"
 
 /* prototypes */
-void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007);
+void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
+                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280);
 void initialize_handles();
 void detectPets();
 
@@ -224,11 +222,11 @@ void uartTaskFxn()
 // TODO: poista sleepit, testaa ja laita takaisin ne mikä eivät olleet turhia
 Void sensorTaskFxn()
 {
-   I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280, i2c_tmp007;
-   I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280, i2cParams_tmp007;
+   I2C_Handle i2c_mpu9250, i2c_opt3001, i2c_bmp280;
+   I2C_Params i2cParams_mpu9250, i2cParams_opt3001, i2cParams_bmp280;
 
-   sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2c_tmp007, 
-   &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280, &i2cParams_tmp007);
+   sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, 
+   &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
 
    while (1)
    {
@@ -245,16 +243,6 @@ Void sensorTaskFxn()
       mpu9250_get_data(&i2c_mpu9250, &ax, &ay, &az, &gx, &gy, &gz);
       I2C_close(i2c_mpu9250);
       // Task_sleep(SECOND / 10);
-
-      /**
-       // TMP007
-      i2c_tmp007 = I2C_open(Board_I2C_TMP, &i2cParams_tmp007);
-      if (i2c_tmp007 == NULL)
-         System_abort("Error Initializing mpu9250 I2C\n");
-      // Task_sleep(SECOND / 10);
-      temp = tmp007_get_data(&i2c_tmp007);
-      I2C_close(i2c_tmp007);
-      **/
 
       // OPT3001
       i2c_opt3001 = I2C_open(Board_I2C_TMP, &i2cParams_opt3001);
@@ -450,19 +438,17 @@ void initialize_handles()
    }
 }
 
-void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007)
+void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
+                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280)
 {
    // Alustetaan i2c-väylä
    I2C_Params_init(i2cParams_mpu9250);
    I2C_Params_init(i2cParams_opt3001);
    I2C_Params_init(i2cParams_bmp280);
-   I2C_Params_init(i2cParams_tmp007);
    (*i2cParams_mpu9250).bitRate = I2C_400kHz;
    (*i2cParams_mpu9250).custom = (uintptr_t)&mpuI2cPinConfig;
    (*i2cParams_opt3001).bitRate = I2C_400kHz;
    (*i2cParams_bmp280).bitRate = I2C_400kHz;
-   (*i2cParams_tmp007).bitRate = I2C_400kHz;
 
 
    // Alustetaan MPU9250
@@ -489,13 +475,5 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
    Task_sleep(SECOND / 10);
    bmp280_setup(i2c_bmp280);
    I2C_close((*i2c_bmp280));
-
-   // Alustetaan TMP007
-   (*i2c_tmp007) = I2C_open(Board_I2C_TMP, i2cParams_tmp007);
-   if ((*i2c_tmp007) == NULL)
-      System_abort("Error Initializing tmp007 I2C\n");
-   Task_sleep(SECOND / 10);
-   tmp007_setup(i2c_tmp007);
-   I2C_close((*i2c_tmp007));
 
 }
