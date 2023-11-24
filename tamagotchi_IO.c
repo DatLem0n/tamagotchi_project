@@ -1,13 +1,9 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
-#include <stdlib.h>
 #include <math.h>
 #include <ti/sysbios/knl/Task.h>
-#include <xdc/runtime/System.h>
 #include "sensortag_examples/buzzer.h"
 #include "shared.h"
-#include "ti/drivers/UART.h"
 
 /**
  * Writes given message to the message buffer. Will try writing until buffer is not full.
@@ -84,60 +80,9 @@ int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, fl
     return 1;
 }
 
-void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], float mpu9250DeltasArray[6]){
-    uint8_t t1, t2;
-    // Make sure that t1 < t2. Because the sensorDataArray is a ring buffer, the measurements might not be in ascending time order. 
-    if(sensorDataArray[0][TIME] < sensorDataArray[1][TIME]){
-        t1 = 0;
-        t2 = 1;
-    }
-    else{
-        t1 = 1;
-        t2 = 0;
-    }
-
-    // Calculate the change in mpu9250 measurements between timesteps
-    uint8_t i = AX;
-    for(i = AX; i <= GZ; i++){
-        mpu9250DeltasArray[i] = sensorDataArray[t1][i] - sensorDataArray[t2][i];
-    }
-
-}
-
 float acceleration_vector_length(float ax, float ay, float az){
     return sqrt(ax*ax + ay*ay + az*az);
 }
-
-uint8_t axBounces=0, ayBounces=0, azBounces=0;
-bool detect_Exercise(float mpu9250DeltasArray[6]){
-    float threshold = 0.3;
-    float d_ax = mpu9250DeltasArray[AX];
-    float d_ay = mpu9250DeltasArray[AY];
-    float d_az = mpu9250DeltasArray[AZ];
-
-    if(d_ax < -threshold || d_ax > threshold)
-        axBounces++;
-    if(d_ay < threshold || d_ay > threshold)
-        ayBounces++;
-    if(d_az < -threshold || d_az > threshold)
-        azBounces++;
-    
-    if(axBounces > 10){
-        axBounces = 0;
-        return true;
-    }
-    if(ayBounces > 10){
-        ayBounces = 0;
-        return true;
-    }
-    if(azBounces > 10){
-        azBounces = 0;
-        return true;
-    }
-    
-    return false;
-}
-
 
 void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
     float gx, float gy, float gz, double temp, double press, double light) {
@@ -234,12 +179,6 @@ struct Note
     char note[3];
     int length;
 };
-
-void testMessage(char* buffer){
-    char message[20] = "MSG1:Yaas queen";
-    write_to_messageBuffer(buffer, message);
-    Task_sleep(SECOND);
-}
 
 void nowPlaying(int musicSelection, char* buffer){
     char message[80] = "MSG1:";
@@ -584,19 +523,4 @@ void toggleLed(PIN_Handle ledHandle, char board_led) {
     else {
         PIN_setOutputValue(ledHandle, board_led, OFF);
     }
-}
-
-/*
-* Currently unused functions
-*/
-void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz) {
-    char msg[BUFFERSIZE];
-    sprintf(msg, "time:%i,ax:%.2f,ay:%.2f,az:%.2f,gx:%.2f,gy:%.2f,gz:%.2f",
-        time, ax, ay, az, gx, gy, gz);
-    write_to_messageBuffer(buffer, msg);
-}
-void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, double light) {
-    char msg[BUFFERSIZE];
-    sprintf(msg, "temp:%f,press:%f,light:%f", temp, press, light);
-    write_to_messageBuffer(buffer, msg);
 }

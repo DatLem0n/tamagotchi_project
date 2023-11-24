@@ -10,8 +10,6 @@ void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DAT
 
 // Data cleaning functions
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
-void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], float mpu9250DeltasArray[6]);
-bool detect_Exercise(float mpu9250DeltasArray[6]);
 float acceleration_vector_length(float ax, float ay, float az);
 
 // Tamagotchi functions
@@ -21,20 +19,11 @@ int pet(int amount, char* buffer);
 int activate(int eat, int exercise, int pet, char* buffer);
 
 // Sound functions
-int noteToFreq(int note);
 int makeSound(PIN_Handle buzzerHandle, int soundSelection);
 void nowPlaying(int musicSelection, char* buffer);
-void testMessage(char* buffer);
 
 
 // Led functions
 int blinkLed(PIN_Handle ledHandle, int ledSelection, int blinkTimes, float timesPerSecond);
 int turnOnLed(PIN_Handle ledHandle, int ledSelection, float time);
 int toggleLed(PIN_Handle ledHandle, char board_led);
-
-/*
-* Currently unused functions
-*/
-void writeOtherSensorsToMsgBuffer(char* buffer, double temp, double press, double light);
-void write_mpu9250_to_messageBuffer(char* buffer, int time, float ax, float ay, float az, float gx, float gy, float gz);
-void write_mpu9250_to_sensor_data(float sensorDataArray[][SENSOR_DATA_COLUMNS], int* index, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
