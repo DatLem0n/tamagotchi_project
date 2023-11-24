@@ -103,6 +103,10 @@ void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], floa
 
 }
 
+float acceleration_vector_length(float ax, float ay, float az){
+    return sqrt(ax*ax + ay*ay + az*az);
+}
+
 uint8_t axBounces=0, ayBounces=0, azBounces=0;
 bool detect_Exercise(float mpu9250DeltasArray[6]){
     float threshold = 0.3;

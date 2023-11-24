@@ -282,10 +282,13 @@ Void sensorTaskFxn()
       write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
 
       detectPets();
-      if(detect_Exercise(mpu9250DeltasArray)){
-        // exercise(5, messageBuffer);
-         //makeSound(buzzerHandle, DOOM);
+
+      float exerciseThreshold = 1.5;
+      if(acceleration_vector_length(ax, ay, az) > exerciseThreshold){
+         exercise(5, messageBuffer);
+         makeSound(buzzerHandle, DOOM);
       }
+
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
 
       if (sendSensorDataToBackend == TRUE)

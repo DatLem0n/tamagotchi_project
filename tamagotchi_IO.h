@@ -12,6 +12,7 @@ void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DAT
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], float mpu9250DeltasArray[6]);
 bool detect_Exercise(float mpu9250DeltasArray[6]);
+float acceleration_vector_length(float ax, float ay, float az);
 
 // Tamagotchi functions
 int eat(int amount, char* buffer);
