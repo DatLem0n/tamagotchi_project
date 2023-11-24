@@ -161,9 +161,13 @@ void buzzerTaskFxn()
 /**
  * react to
  */
-void Beep()
+void Beep(char* warningMsg)
 {
-   inDistress = 1;
+    inDistress = 1;
+
+    char msg[BUFFERSIZE] = "MSG2:";
+    strcat(msg, warningMsg);
+    write_to_messageBuffer(messageBuffer, msg);
 }
 
 static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
@@ -172,9 +176,9 @@ static void checkMessage(UART_Handle handle, void *rxBuf, size_t len){
     if (atoi(token) == GROUP_ID_NUM){
         token = strtok(NULL, ":");
         if (strcmp(token, "BEEP") == 0){
-            //token = strtok(NULL,)
-            //strcpy(msg,token)
-            Beep();
+            token = strtok(NULL,",");
+            strcpy(msg,token);
+            Beep(msg);
         }
     }
     UART_read(handle, rxBuf, BUFFERSIZE);
