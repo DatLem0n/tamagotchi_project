@@ -312,15 +312,15 @@ int previousMeasurementIndex = -1;
 int detectPets(){
     float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
     if (lightAmount > 0){
-        previousMeasurementIndex = sensorArrayHEAD;
         if (lightAmount < 5 && sensorArrayHEAD != previousMeasurementIndex){
-            petAmount ++;
+            petAmount++;
             if (petAmount == 5){
                 petAmount = 0;
                 pet(5, messageBuffer);
                 makeSound(buzzerHandle,ONEUP);
             }
         }
+        previousMeasurementIndex = sensorArrayHEAD;
     }
 }
 
