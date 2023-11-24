@@ -96,12 +96,27 @@ void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], floa
     }
 
     // Calculate the change in mpu9250 measurements between timesteps
-    enum SensorDataKeys sensorDataKey = AX;
-    for(sensorDataKey = AX; sensorDataKey <= GZ; sensorDataKey++){
-        mpu9250DeltasArray[sensorDataKey] = sensorDataArray[t1][sensorDataKey] - sensorDataArray[t2][sensorDataKey];
+    uint8_t i = AX;
+    for(i = AX; i <= GZ; i++){
+        mpu9250DeltasArray[i] = sensorDataArray[t1][i] - sensorDataArray[t2][i];
     }
 
 }
+
+void count_bounces(float mpu9250DeltasArray[6], uint8_t* axBounces, uint8_t* ayBounces, uint8_t* azBounces){
+    uint8_t i;
+    uint8_t d_ax = mpu9250DeltasArray[AX];
+    uint8_t d_ay = mpu9250DeltasArray[AY];
+    uint8_t d_az = mpu9250DeltasArray[AZ];
+
+    if(d_ax < -0,2 || d_ax > 0,2)
+        *axBounces++;
+    if(d_ay < -0,2 || d_ay > 0,2)
+        *ayBounces++;
+    if(d_az < -0,2 || d_az > 0,2)
+        *azBounces++;
+}
+
 
 void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DATA_COLUMNS], int index, int time, float ax, float ay, float az,
     float gx, float gy, float gz, double temp, double press, double light) {
