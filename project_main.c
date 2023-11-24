@@ -19,9 +19,11 @@
 
 /* Board Header files */
 #include "Board.h"
-#include "sensors/opt3001.h" //valoisuus
+#include "sensors/opt3001.h" // valoisuus
 #include "sensors/mpu9250.h" //kiihtyvyys
-#include "sensors/bmp280.h"  //lämpötila ja paine
+#include "sensors/bmp280.h"  //  lämpötila ja paine
+#include "sensors/tmp007.h"  // IR lämpötila
+
 
 #include "tamagotchi_IO.h"
 #include "shared.h"
@@ -470,7 +472,7 @@ void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), c
 }
 
 void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
-                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007);
+                 I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007)
 {
    // Alustetaan i2c-väylä
    I2C_Params_init(i2cParams_mpu9250);
