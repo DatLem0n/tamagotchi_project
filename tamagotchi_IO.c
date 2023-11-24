@@ -103,11 +103,10 @@ void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], floa
 
 }
 
-void count_bounces(float mpu9250DeltasArray[6], uint8_t* axBounces, uint8_t* ayBounces, uint8_t* azBounces){
-    uint8_t i;
-    uint8_t d_ax = mpu9250DeltasArray[AX];
-    uint8_t d_ay = mpu9250DeltasArray[AY];
-    uint8_t d_az = mpu9250DeltasArray[AZ];
+void count_bounces(float mpu9250DeltasArray[6], uint8_t* axBounces, uint8_t* ayBounces, uint8_t* azBounces, uint8_t* noBounces){
+    float d_ax = mpu9250DeltasArray[AX];
+    float d_ay = mpu9250DeltasArray[AY];
+    float d_az = mpu9250DeltasArray[AZ];
 
     if(d_ax < -0,2 || d_ax > 0,2)
         *axBounces++;
@@ -115,6 +114,8 @@ void count_bounces(float mpu9250DeltasArray[6], uint8_t* axBounces, uint8_t* ayB
         *ayBounces++;
     if(d_az < -0,2 || d_az > 0,2)
         *azBounces++;
+    
+    
 }
 
 
