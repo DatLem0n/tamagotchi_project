@@ -31,6 +31,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
                  I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280);
 void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), char *stack, uint8_t priority);
 void initialize_handles();
+int detectPets();
 
 /*
  * Globaalit muuttujat
@@ -43,6 +44,7 @@ char uartTaskStack[STACKSIZE];
 char buzzerTaskStack[STACKSIZE];
 
 float ax, ay, az, gx, gy, gz;
+int sensorArrayHEAD = 0;
 
 double temp, press, light;
 int time;
@@ -142,7 +144,7 @@ void buzzerTaskFxn()
         
       if (inDistress)
       {
-         makeSound(buzzerHandle, DOOM);
+         makeSound(buzzerHandle, ALERT);
          inDistress = 0;
       }
       if (eatButtonPressed)
@@ -232,7 +234,7 @@ Void sensorTaskFxn()
    sensorSetup(&i2c_mpu9250, &i2c_opt3001, &i2c_bmp280, &i2cParams_mpu9250, &i2cParams_opt3001, &i2cParams_bmp280);
    write_to_messageBuffer(messageBuffer, "session:start");
 
-   int index = 0;
+
    while (1)
    {
       time = Clock_getTicks() / Clock_tickPeriod;
@@ -277,8 +279,9 @@ Void sensorTaskFxn()
       clean_mpu9250_data(&ax, &ay, &az, &gx, &gy, &gz);
       // TODO: toteuta clean_other_data (testaa ja keksi sopivat rajat)
 
-      write_sensor_readings_to_sensorDataArray(sensorDataArray, index, time, ax, ay, az, gx, gy, gz, temp, press, light);
-      
+      write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
+
+      detectPets();
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
 
       if (sendSensorDataToBackend == TRUE)
@@ -297,12 +300,24 @@ Void sensorTaskFxn()
       }
 
       // Used to turn the sensor data array into a ring buffer
-      index++;
-      if (index == SENSOR_DATA_ROWS)
-         index = 0;
+      sensorArrayHEAD++;
+      if (sensorArrayHEAD == SENSOR_DATA_ROWS)
+          sensorArrayHEAD = 0;
 
       Task_sleep(SECOND / 10);
    }
+}
+int petAmount = 0;
+int detectPets(){
+    float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
+    if (lightAmount > 0 && lightAmount < 5){
+        petAmount ++;
+        if (petAmount == 5){
+            petAmount = 0;
+            pet(5, messageBuffer);
+            makeSound(buzzerHandle,ONEUP);
+        }
+    }
 }
 
 int main(void)
