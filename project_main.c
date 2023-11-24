@@ -311,15 +311,31 @@ Void sensorTaskFxn()
       Task_sleep(SECOND / 10);
    }
 }
+const short neededPets = 5;
+short petBoolArray[neededPets];
 int petAmount = 0;
+bool gotPET = true;
+
 void detectPets(){
     float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
     if (lightAmount > 0){
-        if (lightAmount > 10|| lightAmount < 20){
-            petAmount++;
-            if (petAmount == 3){
+        if (lightAmount < 25) {
+            petBoolArray[petAmount] = 0;
+        }
+        else {
+            petBoolArray[petAmount] = 1;
+        }
+        petAmount++;
+        if (petAmount > neededPets){
+            int i;
+            for (i = 1; i < neededPets; ++i) {
+                if (petBoolArray[i] == petBoolArray[i - 1]){
+                    gotPET = false;
+                }
+            }
+            if(gotPET){
                 petAmount = 0;
-                pet(5, messageBuffer);
+                pet(neededPets, messageBuffer);
                 makeSound(buzzerHandle,ONEUP);
             }
         }
