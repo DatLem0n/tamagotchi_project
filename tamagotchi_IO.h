@@ -11,7 +11,7 @@ void write_sensor_readings_to_sensorDataArray(float sensorDataArray[][SENSOR_DAT
 // Data cleaning functions
 int clean_mpu9250_data(float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], float mpu9250DeltasArray[6]);
-void count_bounces(float mpu9250DeltasArray[6], uint8_t* axBounces, uint8_t* ayBounces, uint8_t* azBounces, uint8_t* noBounces);
+void count_bounces(float mpu9250DeltasArray[6]);
 
 // Tamagotchi functions
 int eat(int amount, char* buffer);
