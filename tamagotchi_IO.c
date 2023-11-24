@@ -384,6 +384,15 @@ struct Note alert[] = {
         {"db", 8},
         {"G", 1}
 };
+
+struct Note oneUp[] = {
+        {"E",8},
+        {"G",8},
+        {"e",8},
+        {"c",8},
+        {"d",8},
+        {"g",8}
+};
 /**
  *          END OF SOUNDBANK (for now)
  */
@@ -395,7 +404,9 @@ struct Note alert[] = {
   *    1 for Doom
   *    2 for Victory sound
   *    3 for roundabout
-  *    4 for eatSound
+  *    4 is reserved for END in soundSelection (for jukebox)
+  *    5 for eatSound
+  *    6 for alert sound
   *
   * @param buzzerHandle
   * @param soundSelection (int)
@@ -422,14 +433,19 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
         songLength = sizeof(toBeContinued) / sizeof(struct Note);
         tempo = 2 * SECOND;
         break;
-    case 4:
+    case 5:
         sound = eatSound;
         songLength = sizeof(eatSound) / sizeof(struct Note);
         tempo = 2 * SECOND;
         break;
-    case 5:
+    case 6:
         sound = alert;
         songLength = sizeof(alert) / sizeof(struct Note);
+        tempo = 2 * SECOND;
+        break;
+    case 7:
+        sound = oneUp;
+        songLength = sizeof(oneUp) / sizeof(struct Note);
         tempo = 2 * SECOND;
         break;
     default:

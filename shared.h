@@ -17,6 +17,6 @@
 #define GROUP_ID_NUM 3430
 
 enum SensorDataKeys { TIME, AX, AY, AZ, GX, GY, GZ, TEMP, PRESS, LIGHT };
-enum Music { SILENT, DOOM, VICTORY, ROUNDABOUT, EAT, END };
+enum Music { SILENT, DOOM, VICTORY, ROUNDABOUT, END, EAT, ALERT, ONEUP };
 
 #endif
