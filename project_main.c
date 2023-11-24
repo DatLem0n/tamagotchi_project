@@ -282,6 +282,9 @@ Void sensorTaskFxn()
       write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
 
       detectPets();
+      if(detect_Exercise(mpu9250DeltasArray)){
+         exercise(5, messageBuffer);
+      }
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
 
       if (sendSensorDataToBackend == TRUE)
@@ -308,7 +311,7 @@ Void sensorTaskFxn()
    }
 }
 int petAmount = 0;
-int detectPets(){
+void detectPets(){
     float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
     if (lightAmount > 0){
         if (lightAmount > 10|| lightAmount < 20){
