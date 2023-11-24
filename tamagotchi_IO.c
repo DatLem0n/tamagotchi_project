@@ -457,12 +457,12 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     case 6:
         sound = alert;
         songLength = sizeof(alert) / sizeof(struct Note);
-        tempo = 2 * SECOND;
+        tempo = 3 * SECOND;
         break;
     case 7:
         sound = oneUp;
         songLength = sizeof(oneUp) / sizeof(struct Note);
-        tempo = 2 * SECOND;
+        tempo = 3 * SECOND;
         break;
     default:
         Task_sleep(SECOND / 2);
