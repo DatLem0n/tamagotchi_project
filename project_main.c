@@ -306,6 +306,7 @@ int main(void)
    Task_Params buzzerTaskParams;
 
    Board_initGeneral();
+   Board_initI2C();
    initialize_handles();
 
    // Sensor Task
@@ -404,6 +405,7 @@ void initialize_handles()
 void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280,
                  I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280)
 {
+    Task_sleep(SECOND / 2);
    // Alustetaan i2c-väylä
    I2C_Params_init(i2cParams_mpu9250);
    I2C_Params_init(i2cParams_opt3001);
