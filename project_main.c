@@ -308,19 +308,17 @@ Void sensorTaskFxn()
    }
 }
 int petAmount = 0;
-int previousMeasurementIndex = -1;
 int detectPets(){
     float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
     if (lightAmount > 0){
-        if (lightAmount < 5 && sensorArrayHEAD != previousMeasurementIndex){
+        if (lightAmount > 10|| lightAmount < 20){
             petAmount++;
-            if (petAmount == 5){
+            if (petAmount == 3){
                 petAmount = 0;
                 pet(5, messageBuffer);
                 makeSound(buzzerHandle,ONEUP);
             }
         }
-        previousMeasurementIndex = sensorArrayHEAD;
     }
 }
 
