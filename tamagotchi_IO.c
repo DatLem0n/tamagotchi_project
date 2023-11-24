@@ -104,7 +104,7 @@ void calculate_mpu9250_deltas(float sensorDataArray[][SENSOR_DATA_COLUMNS], floa
 }
 
 float acceleration_vector_length(float ax, float ay, float az){
-    return sqrt(ax**2 + ay**2 + az**2);
+    return sqrt(ax*ax + ay*ay + az*az);
 }
 
 uint8_t axBounces=0, ayBounces=0, azBounces=0;
