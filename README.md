@@ -10,17 +10,17 @@ Kalle Asmundi
 ### Pakolliset
 
 - [x]  Jupiter-notebook algoritmien protoiluun
-- [ ]  MPU-datan käsittely
-  - [ ]  Testidatan keräys
+- [x]  MPU-datan käsittely
+  - [x]  Testidatan keräys
   - [x]  Sensoridatan siivoaminen
     - [x] liian pienien ja suurien mittausten poisto
     - [ ] liukuva keskiarvo?
   - [ ]  Eleiden tunnistus datasta
-    - [ ]  Ainakin pöydällä pompottelu koska helppo tunnistaa
+    - [x]  Ainakin pöydällä pompottelu koska helppo tunnistaa
     - [ ]  1-2 lisää elettä?
 - [ ]  Nukkuminen: kun valosensori tunnistaa pimeyden, soitetaan tuutulaulua
-- [ ]  Exercise: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
-- [ ]  Pet: Valosensorilla tunnistetaan kun käden varjo pyyhkii laitteen yli?
+- [x]  Exercise: Pompottelu pöydällä kutsuu Exercise() ja soittaa Doom?
+- [x]  Pet: Valosensorilla tunnistetaan kun käden varjo pyyhkii laitteen yli?
 - [x]  Eat: Nappi 1 syöttää, pitäisi keksiä jokin reaktio
 - [x]  Nappi 2: Jukebox
   - [x]  Ei vielä käytössä, pitää alustaa Mainissa
@@ -49,7 +49,7 @@ Kalle Asmundi
     - Jos `msgBufferState = BUFFER_FULL`: Lähettää ja tyhjentää bufferin, asettaa `msgBufferState = BUFFER_EMPTY`
     - Jos `msgBufferState = BUFFER_EMPTY`: Sleep
 - [x]  `MSG1` ja `MSG2`-kentille jotakin järkevää lähetettävää, esim. sensoreilta
-- [ ] BMP280 lämpötila ei tunnu toimivan luotettavasti, ota käyttöön tmp007 ja hae lämpötila siltä (Sigmasetä hoitaa)
+- [x] BMP280 lämpötila ei tunnu toimivan luotettavasti, ota käyttöön tmp007 ja hae lämpötila siltä (Sigmasetä hoitaa)
 
 ## Sensorit
 
