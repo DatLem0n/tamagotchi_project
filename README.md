@@ -12,7 +12,7 @@ Kalle Asmundi
 - [x]  Jupiter-notebook algoritmien protoiluun
 - [ ]  MPU-datan käsittely
   - [ ]  Testidatan keräys
-  - [ ]  Sensoridatan siivoaminen
+  - [x]  Sensoridatan siivoaminen
     - [x] liian pienien ja suurien mittausten poisto
     - [ ] liukuva keskiarvo?
   - [ ]  Eleiden tunnistus datasta
@@ -26,7 +26,7 @@ Kalle Asmundi
   - [x]  Ei vielä käytössä, pitää alustaa Mainissa
   - [ ]  Napin painaminen kiertää `music_selection` enumia niin että soiva kappale katkeaa ja seuraava alkaa suoraan
   - [ ]  Muuta playSoundin logiikkaa niin että buzzerTask hoitaa looppaamisen, playSound soittaa vain kappaleen seuraavan nuotin
-- [ ]  `id,BEEP` viestien käsittely
+- [x]  `id,BEEP` viestien käsittely
   - <https://github.com/UniOulu-Ubicomp-Programming-Courses/jtkj-sensortag-gateway#sending-messages-from-the-gateway>
   - <https://lovelace.oulu.fi/tietokonej%C3%A4rjestelm%C3%A4t/tietokonej%C3%A4rjestelm%C3%A4t/sarjaliikenne/>
   - <https://lovelace.oulu.fi/tietokonej%C3%A4rjestelm%C3%A4t/tietokonej%C3%A4rjestelm%C3%A4t/keskeytykset/>
@@ -48,7 +48,7 @@ Kalle Asmundi
   - `uartTaskFxn` muutoksia:
     - Jos `msgBufferState = BUFFER_FULL`: Lähettää ja tyhjentää bufferin, asettaa `msgBufferState = BUFFER_EMPTY`
     - Jos `msgBufferState = BUFFER_EMPTY`: Sleep
-- [ ]  `MSG1` ja `MSG2`-kentille jotakin järkevää lähetettävää, esim. sensoreilta
+- [x]  `MSG1` ja `MSG2`-kentille jotakin järkevää lähetettävää, esim. sensoreilta
 - [ ] BMP280 lämpötila ei tunnu toimivan luotettavasti, ota käyttöön tmp007 ja hae lämpötila siltä (Sigmasetä hoitaa)
 
 ## Sensorit
