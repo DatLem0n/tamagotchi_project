@@ -376,12 +376,12 @@ struct Note toBeContinued[] = {
         {"e", 8},
         {"d", 8},
         {"c", 8},
-        {"H", 8},
+        {"B", 8},
         {"d", 8},
-        {"H", 8},
+        {"B", 8},
         {"c", 8},
         {"A", 8},
-        {"H", 8},
+        {"B", 8},
         {"G", 8},
         {"A", 8},
         {"e", 4},
@@ -408,9 +408,9 @@ struct Note eatSound[] = {
 };
 
 struct Note alert[] = {
-        {"Hb", 8},
+        {"Bb", 8},
         {"db", 8},
-        {"G", 1}
+        {"g", 1}
 };
 
 struct Note oneUp[] = {
@@ -469,7 +469,7 @@ int makeSound(PIN_Handle buzzerHandle, int soundSelection) {
     case 6:
         sound = alert;
         songLength = sizeof(alert) / sizeof(struct Note);
-        tempo = SECOND;
+        tempo = 0.5 * SECOND;
         break;
     case 7:
         sound = oneUp;
