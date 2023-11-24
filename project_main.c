@@ -31,7 +31,6 @@
 /* prototypes */
 void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
                  I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280, I2C_Params* i2cParams_tmp007);
-void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), char *stack, uint8_t priority);
 void initialize_handles();
 void detectPets();
 
@@ -66,8 +65,7 @@ float mpu9250DeltasArray[6];
 bool sendSensorDataToBackend = FALSE;
 int timesSenttoBackend = 0;
 
-bool bouncingDetected = FALSE;
-int inDistress = 0;
+bool inDistress = 0;
 
 // Pin RTOS-variables and configurations
 static PIN_Handle button0_Handle;
@@ -451,22 +449,6 @@ void initialize_handles()
    {
       System_abort("Buzzer pin open failed!");
    }
-}
-
-void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), char *stack, uint8_t priority)
-{
-   Task_Params_init(params);
-   (*params).stackSize = STACKSIZE;
-   (*params).stack = &stack;
-
-   (*handle) = Task_create(taskFxn, &params, NULL);
-
-   if (handle == NULL)
-   {
-      System_abort("Task create failed!");
-   }
-   if (priority != 0)
-      (*params).priority = priority;
 }
 
 void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i2c_bmp280, I2C_Handle *i2c_tmp007,
