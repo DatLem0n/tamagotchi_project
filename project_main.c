@@ -31,7 +31,7 @@ void sensorSetup(I2C_Handle *i2c_mpu9250, I2C_Handle *i2c_opt3001, I2C_Handle *i
                  I2C_Params *i2cParams_mpu9250, I2C_Params *i2cParams_opt3001, I2C_Params *i2cParams_bmp280);
 void initialize_task(Task_Handle *handle, Task_Params *params, void(*taskFxn), char *stack, uint8_t priority);
 void initialize_handles();
-int detectPets();
+void detectPets();
 
 /*
  * Globaalit muuttujat
@@ -282,6 +282,10 @@ Void sensorTaskFxn()
       write_sensor_readings_to_sensorDataArray(sensorDataArray, sensorArrayHEAD, time, ax, ay, az, gx, gy, gz, temp, press, light);
 
       detectPets();
+      if(detect_Exercise(mpu9250DeltasArray)){
+         exercise(5, messageBuffer);
+         makeSound(buzzerHandle, DOOM);
+      }
       calculate_mpu9250_deltas(sensorDataArray, mpu9250DeltasArray);
 
       if (sendSensorDataToBackend == TRUE)
@@ -312,7 +316,7 @@ short petBoolArray[neededPets];
 int petAmount = 0;
 bool gotPET = true;
 
-int detectPets(){
+void detectPets(){
     float lightAmount = sensorDataArray[sensorArrayHEAD][LIGHT];
     if (lightAmount > 0){
         if (lightAmount < 25) {
